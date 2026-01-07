@@ -1,9 +1,10 @@
-Node
+Label
 Sprite2D
+Node
+Panel
 Label      - Matches the "text" keyword.
 TextEdit
 Container
-Panel
 FlowContainer
 Node2D
 CanvasLayer

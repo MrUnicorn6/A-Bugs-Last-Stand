@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2vj21s3sjysa"]
+[gd_scene load_steps=6 format=3 uid="uid://b2vj21s3sjysa"]
 
 [ext_resource type="Script" uid="uid://bd1da1y4n5xk1" path="res://UI/shop_management_scripts.gd" id="2_dhe1o"]
+[ext_resource type="Script" uid="uid://4qxeqtk7wca8" path="res://UI/health_and_money.gd" id="2_q0uhn"]
+[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="3_e707p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1fl4"]
+atlas = ExtResource("3_e707p")
+region = Rect2(832, 768, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqf55"]
+atlas = ExtResource("3_e707p")
+region = Rect2(1344, 768, 64, 64)
 
 [node name="UI" type="CanvasLayer"]
 
@@ -20,3 +30,35 @@ last_wrap_alignment = 1
 
 [node name="ShopManagementScripts" type="Node" parent="."]
 script = ExtResource("2_dhe1o")
+
+[node name="HealthAndMoney" type="Panel" parent="."]
+offset_left = 1.0
+offset_right = 321.0
+offset_bottom = 149.0
+script = ExtResource("2_q0uhn")
+
+[node name="HealthIcon" type="Sprite2D" parent="HealthAndMoney"]
+position = Vector2(32, 76)
+texture = SubResource("AtlasTexture_f1fl4")
+
+[node name="HealthNumber" type="Label" parent="HealthAndMoney"]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 41.0
+offset_right = 107.0
+offset_bottom = 64.0
+scale = Vector2(3, 3)
+text = "200"
+
+[node name="MoneyIcon" type="Sprite2D" parent="HealthAndMoney"]
+position = Vector2(190, 78)
+texture = SubResource("AtlasTexture_jqf55")
+
+[node name="MoneyNumber" type="Label" parent="HealthAndMoney"]
+layout_mode = 0
+offset_left = 227.0
+offset_top = 43.0
+offset_right = 267.0
+offset_bottom = 66.0
+scale = Vector2(3, 3)
+text = "100"
