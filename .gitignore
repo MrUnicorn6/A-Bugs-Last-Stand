@@ -2,3 +2,5 @@
 .godot/
 /android/
 .godot/editor/script_editor_cache.cfg
+.godot/editor/script_editor_cache.cfg
+.godot/editor/filesystem_cache10
