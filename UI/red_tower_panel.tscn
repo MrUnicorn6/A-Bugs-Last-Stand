@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddo4susbo4n0b"]
+
+[ext_resource type="Script" uid="uid://drhlppljqp0hs" path="res://red_tower_panel.gd" id="1_tt8ob"]
+[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_f0jvm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ri2ue"]
+atlas = ExtResource("2_f0jvm")
+region = Rect2(1280, 640, 64, 64)
+
+[node name="RedTowerPanel" type="Panel"]
+custom_minimum_size = Vector2(80, 80)
+offset_right = 64.0
+offset_bottom = 64.0
+script = ExtResource("1_tt8ob")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.25, 1.25)
+texture = SubResource("AtlasTexture_ri2ue")
+centered = false
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
