@@ -16,5 +16,5 @@ func _process(delta: float) -> void:
 	
 	#checks health
 	if health <=0 :
-		#print("GOOD KILL")
+		print("GOOD KILL")
 		queue_free()
