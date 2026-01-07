@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://du64n7xpj8sda" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://bng06qj3ij7wc" path="res://Maps/BaseMap.tscn" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://hq2jsvqt70ea" path="res://path_spawner.gd" id="3_h2yge"]
-[ext_resource type="PackedScene" uid="uid://b2vj21s3sjysa" path="res://UI/ui.tscn" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://dsq48ta14430l" path="res://Maps/Path_Spawner.gd" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://b2vj21s3sjysa" path="res://UI/UI.tscn" id="4_1bvp3"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_h2yge")
@@ -11,7 +11,7 @@ script = ExtResource("1_h2yge")
 [node name="TileMapLayer" parent="." instance=ExtResource("1_ig7tw")]
 
 [node name="PathSpawner" type="Node" parent="."]
-script = ExtResource("3_h2yge")
+script = ExtResource("3_1bvp3")
 
 [node name="SpawnTimer" type="Timer" parent="PathSpawner"]
 autostart = true

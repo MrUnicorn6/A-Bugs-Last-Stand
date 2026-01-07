@@ -1,20 +1,20 @@
 [gd_scene load_steps=6 format=3 uid="uid://dhm8sgqrt6k48"]
 
-[ext_resource type="Script" uid="uid://gxmjvcj77mu5" path="res://Towers/red_tower.gd" id="1_nj3e5"]
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_f1add"]
+[ext_resource type="Script" uid="uid://gxmjvcj77mu5" path="res://SourceTowers/BoomTower/Boom_Tower.gd" id="1_jd26s"]
+[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_k6nph"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jt0u4"]
 radius = 25.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ugiwr"]
-atlas = ExtResource("2_f1add")
-region = Rect2(1280, 640, 64, 64)
+atlas = ExtResource("2_k6nph")
+region = Rect2(1280, 512, 64, 64)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a6mss"]
-radius = 200.0
+radius = 300.0
 
-[node name="RedTower" type="StaticBody2D"]
-script = ExtResource("1_nj3e5")
+[node name="BoomTower" type="StaticBody2D"]
+script = ExtResource("1_jd26s")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jt0u4")

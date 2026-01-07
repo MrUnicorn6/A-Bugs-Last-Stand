@@ -1,2 +1,21 @@
+res://Towers/RedTower/red_tower.tscn
+res://UI/red_tower_panel.gd
 res://main.tscn
-res://Enemies/soldier_a.gd
+res://Main/main.tscn
+res://Towers/RedTower/red_tower.gd
+res://Towers/RedTower/Red_Tower.tscn
+res://SourceTowers/RedTower/Red_Tower.tscn
+res://UI/Shop Panel/Red_Tower_Panel.gd
+res://main.gd
+res://SourceTowers/RedTower/Red_Tower.gd
+res://Maps/Path_Spawner.gd
+res://UI/shop_management_scripts.gd
+res://UI/UI.tscn
+res://UI/Shop Panel/BaseShopButton.tscn
+res://UI/Shop Panel/base_shop_button.gd
+res://SourceTowers/BoomTower/Red_Tower.tscn
+res://SourceTowers/BoomTower/Boom_Tower.tscn
+res://SourceTowers/BoomTower/Boom_Bullet.tscn
+res://SourceTowers/BoomTower/Boom_Bullet.gd
+res://SourceTowers/BoomTower/Boom_Tower.gd
+res://SourceTowers/RedTower/Red_Bullet.tscn

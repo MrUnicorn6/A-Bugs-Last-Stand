@@ -1,14 +1,14 @@
+Node
 Sprite2D
+Label      - Matches the "text" keyword.
+TextEdit
+Container
 Panel
 FlowContainer
 Node2D
-Node
 CanvasLayer
 CollisionShape2D
 Area2D
 CharacterBody2D
 Marker2D
 StaticBody2D
-Timer
-PathFollow2D
-Path2D

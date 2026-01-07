@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://yec1bj7pege1"]
 
 [ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="1_ophvu"]
-[ext_resource type="Script" uid="uid://b33gm1uv8cuhb" path="res://Enemies/soldier_a.gd" id="1_raqng"]
+[ext_resource type="Script" uid="uid://b33gm1uv8cuhb" path="res://Enemies/Soldier_A/Soldier_A.gd" id="1_raqng"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_afkg1"]
 

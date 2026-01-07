@@ -5,7 +5,7 @@ var bulletDamage = 5
 var fireRate = 1
 
 #loading bullet object
-var Bullet = preload("res://Towers/red_bullet.tscn")
+var Bullet = preload("res://SourceTowers/RedTower/Red_Bullet.tscn")
 
 #in use
 var fireRateCooldown = 0

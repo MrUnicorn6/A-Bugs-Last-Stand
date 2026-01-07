@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://jmrur2kr2boj"]
+
+[ext_resource type="Script" uid="uid://c6awacbqs1wuk" path="res://UI/Shop Panel/base_shop_button.gd" id="1_mvkwo"]
+[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="1_waspw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvkwo"]
+atlas = ExtResource("1_waspw")
+region = Rect2(1280, 768, 64, 64)
+
+[sub_resource type="LabelSettings" id="LabelSettings_70txg"]
+line_spacing = 2.0
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_qbgfg"]
+font_size = 10
+
+[node name="BaseShopButton" type="Panel"]
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1840.0
+offset_bottom = -1000.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mvkwo")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_mvkwo")
+offset = Vector2(40, 40)
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = 50.0
+offset_right = 80.0
+offset_bottom = 80.0
+text = "NAME OF THING"
+label_settings = SubResource("LabelSettings_70txg")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CostLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 30.0
+text = "COST"
+label_settings = SubResource("LabelSettings_qbgfg")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="TempTowerHolder" type="Node" parent="."]
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
