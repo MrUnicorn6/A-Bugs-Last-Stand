@@ -1,20 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhm8sgqrt6k48"]
+[gd_scene load_steps=6 format=3 uid="uid://ci5rmlxqewknb"]
 
-[ext_resource type="Script" uid="uid://gxmjvcj77mu5" path="res://SourceTowers/BoomTower/Boom_Tower.gd" id="1_jd26s"]
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_k6nph"]
+[ext_resource type="Script" uid="uid://gxmjvcj77mu5" path="res://SourceTowers/BoomTower/Boom_Tower.gd" id="1_oi7o8"]
+[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_fcgql"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jt0u4"]
 radius = 25.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ugiwr"]
-atlas = ExtResource("2_k6nph")
+atlas = ExtResource("2_fcgql")
 region = Rect2(1280, 512, 64, 64)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_jd26s"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_a6mss"]
 radius = 300.0
 
 [node name="BoomTower" type="StaticBody2D"]
-script = ExtResource("1_jd26s")
+script = ExtResource("1_oi7o8")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jt0u4")
@@ -30,7 +30,7 @@ texture = SubResource("AtlasTexture_ugiwr")
 
 [node name="TargetingHitbox" type="CollisionShape2D" parent="TargetingRange"]
 scale = Vector2(1.0015972, 1)
-shape = SubResource("CircleShape2D_jd26s")
+shape = SubResource("CircleShape2D_a6mss")
 
 [node name="BulletContainer" type="Node" parent="."]
 

@@ -3,6 +3,7 @@ extends StaticBody2D
 #config vars
 var bulletDamage = 5
 var fireRate = 1
+var shopCost = 5
 
 #loading bullet object
 var Bullet = preload("res://SourceTowers/RedTower/Red_Bullet.tscn")
@@ -24,6 +25,15 @@ func _process(delta: float) -> void:
 	#how far along they are
 	if !possibleTargets.is_empty():
 		selectedTarget = possibleTargets[0]
+		#to find closest target
+		var closest = possibleTargets[0]
+		for i in possibleTargets:
+			if i.global_position.distance_to(global_position) < global_position.distance_to(closest.global_position):
+				closest = i
+		selectedTarget = closest
+		#visual of looking at target
+		if is_instance_valid(selectedTarget):
+			self.look_at(selectedTarget.global_position)
 	
 	#visual of looking at target
 	if is_instance_valid(selectedTarget):

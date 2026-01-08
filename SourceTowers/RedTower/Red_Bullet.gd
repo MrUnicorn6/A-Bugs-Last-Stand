@@ -12,7 +12,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if target==null:
-		print("WARNING BULLET HAS NO TARGET, DELETING")
+		#print("WARNING BULLET HAS NO TARGET, DELETING")
 		queue_free()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta: float) -> void:
@@ -22,7 +22,7 @@ func _physics_process(_delta: float) -> void:
 		look_at(target.global_position)
 		move_and_slide()
 	else:
-		print("WARNING BULLET HAS NO TARGET, DELETING")
+		#print("WARNING BULLET HAS NO TARGET, DELETING")
 		queue_free()
 
 

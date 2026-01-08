@@ -1,10 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://duxv60bkngpm0"]
+[gd_scene load_steps=7 format=3 uid="uid://dyd2vt0dlvb72"]
 
-[ext_resource type="Script" uid="uid://cmsttk846cldu" path="res://SourceTowers/BoomTower/Boom_Bullet.gd" id="1_kitxx"]
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="1_tdqnc"]
+[ext_resource type="Script" uid="uid://cmsttk846cldu" path="res://SourceTowers/BoomTower/Boom_Bullet.gd" id="1_o4ouy"]
+[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_ntu5v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kitxx"]
-atlas = ExtResource("1_tdqnc")
+atlas = ExtResource("2_ntu5v")
 region = Rect2(1408, 640, 64, 64)
 margin = Rect2(-0.5, 0, 0, 0)
 
@@ -16,13 +16,13 @@ height = 34.0
 radius = 75.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7yd4p"]
-atlas = ExtResource("1_tdqnc")
+atlas = ExtResource("2_ntu5v")
 region = Rect2(1280, 768, 64, 64)
 
 [node name="BoomBullet" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("1_kitxx")
+script = ExtResource("1_o4ouy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5707964

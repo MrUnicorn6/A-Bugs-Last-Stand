@@ -23,6 +23,7 @@ func addShopItem(TempTowerPath,cost):
 	
 	#actual button creation stuff
 	var newButton = BaseShopItem.instantiate()
+	
 	#handing the path of each buttons respective towers to the buttons so they can
 	#create their towers when needed.
 	newButton.IntendedTowerPath = TempTowerPath

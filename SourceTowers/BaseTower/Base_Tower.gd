@@ -1,17 +1,14 @@
 extends StaticBody2D
 
-#config vars
+#config vars,  meant to be set when instanced
 var bulletDamage = 5
-var fireRate = 0.25
-var shopCost = 10
-
-
-#loading bullet object
-var Bullet = preload("res://SourceTowers/BoomTower/Boom_Bullet.tscn")
+var fireRate = 1
+var shopCost = 5
+#hand this a preload("src")
+var BulletSprite 
 
 #in use
 var fireRateCooldown = 0
-var pathName
 var possibleTargets = [] #constantly changing arr of targets
 var selectedTarget = null # for holding a target seperate from possibleTargets
 
@@ -27,14 +24,13 @@ func _process(delta: float) -> void:
 	if !possibleTargets.is_empty():
 		selectedTarget = possibleTargets[0]
 		#to find closest target
-		var closest = possibleTargets[0]
-		for i in possibleTargets:
-			if i.global_position.distance_to(global_position) < global_position.distance_to(closest.global_position):
-				closest = i
-		selectedTarget = closest
-		#visual of looking at target
-		if is_instance_valid(selectedTarget):
-			self.look_at(selectedTarget.global_position)
+		##WIIPP
+		#$TowerResources/TargetingAndGuidanceMethods.GOLISGuidance($../Base_Tower,possibleTargets)
+	
+	
+	#visual of looking at target
+	if is_instance_valid(selectedTarget):
+		self.look_at(selectedTarget.global_position)
 	
 	#firerate stuff
 	if fireRateCooldown > 0:
@@ -46,10 +42,11 @@ func _process(delta: float) -> void:
 		fireRateCooldown = 1.0 / fireRate
 
 func shoot():
+	#print("BANG")
 	#create new bullet
 	var tempBullet = Bullet.instantiate()
 	#the bullet will handle its own guidance
-	tempBullet.SetTarget(selectedTarget)
+	tempBullet.target = selectedTarget
 	tempBullet.damage = bulletDamage
 	#add it to the bullet folder and move it to the firing point/barrel on the
 	#tower

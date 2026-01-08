@@ -1,26 +1,25 @@
 extends Panel
-var money=500
-var health=100
+var Money=50
+var Health=100
 @onready var HealthLabel = $HealthNumber
 @onready var MoneyLabel = $MoneyNumber
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#print("TESTING VALUES ")
-	changeMoney(100)
-	changeHealth(10)
-	pass # Replace with function body.
-func changeMoney(amount):
-	money = money-amount
 	updateLabels()
-func changeHealth(amount):
-	health = health-amount
+	pass # Replace with function body.
+func changeMoney(Amount:int):
+	Money = Money-Amount
+	print("MONEY IS NOW ",Money)
+	updateLabels()
+func changeHealth(Amount:int):
+	Health = Health-Amount
 	updateLabels()
 func updateLabels():
-	MoneyLabel.text = str(money)
-	HealthLabel.text = str(health)
+	MoneyLabel.text = str(Money)
+	HealthLabel.text = str(Health)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
