@@ -1,20 +1,32 @@
 extends StaticBody2D
 
-#config vars,  meant to be set when instanced
+#the constructor for new Tower Types
+static func createNewTowerType(BaseClass, setDamage, setMinRange,setMaxRange,setFireRate,setShopCost,setBulletObject,setSprite) -> Object:
+		#for future things like buffs auras ect
+		print("CREATING NEW TOWER TYPE")
+		BaseClass.add_to_group("TOWERS")
+		BaseClass.bulletDamage = setDamage
+		BaseClass.fireRate = setFireRate
+		BaseClass.shopCost = setShopCost
+		BaseClass.BulletObject = setBulletObject
+		BaseClass.minRange = setMinRange #range needs to be added
+		BaseClass.maxRange = setMaxRange
+		BaseClass.get_node('Sprite').texture = setSprite #meant to look like res://SourceTowers/BaseTower/Base_Tower.tscn::AtlasTexture_ugiwr
+		return BaseClass
+
+
 var bulletDamage = 5
 var fireRate = 1
 var shopCost = 5
+var minRange = 0
+var maxRange = 20
 #hand this a preload("src")
-var BulletSprite 
+var BulletObject
 
 #in use
 var fireRateCooldown = 0
 var possibleTargets = [] #constantly changing arr of targets
 var selectedTarget = null # for holding a target seperate from possibleTargets
-
-func _init() -> void:
-	#for future things like buffs auras ect
-	add_to_group("TOWERS")
 
 func _process(delta: float) -> void:
 	#something something target filtering (strong, first, last, ect)
@@ -44,10 +56,9 @@ func _process(delta: float) -> void:
 func shoot():
 	#print("BANG")
 	#create new bullet
-	var tempBullet = Bullet.instantiate()
+	var tempBullet = BulletObject.new(selectedTarget)
 	#the bullet will handle its own guidance
-	tempBullet.target = selectedTarget
-	tempBullet.damage = bulletDamage
+
 	#add it to the bullet folder and move it to the firing point/barrel on the
 	#tower
 	get_node("BulletContainer").add_child(tempBullet)

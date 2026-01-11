@@ -16,3 +16,11 @@ position = Vector2(137, 161)
 rotation = 0.0018438823
 
 [node name="SoldierA" parent="PathFollow2D" instance=ExtResource("1_7kecx")]
+
+[node name="PathFollow2D2" type="PathFollow2D" parent="."]
+position = Vector2(336.31235, 161.36751)
+rotation = 0.0018438823
+progress = 199.31316
+
+[node name="SoldierA2" parent="PathFollow2D2" instance=ExtResource("1_7kecx")]
+scale = Vector2(1.0000001, 1.0000001)

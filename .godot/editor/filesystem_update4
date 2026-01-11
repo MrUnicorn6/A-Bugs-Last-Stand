@@ -1,17 +1,14 @@
-res://UI/Shop Panel/base_shop_button.gd
-res://SourceTowers/BoomTower/Boom_Tower.gd
-res://UI/shop_management_scripts.gd
-res://Enemies/Soldier_A/Soldier_A.gd
-res://UI/Shop Panel/Red_Tower_Panel.tscn
-res://SourceTowers/RedTower/Red_Tower.gd
-res://SourceTowers/BoomTower/Boom_Bullet.gd
-res://UI/Shop Panel/BaseShopButton.tscn
-res://UI/health_and_money.gd
+res://Enemies/EnemyBase.tscn
+res://Enemies/enemy_base.gd
+res://Maps/BaseMapPath.tscn
 res://main.tscn
-res://SourceTowers/RedTower/Red_Bullet.gd
-res://SourceTowers/BoomTower/Boom_Bullet.tscn
-res://SourceTowers/BaseTower/BaseTower.tscn
-res://SourceTowers/BoomTower/Boom_Tower.tscn
-res://SourceTowers/BaseTower/Base_Tower.tscn
+res://Maps/Map1/Map1.tscn
 res://SourceTowers/BaseTower/Base_Tower.gd
+res://main.gd
+res://Maps/Map1/enemy_path.gd
+res://SourceTowers/BaseTower/Base_Bullet.tscn
+res://SourceTowers/BaseTower/base_bullet.gd
+res://SourceTowers/BoomTower/Boom_Bullet.gd
 res://SourceTowers/BaseTower/TowerResources/TargetingAndGuidanceMethods.gd
+res://SourceTowers/BaseTower/Base_Tower.tscn
+res://SourceTowers/BaseTower/Base_tower.gd

@@ -1,5 +1,9 @@
-Sprite2D
+PathFollow2D
+Timer
+Path2D
+CharacterBody2D
 CollisionShape2D
+Sprite2D
 ShapeCast2D
 Area2D
 Label
@@ -8,7 +12,3 @@ Panel
 Label      - Matches the "text" keyword.
 TextEdit
 Container
-FlowContainer
-Node2D
-CanvasLayer
-CharacterBody2D
