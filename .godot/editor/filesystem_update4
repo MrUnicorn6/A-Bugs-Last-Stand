@@ -1,14 +1,1 @@
-res://Enemies/EnemyBase.tscn
-res://Enemies/enemy_base.gd
-res://Maps/BaseMapPath.tscn
 res://main.tscn
-res://Maps/Map1/Map1.tscn
-res://SourceTowers/BaseTower/Base_Tower.gd
-res://main.gd
-res://Maps/Map1/enemy_path.gd
-res://SourceTowers/BaseTower/Base_Bullet.tscn
-res://SourceTowers/BaseTower/base_bullet.gd
-res://SourceTowers/BoomTower/Boom_Bullet.gd
-res://SourceTowers/BaseTower/TowerResources/TargetingAndGuidanceMethods.gd
-res://SourceTowers/BaseTower/Base_Tower.tscn
-res://SourceTowers/BaseTower/Base_tower.gd
