@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed=300
+@export var speed=100
 var health = 10
 var statuses
 
@@ -14,7 +14,8 @@ func _ready() -> void:
 	add_to_group("ENEMY")
 	#print(get_groups())
 
-func takedamage(amount, type):
+func takeDamage(amount, type):##WIP
+	print("TAKING SOME DADMAGE")
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

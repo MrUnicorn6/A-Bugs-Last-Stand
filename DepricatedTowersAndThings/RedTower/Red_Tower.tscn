@@ -1,20 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://ci5rmlxqewknb"]
+[gd_scene load_steps=6 format=3 uid="uid://f0pk5ict0w58"]
 
-[ext_resource type="Script" uid="uid://calyswity8rl" path="res://SourceTowers/BaseTower/Base_Tower.gd" id="1_cjgoi"]
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_fcgql"]
+[ext_resource type="Script" uid="uid://cadj0oerm5c6h" path="res://DepricatedTowersAndThings/RedTower/Red_Tower.gd" id="1_gku1l"]
+[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_c7qvl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jt0u4"]
 radius = 25.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ugiwr"]
-atlas = ExtResource("2_fcgql")
-region = Rect2(1280, 512, 64, 64)
+atlas = ExtResource("2_c7qvl")
+region = Rect2(1280, 640, 64, 64)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a6mss"]
-radius = 300.0
+radius = 200.0
 
-[node name="Base_Tower" type="StaticBody2D"]
-script = ExtResource("1_cjgoi")
+[node name="RedTower" type="StaticBody2D"]
+script = ExtResource("1_gku1l")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jt0u4")
@@ -22,7 +22,7 @@ shape = SubResource("CircleShape2D_jt0u4")
 [node name="BulletSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(26, 0)
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="RedTowerSprite" type="Sprite2D" parent="."]
 rotation = 1.5707964
 texture = SubResource("AtlasTexture_ugiwr")
 

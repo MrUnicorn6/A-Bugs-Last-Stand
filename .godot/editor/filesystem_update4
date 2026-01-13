@@ -1,1 +1,7 @@
-res://main.tscn
+res://Towers/BaseTower/Base_Tower.gd
+res://Towers/BaseTower/base_bullet.gd
+res://main.gd
+res://Enemies/enemy_base.gd
+res://Maps/Map1/enemy_path.gd
+res://Towers/BaseTower/Base_Bullet.tscn
+res://Enemies/EnemyBase.tscn

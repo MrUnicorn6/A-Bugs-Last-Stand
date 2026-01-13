@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_6ijjn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tflo0"]
-radius = 15.0
+radius = 12.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k210i"]
 atlas = ExtResource("2_6ijjn")

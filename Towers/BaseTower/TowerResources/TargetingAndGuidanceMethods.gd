@@ -1,7 +1,4 @@
 extends Node
-class TowerGuideOrTargetingEnums:
-	enum TargetingTypes {Closest}
-	enum GuidanceTypes {DUMB}
 
 
 # Called when the node enters the scene tree for the first time.

@@ -10,7 +10,6 @@ func _ready() -> void:
 	pass # Replace with function body.
 func changeMoney(Amount:int):
 	Money = Money-Amount
-	print("MONEY IS NOW ",Money)
 	updateLabels()
 func changeHealth(Amount:int):
 	Health = Health-Amount

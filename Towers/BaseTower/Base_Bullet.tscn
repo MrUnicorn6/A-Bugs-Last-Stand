@@ -1,36 +1,40 @@
-[gd_scene load_steps=7 format=3 uid="uid://duxv60bkngpm0"]
+[gd_scene load_steps=7 format=3 uid="uid://dyd2vt0dlvb72"]
 
-[ext_resource type="Script" uid="uid://cmsttk846cldu" path="res://SourceTowers/BoomTower/Boom_Bullet.gd" id="1_kitxx"]
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="1_tdqnc"]
+[ext_resource type="Script" uid="uid://bsbtferjb3rha" path="res://Towers/BaseTower/base_bullet.gd" id="1_8idb5"]
+[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_ntu5v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kitxx"]
-atlas = ExtResource("1_tdqnc")
+atlas = ExtResource("2_ntu5v")
 region = Rect2(1408, 640, 64, 64)
 margin = Rect2(-0.5, 0, 0, 0)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_np6ci"]
-radius = 5.0
-height = 34.0
+radius = 4.0
+height = 19.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7yd4p"]
 radius = 75.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7yd4p"]
-atlas = ExtResource("1_tdqnc")
+atlas = ExtResource("2_ntu5v")
 region = Rect2(1280, 768, 64, 64)
 
-[node name="BoomBullet" type="CharacterBody2D"]
+[node name="BaseBullet" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("1_kitxx")
+script = ExtResource("1_8idb5")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="."]
 rotation = 1.5707964
 scale = Vector2(0.5, 0.5)
 texture = SubResource("AtlasTexture_kitxx")
 
-[node name="Hitbox" type="CollisionShape2D" parent="."]
+[node name="EnemyDetectionArea" type="Area2D" parent="."]
 rotation = 1.5707964
+scale = Vector2(0.5, 0.5)
+
+[node name="HitboxArea" type="CollisionShape2D" parent="EnemyDetectionArea"]
+scale = Vector2(2, 2)
 shape = SubResource("CapsuleShape2D_np6ci")
 
 [node name="ExplosionArea" type="Area2D" parent="."]
@@ -45,4 +49,5 @@ rotation = -1.5707964
 scale = Vector2(6.5, 6.5)
 texture = SubResource("AtlasTexture_7yd4p")
 
+[connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
 [connection signal="body_entered" from="ExplosionArea" to="." method="_on_explosion_area_body_entered"]
