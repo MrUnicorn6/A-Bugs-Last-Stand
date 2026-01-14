@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://6hoaclr67vlu"]
+[gd_scene load_steps=4 format=3 uid="uid://6hoaclr67vlu"]
 
 [ext_resource type="PackedScene" uid="uid://yec1bj7pege1" path="res://Enemies/Soldier_A/Soldier_A.tscn" id="1_7kecx"]
+[ext_resource type="PackedScene" uid="uid://bkxw5f434xabq" path="res://Enemies/EnemyBase.tscn" id="2_1acrn"]
 
 [sub_resource type="Curve2D" id="Curve2D_h2yge"]
 _data = {
@@ -22,5 +23,4 @@ position = Vector2(336.31235, 161.36751)
 rotation = 0.0018438823
 progress = 199.31316
 
-[node name="SoldierA2" parent="PathFollow2D2" instance=ExtResource("1_7kecx")]
-scale = Vector2(1.0000001, 1.0000001)
+[node name="EnemyBase" parent="PathFollow2D2" instance=ExtResource("2_1acrn")]

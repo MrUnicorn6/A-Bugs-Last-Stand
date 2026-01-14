@@ -1,19 +1,17 @@
 [gd_scene load_steps=7 format=3 uid="uid://dyd2vt0dlvb72"]
 
 [ext_resource type="Script" uid="uid://bsbtferjb3rha" path="res://Towers/BaseTower/base_bullet.gd" id="1_8idb5"]
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_ntu5v"]
+[ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="2_ntu5v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kitxx"]
 atlas = ExtResource("2_ntu5v")
 region = Rect2(1408, 640, 64, 64)
 margin = Rect2(-0.5, 0, 0, 0)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_np6ci"]
-radius = 4.0
-height = 19.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_2hl3b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7yd4p"]
-radius = 75.0
+radius = 64.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7yd4p"]
 atlas = ExtResource("2_ntu5v")
@@ -35,7 +33,7 @@ scale = Vector2(0.5, 0.5)
 
 [node name="HitboxArea" type="CollisionShape2D" parent="EnemyDetectionArea"]
 scale = Vector2(2, 2)
-shape = SubResource("CapsuleShape2D_np6ci")
+shape = SubResource("CircleShape2D_2hl3b")
 
 [node name="ExplosionArea" type="Area2D" parent="."]
 
@@ -44,9 +42,8 @@ shape = SubResource("CircleShape2D_7yd4p")
 
 [node name="ExplosionEffect" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(-40, -1)
 rotation = -1.5707964
-scale = Vector2(6.5, 6.5)
+scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_7yd4p")
 
 [connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]

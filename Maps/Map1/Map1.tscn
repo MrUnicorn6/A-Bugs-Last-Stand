@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=4 uid="uid://bng06qj3ij7wc"]
 
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="1_webya"]
+[ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="1_webya"]
 [ext_resource type="Script" uid="uid://cr8sabotl1f15" path="res://Maps/Map1/enemy_path.gd" id="2_giggf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eew4c"]
@@ -386,6 +386,7 @@ tile_map_data = PackedByteArray("AAACAAAAAAACAAMAAAADAAAAAAABAAEAAAAEAAAAAAABAAE
 tile_set = SubResource("TileSet_si6vv")
 
 [node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 3.0
 autostart = true
 
 [node name="EnemyPath" type="Path2D" parent="."]

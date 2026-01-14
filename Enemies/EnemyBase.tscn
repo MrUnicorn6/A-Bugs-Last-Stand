@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bkxw5f434xabq"]
 
 [ext_resource type="Script" uid="uid://xs6uy33avggi" path="res://Enemies/enemy_base.gd" id="1_bq4py"]
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_6ijjn"]
+[ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="2_6ijjn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tflo0"]
 radius = 12.0
@@ -18,3 +18,9 @@ shape = SubResource("CircleShape2D_tflo0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_k210i")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

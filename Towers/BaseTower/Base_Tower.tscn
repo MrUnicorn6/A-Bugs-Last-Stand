@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://ci5rmlxqewknb"]
 
 [ext_resource type="Script" uid="uid://calyswity8rl" path="res://Towers/BaseTower/Base_Tower.gd" id="1_cjgoi"]
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_fcgql"]
+[ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="2_fcgql"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jt0u4"]
 radius = 25.0

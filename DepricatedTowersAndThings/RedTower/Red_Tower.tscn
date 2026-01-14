@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://f0pk5ict0w58"]
 
 [ext_resource type="Script" uid="uid://cadj0oerm5c6h" path="res://DepricatedTowersAndThings/RedTower/Red_Tower.gd" id="1_gku1l"]
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="2_c7qvl"]
+[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://addons/godot-git-plugin/towerDefense_tilesheet.png" id="2_c7qvl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jt0u4"]
 radius = 25.0

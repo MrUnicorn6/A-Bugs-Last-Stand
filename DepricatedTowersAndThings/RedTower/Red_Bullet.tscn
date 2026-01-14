@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bvhd3yarqyc2"]
 
 [ext_resource type="Script" uid="uid://cwln4sj8jh376" path="res://DepricatedTowersAndThings/RedTower/Red_Bullet.gd" id="1_73m6w"]
-[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://Assets/towerDefense_tilesheet.png" id="1_tdqnc"]
+[ext_resource type="Texture2D" uid="uid://c7bjtifwp6fll" path="res://addons/godot-git-plugin/towerDefense_tilesheet.png" id="1_tdqnc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kitxx"]
 atlas = ExtResource("1_tdqnc")
