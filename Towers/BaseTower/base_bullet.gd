@@ -23,6 +23,8 @@ func setBulletValues(setMuzzleVelocity,setGuidance:Enums.GuidanceTypes,
 	fuseValue = setFuseValue
 	statusEffectData = setStatusEffectData
 	get_node('Sprite').texture = setSprite #meant to look like res://SourceTowers/BaseTower/Base_Tower.tscn::AtlasTexture_ugiwr
+	z_index -= 1 #to have it appear below its parent
+	return self
 var muzzleVelocity
 var damageNumber #maybe depricated fine for now
 var fuseType 
@@ -37,7 +39,7 @@ var targetPositionFixed #for dumb weapons
 
 
 		
-func setTarget(setTarget):
+func setBulletTarget(setTarget):
 	target = setTarget
 	targetPositionFixed = target.global_position
 	
@@ -78,7 +80,6 @@ func _physics_process(_delta: float) -> void:
 
 
 
-#ignore this for now,
 func explode():
 	var targets = $ExplosionArea.get_overlapping_bodies()
 	var temp = []
@@ -99,7 +100,7 @@ func explode():
 	queue_free()
 		
 	
-	
+
 
 
 

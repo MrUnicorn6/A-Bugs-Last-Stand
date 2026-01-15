@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://jmrur2kr2boj"]
+[gd_scene load_steps=6 format=3 uid="uid://uop5viubpenp"]
 
-[ext_resource type="Script" uid="uid://c6awacbqs1wuk" path="res://UI/Shop Panel/base_shop_button.gd" id="1_mvkwo"]
-[ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="1_waspw"]
+[ext_resource type="Script" uid="uid://txgge1lyg7af" path="res://UI/UpgradePanel/base_upgrade_button.gd" id="1_ax1mn"]
+[ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="2_qgwuk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mvkwo"]
-atlas = ExtResource("1_waspw")
+atlas = ExtResource("2_qgwuk")
 region = Rect2(1280, 768, 64, 64)
 
 [sub_resource type="LabelSettings" id="LabelSettings_70txg"]
@@ -15,15 +15,15 @@ font_size = 20
 font_size = 20
 
 [node name="BaseShopButton" type="Panel"]
-custom_minimum_size = Vector2(128, 128)
+custom_minimum_size = Vector2(128, 192)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -1792.0
-offset_bottom = -952.0
+offset_bottom = -888.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_mvkwo")
+script = ExtResource("1_ax1mn")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(-15.999998, -15.999998)
@@ -33,19 +33,18 @@ offset = Vector2(40, 40)
 
 [node name="NameLabel" type="Label" parent="."]
 layout_mode = 0
-offset_top = 64.0
+offset_top = 128.0
 offset_right = 128.0
-offset_bottom = 128.0
-text = "NAME OF THING"
+offset_bottom = 192.0
+text = "Upgrade desc"
 label_settings = SubResource("LabelSettings_70txg")
 horizontal_alignment = 1
-vertical_alignment = 2
 autowrap_mode = 2
 
 [node name="CostLabel" type="Label" parent="."]
 layout_mode = 0
 offset_right = 128.0
-offset_bottom = 32.0
+offset_bottom = 64.0
 text = "COST"
 label_settings = SubResource("LabelSettings_qbgfg")
 horizontal_alignment = 1

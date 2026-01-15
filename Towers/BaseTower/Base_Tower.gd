@@ -11,7 +11,7 @@ func dupeThisTower() -> Object:
 func setThisTowersValues(setName,setTargetingMethod:Enums.TargetingTypes,
 		setCanSeeCamo:Enums.CanSeeCamo,
 		setMinRange,setMaxRange,setFireRate,setShopCost,
-		setBulletObject,setSprite) -> void:
+		setBulletObject,setSprite) -> Object:
 			
 		#for future things like buffs auras ect
 		add_to_group("TOWERS")
@@ -27,8 +27,13 @@ func setThisTowersValues(setName,setTargetingMethod:Enums.TargetingTypes,
 		minRange = setMinRange #range needs to be added
 		maxRange = setMaxRange
 		$'TargetingRange/TargetingHitbox'.shape.radius = maxRange
-		get_node('Sprite').texture = setSprite #meant to look like res://SourceTowers/BaseTower/Base_Tower.tscn::AtlasTexture_ugiwr
-
+		
+		get_node('Sprite').texture = setSprite 
+		#meant to look like res://SourceTowers/BaseTower/Base_Tower.tscn::AtlasTexture_ugiwr
+		return self
+func _draw() -> void:
+	if displayRange:
+		draw_circle(Vector2(0,0),maxRange,Color(0,0,0,0.25),true)
 
 
 var bulletDamage :int
@@ -37,9 +42,11 @@ var canSeeCamo:Enums.CanSeeCamo
 var shopCost:int 
 var minRange:int
 var maxRange :int
+var displayRange = false
 var targetingMethod:Enums.TargetingTypes
 #hand this a preload("src")
 var BulletObject
+var upgradeCount = 0
 
 #in use
 var fireRateCooldown = 0
@@ -75,6 +82,8 @@ func _process(delta: float) -> void:
 				if i.health > Strongest.health:
 					Strongest = i
 			selectedTarget = Strongest
+		elif targetingMethod == Enums.TargetingTypes.FIRST:
+			selectedTarget = possibleTargets[0]
 			
 			
 			
@@ -92,7 +101,7 @@ func shoot():
 	#print("number of possible targets is ",possibleTargets.size())
 	var tempBullet = BulletObject.dupeThisBullet()
 	$'BulletContainer'.add_child(tempBullet)
-	tempBullet.setTarget(selectedTarget) 
+	tempBullet.setBulletTarget(selectedTarget) 
 	tempBullet.show()
 	tempBullet.process_mode = Node.PROCESS_MODE_ALWAYS
 	tempBullet.global_position = $BulletSpawnPoint.global_position
@@ -109,3 +118,12 @@ func _on_targeting_range_body_entered(body: Node2D) -> void:
 func _on_targeting_range_body_exited(body: Node2D) -> void:
 	if body in possibleTargets:
 		possibleTargets.remove_at(possibleTargets.find(body))
+
+
+
+#to call the GUI to show upgrade options
+func _on_clicked_on_detector_gui_input(event: InputEvent) -> void:
+	
+	if event is InputEventMouseButton and event.button_mask==0:
+		get_node("/root/Main/UI").changeToUpgradeScreen(self)
+	pass # Replace with function body.

@@ -80,5 +80,5 @@ func _on_timer_timeout() -> void:
 				canMove = true
 			if i[0] == Enums.StatusEffectType.SLOW:
 				speed = defaultSpeed
-			print("STATUS ",i[0], "removed, Statuses length is now ",statuses.size())
+			#print("STATUS ",i[0], "removed, Statuses length is now ",statuses.size())
 			statuses.erase(i)

@@ -1,8 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2vj21s3sjysa"]
+[gd_scene load_steps=9 format=3 uid="uid://b2vj21s3sjysa"]
 
-[ext_resource type="Script" uid="uid://bd1da1y4n5xk1" path="res://UI/shop_management_scripts.gd" id="2_dhe1o"]
+[ext_resource type="Script" uid="uid://fxckusi88c8o" path="res://UI/ui_script.gd" id="1_e6gg6"]
+[ext_resource type="Texture2D" uid="uid://0q22n8wdeb7a" path="res://Assets/BugAtlas.png" id="2_hat8c"]
 [ext_resource type="Script" uid="uid://4qxeqtk7wca8" path="res://UI/health_and_money.gd" id="2_q0uhn"]
 [ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="3_e707p"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3sbvi"]
+font_size = 30
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nm1m0"]
+atlas = ExtResource("2_hat8c")
+region = Rect2(96, 320, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f1fl4"]
 atlas = ExtResource("3_e707p")
@@ -13,23 +21,54 @@ atlas = ExtResource("3_e707p")
 region = Rect2(1344, 768, 64, 64)
 
 [node name="UI" type="CanvasLayer"]
+script = ExtResource("1_e6gg6")
 
-[node name="UIPanel" type="Panel" parent="."]
+[node name="ShopPanel" type="Panel" parent="."]
 offset_left = 1536.0
 offset_right = 1920.0
 offset_bottom = 1088.0
 
-[node name="ShopOptionsContainer" type="FlowContainer" parent="UIPanel"]
+[node name="ShopOptionsContainer" type="FlowContainer" parent="ShopPanel"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 38.0
-offset_right = 355.0
-offset_bottom = 1024.0
+offset_right = 384.0
+offset_bottom = 1088.0
 alignment = 1
 last_wrap_alignment = 1
 
-[node name="ShopManagementScripts" type="Node" parent="."]
-script = ExtResource("2_dhe1o")
+[node name="UpgradePanel" type="Panel" parent="."]
+visible = false
+offset_left = 1536.0
+offset_right = 1920.0
+offset_bottom = 1088.0
+
+[node name="UpgradeOptionsContainer" type="FlowContainer" parent="UpgradePanel"]
+layout_mode = 0
+offset_top = 256.0
+offset_right = 384.0
+offset_bottom = 1088.0
+alignment = 1
+last_wrap_alignment = 1
+
+[node name="Label" type="Label" parent="UpgradePanel"]
+layout_mode = 0
+offset_left = 64.0
+offset_right = 320.0
+offset_bottom = 64.0
+text = "TowerName "
+label_settings = SubResource("LabelSettings_3sbvi")
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="UpgradePanel"]
+position = Vector2(128, 63.999977)
+scale = Vector2(3.9999962, 4.0000005)
+texture = SubResource("AtlasTexture_nm1m0")
+centered = false
+
+[node name="Button" type="Button" parent="UpgradePanel"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+text = "< back"
 
 [node name="HealthAndMoney" type="Panel" parent="."]
 offset_left = 1.0
