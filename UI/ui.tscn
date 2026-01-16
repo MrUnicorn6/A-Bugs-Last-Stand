@@ -24,6 +24,7 @@ region = Rect2(1344, 768, 64, 64)
 script = ExtResource("1_e6gg6")
 
 [node name="ShopPanel" type="Panel" parent="."]
+visible = false
 offset_left = 1536.0
 offset_right = 1920.0
 offset_bottom = 1088.0
@@ -36,7 +37,6 @@ alignment = 1
 last_wrap_alignment = 1
 
 [node name="UpgradePanel" type="Panel" parent="."]
-visible = false
 offset_left = 1536.0
 offset_right = 1920.0
 offset_bottom = 1088.0
@@ -58,7 +58,7 @@ text = "TowerName "
 label_settings = SubResource("LabelSettings_3sbvi")
 horizontal_alignment = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="UpgradePanel"]
+[node name="DisplaySprite" type="Sprite2D" parent="UpgradePanel"]
 position = Vector2(128, 63.999977)
 scale = Vector2(3.9999962, 4.0000005)
 texture = SubResource("AtlasTexture_nm1m0")
@@ -101,3 +101,5 @@ offset_right = 267.0
 offset_bottom = 66.0
 scale = Vector2(3, 3)
 text = "100"
+
+[connection signal="pressed" from="UpgradePanel/Button" to="." method="_on_button_pressed"]

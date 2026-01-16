@@ -19,7 +19,7 @@ func _on_spawn_timer_timeout() -> void:
 		path_follow_2d.set_progress(0.0)
 		#print("spawning strongah")
 		var tempenemySTRONG = BaseEnemy.instantiate()
-		tempenemySTRONG.setEnemyValues('Strongah',20,60,false,null)
+		tempenemySTRONG.setEnemyValues('Strongah',20,60,true,null)
 		#tempenemySTRONG.name = "STRONGO"
 		tempenemySTRONG.speed = 60
 		path_follow_2d.add_child(tempenemySTRONG)

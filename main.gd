@@ -38,33 +38,51 @@ func _ready() -> void:
 				0,#AOE
 				getAtlasAreaGrid(testingAtlas,22,10,64)
 			),
-			getAtlasAreaGrid(BugAtlas,2,2,32)
-		),BlankTower.duplicate().setThisTowersValues(
-			'Beetle', Enums.TargetingTypes.CLOSEST,
+			getAtlasAreaGrid(BugAtlas,2,2,32),
+			[#upgrades, should be 2 per tower
+				{"range":100,"damage":20,"sprite":getAtlasAreaGrid(BugAtlas,3,2,32),
+				"cost":10,"desc":"better dmg and range"},
+				{"firerate":0.5,"canseecamo":Enums.CanSeeCamo.CANSEECAMO,"sprite":getAtlasAreaGrid(BugAtlas,4,2,32),
+				"cost":10,"desc":"faster firerate and can now see camo"}
+			]
+		),
+		BlankTower.duplicate().setThisTowersValues(
+			'Beetle', Enums.TargetingTypes.LAST,
 			Enums.CanSeeCamo.CANNOTSEECAMO,
-			0,200,1,5,# setMinRange,setMaxRange,setFireRate,setShopCost
+			0,200,0.25,5,# setMinRange,setMaxRange,setFireRate,setShopCost
 			BlankBullet.duplicate().setBulletValues(
-				200,Enums.GuidanceTypes.SMART,#bulletspeed
-				10,Enums.Fuses.IMPACT, #damage
-				0, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
+				250,Enums.GuidanceTypes.BALL,#bulletspeed
+				5,Enums.Fuses.TIMER, #damage
+				1, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 				null, #status object
-				0,#AOE
-				getAtlasAreaGrid(testingAtlas,22,10,64)
+				32,#AOE
+				getAtlasAreaGrid(BugAtlas,2,9,32)
 			),
-			getAtlasAreaGrid(BugAtlas,2,1,32)
-		),BlankTower.duplicate().setThisTowersValues(
+			getAtlasAreaGrid(BugAtlas,2,1,32),
+			[{"firerate":0.5,"aoeradius":16,"fusevalue":1,"sprite":getAtlasAreaGrid(BugAtlas,3,1,32),
+				"cost":10,"desc":"better firerate, ball Radius,and ball distance"},
+				{"damage":5,"status":
+					{'application':Enums.StatusApplication.DIRECT,
+					'effectType':Enums.StatusEffectType.SLOW,
+					'strength':2,'duration':3}
+					,"sprite":getAtlasAreaGrid(BugAtlas,4,1,32),
+				"cost":15,"desc":"better Damage, and slowness effect"}]
+		),
+		BlankTower.duplicate().setThisTowersValues(
 			'BoomTower', Enums.TargetingTypes.CLOSEST,
 			Enums.CanSeeCamo.CANNOTSEECAMO,
 			10,600,0.25,10,# setMinRange,setMaxRange,setFireRate,setShopCost
 			BlankBullet.duplicate().setBulletValues(
 				300,Enums.GuidanceTypes.DUMB,
-				0,Enums.Fuses.TIMER,0, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
+				0,Enums.Fuses.POINT,0, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 				{'application':Enums.StatusApplication.AOE,
 				'effectType':Enums.StatusEffectType.SLOW,
 				'strength':2,'duration':0.5},
 				100,#AOE
-				getAtlasAreaGrid(testingAtlas,22,10,64)),
-			getAtlasAreaGrid(testingAtlas,20,8,64)
+				getAtlasAreaGrid(testingAtlas,22,10,64)
+			),
+			getAtlasAreaGrid(testingAtlas,20,8,64),
+			[]
 		),BlankTower.duplicate().setThisTowersValues(
 			'BlueTower', Enums.TargetingTypes.CLOSEST,
 			Enums.CanSeeCamo.CANNOTSEECAMO,
@@ -77,8 +95,10 @@ func _ready() -> void:
 				'effectType':Enums.StatusEffectType.DOT,
 				'strength':2,'duration':10},
 				0,#AOE
-				getAtlasAreaGrid(testingAtlas,22,10,64)),
-			getAtlasAreaGrid(testingAtlas,20,10,64)
+				getAtlasAreaGrid(testingAtlas,22,10,64)
+			),
+			getAtlasAreaGrid(testingAtlas,20,10,64),
+			[]
 		)
 	]
 	for i in Towers:

@@ -14,13 +14,13 @@ font_size = 20
 [sub_resource type="LabelSettings" id="LabelSettings_qbgfg"]
 font_size = 20
 
-[node name="BaseShopButton" type="Panel"]
+[node name="BaseUpgradeButton" type="Panel"]
 custom_minimum_size = Vector2(128, 192)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -1792.0
-offset_bottom = -888.0
+offset_bottom = -824.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ax1mn")
@@ -31,11 +31,11 @@ scale = Vector2(1.9999999, 1.9999999)
 texture = SubResource("AtlasTexture_mvkwo")
 offset = Vector2(40, 40)
 
-[node name="NameLabel" type="Label" parent="."]
+[node name="DescLabel" type="Label" parent="."]
 layout_mode = 0
 offset_top = 128.0
 offset_right = 128.0
-offset_bottom = 192.0
+offset_bottom = 256.0
 text = "Upgrade desc"
 label_settings = SubResource("LabelSettings_70txg")
 horizontal_alignment = 1
