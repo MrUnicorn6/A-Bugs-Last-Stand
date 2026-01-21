@@ -1,58 +1,50 @@
 extends StaticBody2D
 const Enums = preload("res://Main/ENUMS.gd")
 
-#this is a cursed way to do it but duplicate() doesnt carry over actual values.
-func dupeThisTower() -> Object:
-	var toDupe = duplicate()
-	toDupe.setThisTowersValues(displayName,targetingMethod,canSeeCamo,minRange,
-		maxRange,fireRate,shopCost,BulletObject.dupeThisBullet(),$'Sprite'.texture,upgrades)
-	return toDupe
-#because instatiate doesnt work on existing objects
 func setThisTowersValues(setName,setTargetingMethod:Enums.TargetingTypes,
 		setCanSeeCamo:Enums.CanSeeCamo,
 		setMinRange,setMaxRange,setFireRate,setShopCost,
-		setBulletObject,setSprite,setUpgrades) -> Object:
-		print("TOWER CONSTRUCTOR CALLED")
-		#for future things like buffs auras ect
+		setPackedBulletObject,setSprite,setUpgrades) -> Object:
+		
 		add_to_group("TOWERS")
 		
 		displayName = setName
 		targetingMethod = setTargetingMethod
 		canSeeCamo = setCanSeeCamo
 		fireRate = setFireRate
-		shopCost = setShopCost
-		BulletObject = setBulletObject
-		add_child(BulletObject)
-		BulletObject.process_mode = Node.PROCESS_MODE_DISABLED
-		BulletObject.hide()
+		packedBulletObject = setPackedBulletObject
+		#$'BaseBullet'.hide()
 		minRange = setMinRange #range needs to be added
-		maxRange = setMaxRange
+		_maxRange = setMaxRange
+		shopCost = setShopCost
 		upgradeCount = 0
 		upgrades = setUpgrades #for upgrade info
-		$'TargetingRange/TargetingHitbox'.shape.radius = maxRange
-		
+		$'TargetingRange/TargetingHitbox'.shape.radius = _maxRange
+		#print("SETTING MAX RANGE TO ",setMaxRange, " on tower ",displayName," and shopcost ",shopCost)
 		get_node('Sprite').texture = setSprite 
 		#meant to look like res://SourceTowers/BaseTower/Base_Tower.tscn::AtlasTexture_ugiwr
 		return self
 func _draw() -> void:
 	if displayRange:
-		draw_circle(Vector2(0,0),maxRange,Color(0,0,0,0.25),true)
+		draw_circle(Vector2(0,0),_maxRange,Color(0,0,0,0.25),true)
 
-var displayName
-var bulletDamage :int
-var fireRate :float
-var canSeeCamo:Enums.CanSeeCamo
-var shopCost:int 
-var minRange:int
-var maxRange :int
-var displayRange = false
-var targetingMethod:Enums.TargetingTypes
+@export var displayName :String
+@export var fireRate :float
+@export var canSeeCamo:Enums.CanSeeCamo
+@export var shopCost:int 
+@export var minRange:int
+@export var _maxRange :int
+@export var targetingMethod:Enums.TargetingTypes
+@export var packedBulletObject:PackedScene
 #hand this a preload("src")
-var BulletObject
-var upgradeCount = 0
-var upgrades
+
+
+@export var upgrades :Array
+#this could be an issue, well see:
 
 #in use
+var displayRange = false
+var upgradeCount = 0
 var fireRateCooldown = 0
 var possibleTargets = [] #constantly changing arr of targets
 var selectedTarget = null # for holding a target seperate from possibleTargets
@@ -99,15 +91,13 @@ func _physics_process(delta: float) -> void:
 
 func shoot():
 	#print("number of possible targets is ",possibleTargets.size())
-	var tempBullet = BulletObject.dupeThisBullet()
+	var tempBullet = packedBulletObject.instantiate()
 	$'BulletContainer'.add_child(tempBullet)
-	
-	tempBullet.process_mode = Node.PROCESS_MODE_ALWAYS
 	tempBullet.global_position = $BulletSpawnPoint.global_position
 	tempBullet.setBulletTarget(selectedTarget) 
+	tempBullet.process_mode = Node.PROCESS_MODE_ALWAYS
 	tempBullet.show()
-	print("DIS TO TARGET IS ",global_position.distance_to(selectedTarget.global_position),
-	" this tower max range is ",$'TargetingRange/TargetingHitbox'.shape.radius)
+	
 	
 func _on_targeting_range_body_entered(body: Node2D) -> void:
 	if canSeeCamo == Enums.CanSeeCamo.CANSEECAMO:
@@ -133,7 +123,6 @@ func _on_clicked_on_detector_gui_input(event: InputEvent) -> void:
 	pass # Replace with function body.
 
 func upgradeOnce():
-	
 	if upgradeCount==0:
 		executeUpgrade(1)
 		print(displayName," UPGRADED TO LEVEL 1")
@@ -146,26 +135,32 @@ func upgradeOnce():
 		
 func executeUpgrade(tolevel):
 	print("UPGRADING TOWER ",displayName)
+	var toUpgradeBullet = packedBulletObject.instantiate()
 	var i = upgrades[tolevel-1]#to grab the first upgrade, or level 1; towers start at level 0
 		#the for loop is to get and apply each item in the object like {"range":10,"damage":5}
 	if i.has("range"):
-		maxRange += i["range"]
-		$'TargetingRange/TargetingHitbox'.shape.radius = maxRange
-		print(displayName," RANGE UPGRADED TO ",maxRange)
+		#print("NOT UPGRADING THE RANGE OF TOWER ",displayName)
+		_maxRange += i["range"]
+		$'TargetingRange/TargetingHitbox'.shape.radius = _maxRange
+		#print(displayName," RANGE UPGRADED TO ",_maxRange)
 	if i.has("sprite"):
 		get_node('Sprite').texture = i['sprite'] 
 	if i.has("damage"):
-		BulletObject.damageNumber +=i["damage"]
+		toUpgradeBullet.damageNumber +=i["damage"]
 	if i.has("firerate"):
 		fireRate+= i["firerate"]
 	if i.has("canseecamo"):
 		canSeeCamo = i["canseecamo"]
 	if i.has("status"):
-		BulletObject.statusEffectData = i["status"]
+		toUpgradeBullet.statusEffectData = i["status"]
 	if i.has("aoeradius"):
-		BulletObject.AOERadius += i["aoeradius"]
+		toUpgradeBullet.AOERadius += i["aoeradius"]
 	if i.has("fusevalue"):
-		BulletObject.fuseValue +=i["fusevalue"]
-
+		toUpgradeBullet.fuseValue +=i["fusevalue"]
+	
+	#apply and repack the bullet for future use
+	var temp = PackedScene.new()
+	temp.pack(toUpgradeBullet)
+	packedBulletObject = temp
 	
 	upgradeCount+=1

@@ -11,6 +11,7 @@ atlas = ExtResource("2_x5he6")
 region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a6mss"]
+resource_local_to_scene = true
 radius = 300.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x5he6"]

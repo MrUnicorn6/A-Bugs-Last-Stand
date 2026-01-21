@@ -10,7 +10,7 @@ func _on_gui_input(event: InputEvent) -> void:
 		pass
 	elif event is InputEventMouseButton and event.button_mask==0:
 		if !event.pressed:
-			print("UPGRADE BUTTON CLICKED FOR TOWER ",tower.displayName)
+			#print("UPGRADE BUTTON CLICKED FOR TOWER ",tower.displayName)
 			if(int(upgrade["cost"])<=int($"../../../HealthAndMoney".Money)):
 				$"../../../HealthAndMoney".changeMoney(upgrade["cost"])
 				tower.upgradeOnce()

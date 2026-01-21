@@ -8,14 +8,17 @@ var mapObject #set by main.gd
 
 
 
-func addShopItem(Tower):
+func addShopItem(packedTower):
 	var newButton = BaseShopItem.instantiate()
+	var tempTower = packedTower.instantiate()
 	newButton.map = mapObject
-	newButton.setIntendedTower(Tower)
-	newButton.get_node("Sprite").texture = Tower.get_node("Sprite").texture
-	newButton.get_node("NameLabel").text = Tower.displayName
-	newButton.get_node("CostLabel").text = str(Tower.shopCost)
+	newButton.setIntendedTower(packedTower)
+	newButton.get_node("Sprite").texture = tempTower.get_node("Sprite").texture
+	#print("NAME OF TOWER BEING ADDED IS ",tempTower.displayName)
+	newButton.get_node("NameLabel").text = tempTower.displayName
+	newButton.get_node("CostLabel").text = str(tempTower.shopCost)
 	$"ShopPanel/ShopOptionsContainer".add_child(newButton)
+	tempTower.queue_free()
 
 
 func changeToUpgradeScreen(tower,upgrades):

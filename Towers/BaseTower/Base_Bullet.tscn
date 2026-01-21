@@ -4,17 +4,19 @@
 [ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="2_ntu5v"]
 [ext_resource type="Texture2D" uid="uid://0q22n8wdeb7a" path="res://Assets/BugAtlas.png" id="2_yyx8x"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kitxx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yyx8x"]
 atlas = ExtResource("2_yyx8x")
 region = Rect2(64, 288, 32, 32)
-margin = Rect2(-0.5, 0, 0, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2hl3b"]
+resource_local_to_scene = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7yd4p"]
+resource_local_to_scene = true
 radius = 64.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7yd4p"]
+resource_local_to_scene = true
 atlas = ExtResource("2_ntu5v")
 region = Rect2(1280, 768, 64, 64)
 
@@ -24,7 +26,7 @@ script = ExtResource("1_8idb5")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 rotation = 1.5707964
-texture = SubResource("AtlasTexture_kitxx")
+texture = SubResource("AtlasTexture_yyx8x")
 
 [node name="EnemyDetectionArea" type="Area2D" parent="."]
 rotation = 1.5707964

@@ -7,17 +7,13 @@ var map
 
 func setIntendedTower(setTower):
 	IntendedTower = setTower
-	#print("TOWER BEING SET IS ",IntendedTower.get_name(),IntendedTower.maxRange,IntendedTower.BulletObject)
 
 
 func _on_gui_input(event: InputEvent) -> void:
-	#print("GUI EVENT SAYS ",IntendedTower.get_name(),IntendedTower.maxRange,IntendedTower.BulletObject)
+	
 	if event is InputEventMouseButton and event.button_mask==1:
-		#print("INSIDE THE CLICK BUTTON ",IntendedTower.get_name(),IntendedTower.maxRange,IntendedTower.BulletObject)
-		var tempTower = IntendedTower.dupeThisTower()
-		#print("AFTER DUPING ",IntendedTower.get_name(),IntendedTower.maxRange,IntendedTower.BulletObject)
+		var tempTower = IntendedTower.instantiate()
 		var PlayerMoney = $"../../../HealthAndMoney".Money
-		#print("tower cost is ",tempTower.shopCost,", money is ",PlayerMoney)
 		if(int(tempTower.shopCost)<=int(PlayerMoney)):
 			$"../../../HealthAndMoney".changeMoney(tempTower.shopCost)
 			$TempTowerHolder.add_child(tempTower)

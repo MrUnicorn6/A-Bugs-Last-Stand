@@ -38,8 +38,7 @@ func applyStatusEffect(type,strength,duration):
 		speed = speed/strength
 	statuses.append(temp)
 	
-func _process(delta: float) -> void:
-	pass
+
 	#apply the effects that this enemy has
 	#statuses held in here are in array format [type,strength,duration]
 	

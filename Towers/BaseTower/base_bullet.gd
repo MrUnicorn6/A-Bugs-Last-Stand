@@ -2,57 +2,60 @@ extends CharacterBody2D
 const Enums = preload(
     "res://Main/ENUMS.gd"
 )
-
-func dupeThisBullet():
-	var toDupe = duplicate()
-	toDupe.setBulletValues(muzzleVelocity,guidance,damageNumber,fuseType,fuseValue,statusEffectData,AOERadius,$'Sprite'.texture)
-	return toDupe
 #the constructor for new bullet types
-func setBulletValues(setMuzzleVelocity,setGuidance:Enums.GuidanceTypes,
-		setDamageNumber,setFuseType:Enums.Fuses,setFuseValue,setStatusEffectData,
-		setAOERadius,setSprite):
-	#for future things like buffs auras ect
-	#print("CREATING NEW BULLET TYPE")
+func setBulletValuesViaConfigOBject(configObject:Array):
 	add_to_group("BULLETS")
-	muzzleVelocity = setMuzzleVelocity
-	guidance = setGuidance
-	$ExplosionArea/CollisionShape2D.shape.radius = setAOERadius
-	AOERadius = setAOERadius
-	if guidance == Enums.GuidanceTypes.BALL:
-		$'EnemyDetectionArea/HitboxArea'.shape.radius = AOERadius
-		$Sprite.scale = Vector2(AOERadius/16,AOERadius/16)
-	#this to set the size of the ball
-	damageNumber = setDamageNumber
-	fuseType = setFuseType
-	fuseValue = setFuseValue
-	statusEffectData = setStatusEffectData
-	get_node('Sprite').texture = setSprite #meant to look like res://SourceTowers/BaseTower/Base_Tower.tscn::AtlasTexture_ugiwr
+	muzzleVelocity = configObject[0]
+	guidance = configObject[1]
+	$ExplosionArea/CollisionShape2D.shape.radius = configObject[6]
+	AOERadius = configObject[6]
+	
+	process_mode = Node.PROCESS_MODE_DISABLED
+	hide()
+	damageNumber = configObject[2]
+	fuseType = configObject[3]
+	fuseValue = configObject[4]
+	if is_instance_valid(configObject[5]):
+		statusEffectData = configObject[5]
+	print("bullet sprite is ",configObject[7])
+	get_node('Sprite').texture = configObject[7] 
 	z_index -= 1 #to have it appear below its parent
 	return self
-var muzzleVelocity
-var damageNumber #maybe depricated fine for now
-var fuseType 
-var fuseValue #for things like timer or proxy fuse radius
-var statusEffectData
-var guidance 
-var AOERadius #ignored if set to 0; need future damge thing
+@export var muzzleVelocity :int
+@export var damageNumber :int#maybe depricated fine for now
+@export var fuseType:Enums.Fuses
+@export var fuseValue :float
+@export var statusEffectData:Dictionary 
+@export var guidance:Enums.GuidanceTypes
+@export var AOERadius:float #ignored if set to 0; need future damge thing
 
 var canMove = true #for freezing teh bullet in place for the explosion effect
 var target
-var targetPositionFixed #for dumb weapons
-var targetDirection
+var targetPositionFixed:Vector2 #for dumb weapons
+var targetDirection :Vector2
 
 
 		
 func setBulletTarget(setTarget):
+	#update the visual radius of the sprite of the bullet.
+	if guidance == Enums.GuidanceTypes.BALL:
+		$'EnemyDetectionArea/HitboxArea'.shape.radius = AOERadius
+		$Sprite.scale = Vector2(AOERadius/16,AOERadius/16)
+		
+	#mostly for getting a targets fixed position
+	if setTarget == null:
+		print("TARGET INVALID")
+		queue_free()
 	target = setTarget
 	targetPositionFixed = setTarget.global_position
 	#print('TARGET POS IS ',setTarget.global_position," OUR POS IS ",global_position)
 	targetDirection = global_position.direction_to(targetPositionFixed)*muzzleVelocity
-	#print("TARGET DIR IS ",targetDirection," other dir is ",global_position.direction_to(target.global_position))
+	#this is to initally look at the target, updated to current target pos if guidance is smart
+	#mainly for BALL and POINT bullets
+	look_at(targetPositionFixed)
 	
-	
-	
+func setTexture(newTex):
+	$'Sprite'.texture =newTex
 	
 	
 func _physics_process(_delta: float) -> void:
@@ -69,7 +72,7 @@ func _physics_process(_delta: float) -> void:
 		else:
 			queue_free()
 	elif guidance == Enums.GuidanceTypes.DUMB || guidance == Enums.GuidanceTypes.BALL:
-		look_at(targetPositionFixed)
+		
 		velocity = targetDirection
 		move_and_slide()
 		
@@ -105,7 +108,7 @@ func explode():
 		if i.is_in_group("ENEMY"):
 			temp.append(i)
 	for i in temp:
-		if statusEffectData !=null:
+		if !statusEffectData.is_empty():
 			if statusEffectData.application == Enums.StatusApplication.AOE :
 				i.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 		i.takeDamage(damageNumber)
@@ -122,17 +125,17 @@ func explode():
 
 
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
-
+	#for direct hits, and application of status effects 
 	if body.is_in_group("ENEMY") && fuseType==Enums.Fuses.IMPACT:
 		body.takeDamage(damageNumber)
-		if statusEffectData !=null:
+		if !statusEffectData.is_empty():
 			if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
 				body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 		queue_free()
 	elif body.is_in_group("ENEMY") && fuseType==Enums.Fuses.TIMER && guidance == Enums.GuidanceTypes.BALL:
 		body.takeDamage(damageNumber)
 		#print("BALLING DAMAGE")
-		if statusEffectData !=null:
+		if !statusEffectData.is_empty():
 			if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
 				body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 		#queue_free()
