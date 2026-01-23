@@ -1,5 +1,5 @@
 extends Panel
-var Money=50
+var Money=200
 var Health=100
 @onready var HealthLabel = $HealthNumber
 @onready var MoneyLabel = $MoneyNumber

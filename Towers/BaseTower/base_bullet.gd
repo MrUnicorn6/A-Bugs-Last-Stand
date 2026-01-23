@@ -17,7 +17,7 @@ func setBulletValuesViaConfigOBject(configObject:Array):
 	fuseValue = configObject[4]
 	if is_instance_valid(configObject[5]):
 		statusEffectData = configObject[5]
-	print("bullet sprite is ",configObject[7])
+	#print("bullet sprite is ",configObject[7])
 	get_node('Sprite').texture = configObject[7] 
 	z_index -= 1 #to have it appear below its parent
 	return self
@@ -41,6 +41,9 @@ func setBulletTarget(setTarget):
 	if guidance == Enums.GuidanceTypes.BALL:
 		$'EnemyDetectionArea/HitboxArea'.shape.radius = AOERadius
 		$Sprite.scale = Vector2(AOERadius/16,AOERadius/16)
+		#only for use in rolling, exploding balls
+		$ExplosionArea/CollisionShape2D.shape.radius = AOERadius*3
+		
 		
 	#mostly for getting a targets fixed position
 	if setTarget == null:
@@ -82,8 +85,12 @@ func _physics_process(_delta: float) -> void:
 	elif fuseType == Enums.Fuses.POINT:
 		if global_position.distance_to(targetPositionFixed)<6:
 			explode()
-	elif fuseType == Enums.Fuses.TIMER:
+	elif fuseType == Enums.Fuses.TIMER || fuseType == Enums.Fuses.TIMEREXPLOSIVE:
 		await get_tree().create_timer(fuseValue).timeout
+		if Enums.Fuses.TIMEREXPLOSIVE:
+			
+			print("TIMED FUSE GO BOOOM")
+			explode()
 		queue_free()
 		pass
 	else:
@@ -102,15 +109,19 @@ func explode():
 	var targets = $ExplosionArea.get_overlapping_bodies()
 	var temp = []
 	$ExplosionEffect.scale = Vector2(AOERadius/32,AOERadius/32) #scaling the explosion effect to the proper size
-	#print("TARGETS SIZE",targets.size())
+	
 	#get all bodies and make sure their enemies
 	for i in targets:
 		if i.is_in_group("ENEMY"):
 			temp.append(i)
+	print("NUM OF TGTs IN EXP ARE ",temp.size())
 	for i in temp:
+		
 		if !statusEffectData.is_empty():
 			if statusEffectData.application == Enums.StatusApplication.AOE :
+				print("APPLYING STATUS VIA AOE TO ENEMY")
 				i.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
+		print("APPLYING AOE DMG TO ENEMY")
 		i.takeDamage(damageNumber)
 	canMove=false
 	$ExplosionEffect.visible=true

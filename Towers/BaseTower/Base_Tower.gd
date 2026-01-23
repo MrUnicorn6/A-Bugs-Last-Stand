@@ -122,7 +122,7 @@ func _on_clicked_on_detector_gui_input(event: InputEvent) -> void:
 		get_node("/root/Main/UI").changeToUpgradeScreen(self,upgrades)
 	pass # Replace with function body.
 
-func upgradeOnce():
+func upgradeOnce(selectedSpecialTower = ""):
 	if upgradeCount==0:
 		executeUpgrade(1)
 		print(displayName," UPGRADED TO LEVEL 1")
@@ -130,11 +130,21 @@ func upgradeOnce():
 		executeUpgrade(2)
 		print(displayName," UPGRADED TO LEVEL 2")
 	elif upgradeCount == 2:
-		print("HEY SHITASS WE GOTTA CHANGE TYPES")
+		print(displayName," UPGRADED TO LEVEL 3, PATH")
+		if selectedSpecialTower =="":
+			print("WARNING NO PATH WAS SELECTED BUT TOWER UPGRADE() CALLED ANYWAY")
+		print("PREFORMING UPGRADE TO PATH TOWER: ",selectedSpecialTower)
+		var futuretower = get_node("/root/Main").getPackedSpecialTower(selectedSpecialTower).instantiate()
+		futuretower.global_position = global_position
+		$'../'.add_child(futuretower)
+		futuretower.show()
+		futuretower.process_mode = Node.ProcessMode.PROCESS_MODE_ALWAYS
+		queue_free()
+		get_node("/root/Main/UI").changeToUpgradeScreen(futuretower,futuretower.upgrades)
+	
 		
 		
 func executeUpgrade(tolevel):
-	print("UPGRADING TOWER ",displayName)
 	var toUpgradeBullet = packedBulletObject.instantiate()
 	var i = upgrades[tolevel-1]#to grab the first upgrade, or level 1; towers start at level 0
 		#the for loop is to get and apply each item in the object like {"range":10,"damage":5}

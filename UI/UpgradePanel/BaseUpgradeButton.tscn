@@ -9,41 +9,43 @@ region = Rect2(1280, 768, 64, 64)
 
 [sub_resource type="LabelSettings" id="LabelSettings_70txg"]
 line_spacing = 2.0
-font_size = 20
+font_size = 14
 
 [sub_resource type="LabelSettings" id="LabelSettings_qbgfg"]
 font_size = 20
 
 [node name="BaseUpgradeButton" type="Panel"]
-custom_minimum_size = Vector2(128, 192)
+custom_minimum_size = Vector2(120, 256)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1792.0
+offset_right = -1800.0
 offset_bottom = -824.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_ax1mn")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(-15.999998, -15.999998)
-scale = Vector2(1.9999999, 1.9999999)
+position = Vector2(-14.999998, -6.999999)
+scale = Vector2(1.8749999, 1.8749999)
 texture = SubResource("AtlasTexture_mvkwo")
 offset = Vector2(40, 40)
 
 [node name="DescLabel" type="Label" parent="."]
 layout_mode = 0
 offset_top = 128.0
-offset_right = 128.0
-offset_bottom = 256.0
-text = "Upgrade desc"
+offset_right = 120.0
+offset_bottom = 258.0
+text = "Something Somehting lorem ipsum funny description of silly little tower and hsit"
 label_settings = SubResource("LabelSettings_70txg")
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="CostLabel" type="Label" parent="."]
 layout_mode = 0
-offset_right = 128.0
+offset_right = 120.0
 offset_bottom = 64.0
 text = "COST"
 label_settings = SubResource("LabelSettings_qbgfg")
