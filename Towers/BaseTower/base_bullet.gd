@@ -9,15 +9,13 @@ func setBulletValuesViaConfigOBject(configObject:Array):
 	guidance = configObject[1]
 	$ExplosionArea/CollisionShape2D.shape.radius = configObject[6]
 	AOERadius = configObject[6]
-	
 	process_mode = Node.PROCESS_MODE_DISABLED
 	hide()
 	damageNumber = configObject[2]
 	fuseType = configObject[3]
 	fuseValue = configObject[4]
-	if is_instance_valid(configObject[5]):
+	if configObject[5]!=null:
 		statusEffectData = configObject[5]
-	#print("bullet sprite is ",configObject[7])
 	get_node('Sprite').texture = configObject[7] 
 	z_index -= 1 #to have it appear below its parent
 	return self
@@ -87,7 +85,7 @@ func _physics_process(_delta: float) -> void:
 			explode()
 	elif fuseType == Enums.Fuses.TIMER || fuseType == Enums.Fuses.TIMEREXPLOSIVE:
 		await get_tree().create_timer(fuseValue).timeout
-		if Enums.Fuses.TIMEREXPLOSIVE:
+		if fuseType == Enums.Fuses.TIMEREXPLOSIVE:
 			
 			print("TIMED FUSE GO BOOOM")
 			explode()

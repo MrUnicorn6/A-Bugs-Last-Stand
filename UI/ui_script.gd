@@ -11,12 +11,14 @@ var mapObject #set by main.gd
 func addShopItem(packedTower):
 	var newButton = BaseShopItem.instantiate()
 	var tempTower = packedTower.instantiate()
+	#give the map to the button, so that it can be used to check if 
+	#its a valid place to put a tower
 	newButton.map = mapObject
 	newButton.setIntendedTower(packedTower)
 	newButton.get_node("Sprite").texture = tempTower.get_node("Sprite").texture
-	#print("NAME OF TOWER BEING ADDED IS ",tempTower.displayName)
 	newButton.get_node("NameLabel").text = tempTower.displayName
 	newButton.get_node("CostLabel").text = str(tempTower.shopCost)
+	#print("ADDING BUTTONS DISABLED RN")
 	$"ShopPanel/ShopOptionsContainer".add_child(newButton)
 	tempTower.queue_free()
 
@@ -25,6 +27,7 @@ func addUpgradeItem(spriteTex,desc,cost):
 	tempButton.get_node("Sprite").texture = spriteTex
 	tempButton.get_node("DescLabel").text = desc
 	tempButton.get_node("CostLabel").text = str(cost)
+	#print("ADDING BUTTONS DISABLED RN")
 	$"UpgradePanel/UpgradeOptionsContainer".add_child(tempButton)
 	return tempButton
 func changeToUpgradeScreen(tower,upgrades):
