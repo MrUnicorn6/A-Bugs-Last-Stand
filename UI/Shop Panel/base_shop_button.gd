@@ -22,7 +22,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			tempTower.rotation_degrees -= 90
 			tempTower.process_mode = Node.PROCESS_MODE_DISABLED
 			tempTower.displayRange = true
-			print("TEMPTOWERHOLDERLEN IS ",$'TempTowerHolder'.get_children().size() )
+			#print("TEMPTOWERHOLDERLEN IS ",$'TempTowerHolder'.get_children().size() )
 		else:
 			print("YOU CANNOT AFFORD THIS SHIT")
 			

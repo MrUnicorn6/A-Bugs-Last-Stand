@@ -9,8 +9,11 @@ const testingAtlas = preload("res://Assets/towerDefense_tilesheet.png")
 const BugAtlas = preload("res://Assets/BugAtlas.png")
 @onready var map = preload("res://Maps/Map1/Map1.tscn")
 const Enums = preload("res://Main/ENUMS.gd")
+const TowerPath = "res://Towers/OtherTowers/"
+const SpecialTowersPath = "res://Towers/PathUpgradeTowers/"
 var currentMap
-var packedTowers
+static var packedBasicTowers:Dictionary
+static var packedSpecialTowers:Dictionary
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,20 +27,11 @@ func _ready() -> void:
 	UI.mapObject = currentMap
 	add_child(UI)
 	SetAndSaveTowers()
-	packedTowers = load_scenes_in_folder("res://Towers/OtherTowers/")
-	for i in packedTowers:
-		UI.addShopItem(i)
-	
+	packedBasicTowers = load_scenes_in_folder(TowerPath)
+	packedSpecialTowers = load_scenes_in_folder(SpecialTowersPath)
+	for i in packedBasicTowers.keys():
+		UI.addShopItem(packedBasicTowers[i])
 
-	
-
-
-
-
-
-	
-	
-	
 #for loading sections of a atlas texture:
 static func getAtlasAreaGrid(atlas: Texture2D,col: int,row: int,cell_size) -> Texture2D:  
 	var tex := AtlasTexture.new()
@@ -50,11 +44,9 @@ static func getAtlasAreaGrid(atlas: Texture2D,col: int,row: int,cell_size) -> Te
 		cell_size,
 		cell_size)
 	return tex
-	
-	
 static func SetAndSaveTowers():
 	#setting of all towers
-	var UnpackedTowers = [
+	var BaseTowers = [
 		BlankTower.instantiate().setThisTowersValues(
 			'Ant', Enums.TargetingTypes.FIRST,
 			Enums.CanSeeCamo.CANNOTSEECAMO,
@@ -72,7 +64,16 @@ static func SetAndSaveTowers():
 				{"range":100,"damage":20,"sprite":getAtlasAreaGrid(BugAtlas,3,2,32),
 				"cost":10,"desc":"better dmg and range"},
 				{"firerate":0.5,"canseecamo":Enums.CanSeeCamo.CANSEECAMO,"sprite":getAtlasAreaGrid(BugAtlas,4,2,32),
-				"cost":10,"desc":"faster firerate and can now see camo"}
+				"cost":10,"desc":"faster firerate and can now see camo"},
+				{
+					"PathOne":{"Tower":"Fire Ant","cost":20,
+						"desc":"Fire Ant, an ant focused on Fire & Fire DOT damage"},
+					"PathTwo":{"Tower":"Bullet Ant","cost":20,
+						"desc":"Bullet Ant, an ant focused on raw unguided firepower"},
+					"PathThree":{"Tower":"Honey Ant","cost":20,
+						"desc":"Honey ant, an ant focused on economics and buffing neaby towers "},
+				}
+				
 			]
 		),
 		BlankTower.instantiate().setThisTowersValues(
@@ -95,44 +96,122 @@ static func SetAndSaveTowers():
 					'effectType':Enums.StatusEffectType.SLOW,
 					'strength':2,'duration':3}
 					,"sprite":getAtlasAreaGrid(BugAtlas,4,1,32),
-				"cost":15,"desc":"better Damage, and slowness effect"}]
-		),
+				"cost":15,"desc":"better Damage, and slowness effect"},
+				{
+					"PathOne":{"Tower":"Scarab","cost":20,
+						"desc":"blah"},
+					"PathTwo":{"Tower":"Dung Beetle","cost":20,
+						"desc":"poopy"},
+					"PathThree":{"Tower":"Atlas","cost":20,
+						"desc":"NOT IMPLEMENTED YET"},
+				}
+			]
+		)
+	]
+	var SpecialTowers = [
 		BlankTower.instantiate().setThisTowersValues(
-			'BoomTower', Enums.TargetingTypes.CLOSEST,
+			'Fire Ant', Enums.TargetingTypes.CLOSEST,
 			Enums.CanSeeCamo.CANNOTSEECAMO,
-			10,600,0.25,10,# setMinRange,setMaxRange,setFireRate,setShopCost
+			0,300,0.25,10,# setMinRange,setMaxRange,setFireRate,setShopCost
 			prepareBullet([
-				300,Enums.GuidanceTypes.DUMB,
-				0,Enums.Fuses.POINT,0, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
-				{'application':Enums.StatusApplication.AOE,
-				'effectType':Enums.StatusEffectType.SLOW,
-				'strength':2,'duration':0.5},
-				100,#AOE
-				getAtlasAreaGrid(testingAtlas,22,10,64)
-			]),
-			getAtlasAreaGrid(testingAtlas,20,8,64),
-			[]
-		),BlankTower.instantiate().setThisTowersValues(
-			'BlueTower', Enums.TargetingTypes.CLOSEST,
-			Enums.CanSeeCamo.CANNOTSEECAMO,
-			0,200,0.5,5,# setMinRange,setMaxRange,setFireRate,setShopCost
-			prepareBullet([
-				200,Enums.GuidanceTypes.SMART,
+				300,Enums.GuidanceTypes.SMART,
 				0,Enums.Fuses.IMPACT,
 				0, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 				{'application':Enums.StatusApplication.DIRECT,
 				'effectType':Enums.StatusEffectType.DOT,
+				'strength':4,'duration':10},
+				0,#AOE
+				getAtlasAreaGrid(testingAtlas,22,12,64)
+			]),
+			getAtlasAreaGrid(BugAtlas,5,2,32),
+			[]
+		),
+		BlankTower.instantiate().setThisTowersValues(
+			'Bullet Ant', Enums.TargetingTypes.LAST,
+			Enums.CanSeeCamo.CANNOTSEECAMO,
+			0,100,1,0,# setMinRange,setMaxRange,setFireRate,setShopCost
+			prepareBullet([
+				300,Enums.GuidanceTypes.DUMB,
+				10,Enums.Fuses.TIMER,
+				2, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
+				null,
+				0,#AOE
+				getAtlasAreaGrid(testingAtlas,22,12,64)
+			]),
+			getAtlasAreaGrid(BugAtlas,8,2,32),
+			[]
+		),
+		BlankTower.instantiate().setThisTowersValues(
+			'Honey Ant', Enums.TargetingTypes.CLOSEST,
+			Enums.CanSeeCamo.CANNOTSEECAMO,
+			0,300,0.25,0,# setMinRange,setMaxRange,setFireRate,setShopCost
+			prepareBullet([
+				300,Enums.GuidanceTypes.SMART,
+				1,Enums.Fuses.IMPACT,
+				2, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
+				{'application':Enums.StatusApplication.DIRECT,
+				'effectType':Enums.StatusEffectType.SLOW,
 				'strength':2,'duration':10},
 				0,#AOE
-				getAtlasAreaGrid(testingAtlas,22,10,64)
+				getAtlasAreaGrid(testingAtlas,22,12,64)
 			]),
-			getAtlasAreaGrid(testingAtlas,20,10,64),
+			getAtlasAreaGrid(BugAtlas,11,2,32),
+			[]
+		),
+		BlankTower.instantiate().setThisTowersValues(
+			'Scarab', Enums.TargetingTypes.LAST,
+			Enums.CanSeeCamo.CANNOTSEECAMO,
+			0,200,0.5,20,# setMinRange,setMaxRange,setFireRate,setShopCost
+			prepareBullet([
+				250,Enums.GuidanceTypes.DUMB,#bulletspeed
+				5,Enums.Fuses.POINT, #damage
+				1.5, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
+				{'application':Enums.StatusApplication.AOE,
+					'effectType':Enums.StatusEffectType.STUN,
+					'strength':1,'duration':3}, #status object
+				200,#AOE
+				getAtlasAreaGrid(BugAtlas,2,9,32)
+			]),
+			getAtlasAreaGrid(BugAtlas,5,1,32),
+			[]
+		),
+		BlankTower.instantiate().setThisTowersValues(
+			'Dung Beetle', Enums.TargetingTypes.LAST,
+			Enums.CanSeeCamo.CANNOTSEECAMO,
+			0,200,0.5,20,# setMinRange,setMaxRange,setFireRate,setShopCost
+			prepareBullet([
+				250,Enums.GuidanceTypes.BALL,#bulletspeed
+				5,Enums.Fuses.TIMER, #damage
+				2, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
+				{'application':Enums.StatusApplication.AOE,
+					'effectType':Enums.StatusEffectType.STUN,
+					'strength':1,'duration':2}, #status object
+				64,#AOE
+				getAtlasAreaGrid(BugAtlas,2,9,32)
+			]),
+			getAtlasAreaGrid(BugAtlas,8,1,32),
+			[]
+		),
+		BlankTower.instantiate().setThisTowersValues(
+			'Atlas', Enums.TargetingTypes.LAST,
+			Enums.CanSeeCamo.CANNOTSEECAMO,
+			0,200,0.5,20,# setMinRange,setMaxRange,setFireRate,setShopCost
+			prepareBullet([
+				250,Enums.GuidanceTypes.BALL,#bulletspeed
+				5,Enums.Fuses.TIMEREXPLOSIVE, #damage
+				2, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
+				{'application':Enums.StatusApplication.AOE,
+					'effectType':Enums.StatusEffectType.STUN,
+					'strength':2,'duration':3}, #status object
+				25,#AOE
+				getAtlasAreaGrid(BugAtlas,2,9,32)
+			]),
+			getAtlasAreaGrid(BugAtlas,11,1,32),
 			[]
 		)
 	]
-	
-	saveTowersToDisk(UnpackedTowers)
-	
+	saveTowersToDisk(BaseTowers,TowerPath)
+	saveTowersToDisk(SpecialTowers,SpecialTowersPath)
 static func prepareBullet(bulletConfig)->PackedScene:
 	#to procedurally create and config a bullet into a packed scene for use by the tower
 	#does not save bullets to disk, this is mostly for reliable use of bullet.instantiate by shoot()
@@ -141,8 +220,8 @@ static func prepareBullet(bulletConfig)->PackedScene:
 	var scene = PackedScene.new()
 	scene.pack(newBullet)
 	return scene
-static func load_scenes_in_folder(path: String) -> Array[PackedScene]:
-	var loaded_scenes: Array[PackedScene] = []
+static func load_scenes_in_folder(path: String) -> Dictionary:
+	var loaded_scenes: Dictionary= {}
 	var dir = DirAccess.open(path)
 	if dir:
 		dir.list_dir_begin()
@@ -152,23 +231,30 @@ static func load_scenes_in_folder(path: String) -> Array[PackedScene]:
 			if not dir.current_is_dir() and file_name.get_extension() == "tscn":
 				# Construct the full path
 				var full_path = path.path_join(file_name)
-				#print("LOADING TOWER ",file_name)
-				# Use load() to get the resource at runtime
+				print("LOADING TOWER ",file_name.get_basename())
 				var scene: PackedScene = load(full_path)
 				if scene:
-					loaded_scenes.append(scene)
+					loaded_scenes[file_name.get_basename()] = scene
 			file_name = dir.get_next()
 		dir.list_dir_end()
 	else:
 		print("An error occurred when trying to access the path: ", path)
 	return loaded_scenes
-static func saveTowersToDisk(towers):
+static func saveTowersToDisk(towers,givenFilePath):
 	for i in towers:
 		var scene = PackedScene.new()
 		var result = scene.pack(i)
-		var path = str("res://Towers/OtherTowers/",i.displayName,".tscn")
+		var path = str(givenFilePath,i.displayName,".tscn")
 		if result == OK:
 			var error = ResourceSaver.save(scene,path) 
 			
 			if error != OK:
 				push_error("An error occurred while saving a scene to disk.")
+static func getPackedSpecialTower(desiredTowerName)-> PackedScene:
+	print("LOOKING FOR TOWER ",desiredTowerName)
+	for i in packedSpecialTowers.keys():
+		if i == desiredTowerName:
+			print("FOUND TOWER ", i)
+			return packedSpecialTowers[i]
+	print("HEY TOWER",desiredTowerName,"NOT FOUND")
+	return null

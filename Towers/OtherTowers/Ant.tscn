@@ -76,6 +76,22 @@ upgrades = [{
 "desc": "faster firerate and can now see camo",
 "firerate": 0.5,
 "sprite": SubResource("AtlasTexture_qeihx")
+}, {
+"PathOne": {
+"Tower": "Fire Ant",
+"cost": 20,
+"desc": "Fire Ant, an ant focused on Fire & Fire DOT damage"
+},
+"PathThree": {
+"Tower": "Honey Ant",
+"cost": 20,
+"desc": "Honey ant, an ant focused on economics and buffing neaby towers "
+},
+"PathTwo": {
+"Tower": "Bullet Ant",
+"cost": 20,
+"desc": "Bullet Ant, an ant focused on raw unguided firepower"
+}
 }]
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
