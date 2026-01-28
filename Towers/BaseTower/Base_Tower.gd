@@ -56,7 +56,12 @@ func _physics_process(delta: float) -> void:
 		#visual of looking at target
 		if is_instance_valid(selectedTarget):
 			self.look_at(selectedTarget.global_position)
-	if !possibleTargets.is_empty() && possibleTargets[0] != null:
+	
+	if !possibleTargets.is_empty():
+		if possibleTargets[0] == null:
+			possibleTargets.remove_at(0)
+			return
+		#print('in targets selection loop')
 		if targetingMethod == Enums.TargetingTypes.CLOSEST:
 			selectedTarget = possibleTargets[0]
 			var closest = possibleTargets[0]
@@ -87,7 +92,6 @@ func _physics_process(delta: float) -> void:
 	if (selectedTarget != null)&& (fireRateCooldown<=0):
 		shoot()
 		fireRateCooldown = 1.0 / fireRate
-
 func shoot():
 	#print("number of possible targets is ",possibleTargets.size())
 	var tempBullet = packedBulletObject.instantiate()
@@ -97,7 +101,7 @@ func shoot():
 	tempBullet.process_mode = Node.PROCESS_MODE_ALWAYS
 	tempBullet.show()
 func _on_targeting_range_body_entered(body: Node2D) -> void:
-	#print("target entered, ",body.get_groups())
+	print("target entered, ",body.get_groups())
 	if canSeeCamo == Enums.CanSeeCamo.CANSEECAMO:
 		if body.is_in_group("ENEMY"):
 			#print("I SEE A CAMO FUCKER")
@@ -110,9 +114,16 @@ func _on_targeting_range_body_exited(body: Node2D) -> void:
 		possibleTargets.remove_at(possibleTargets.find(body))
 	if body == selectedTarget:
 		selectedTarget = null
-
-
-
+func updatePossibleTargets():
+	var bodies = $'TargetingRange'.get_overlapping_bodies()
+	for i in bodies:
+		if canSeeCamo == Enums.CanSeeCamo.CANSEECAMO:
+			if i.is_in_group("ENEMY"):
+				possibleTargets.append(i)
+		elif canSeeCamo == Enums.CanSeeCamo.CANNOTSEECAMO:
+			if i.is_in_group("ENEMY") && !i.is_in_group("CAMO"):
+				possibleTargets.append(i)
+	print("done updating targets")
 #to call the GUI to show upgrade options
 func _on_clicked_on_detector_gui_input(event: InputEvent) -> void:
 	
@@ -123,9 +134,11 @@ func _on_clicked_on_detector_gui_input(event: InputEvent) -> void:
 func upgradeOnce(selectedSpecialTower = ""):
 	if upgradeCount==0:
 		executeUpgrade(1)
+		updatePossibleTargets()
 		print(displayName," UPGRADED TO LEVEL 1")
 	elif upgradeCount == 1:
 		executeUpgrade(2)
+		updatePossibleTargets()
 		print(displayName," UPGRADED TO LEVEL 2")
 	elif upgradeCount == 2:
 		print(displayName," UPGRADED TO LEVEL 3, PATH")
@@ -137,6 +150,8 @@ func upgradeOnce(selectedSpecialTower = ""):
 		$'../'.add_child(futuretower)
 		futuretower.show()
 		futuretower.process_mode = Node.ProcessMode.PROCESS_MODE_ALWAYS
+		futuretower.updatePossibleTargets()
+		futuretower.rotation_degrees -= 90
 		queue_free()
 		get_node("/root/Main/UI").changeToUpgradeScreen(futuretower,futuretower.upgrades)
 	
@@ -165,6 +180,8 @@ func executeUpgrade(tolevel):
 		toUpgradeBullet.AOERadius += i["aoeradius"]
 	if i.has("fusevalue"):
 		toUpgradeBullet.fuseValue +=i["fusevalue"]
+	if i.has("muzzleVelocity"):
+		toUpgradeBullet.muzzleVelocity +=i["muzzleVelocity"]
 	
 	#apply and repack the bullet for future use
 	var temp = PackedScene.new()

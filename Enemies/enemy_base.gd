@@ -31,7 +31,8 @@ func setEnemyValues(data:Dictionary) -> Object:
 		
 	#non required parameters for enemies
 	if data.has("resistances"):
-		print("SETTING RESISTANCE")
+		pass
+		#print("SETTING RESISTANCE")
 	
 	if data.has("camo"):
 		if data["camo"]:

@@ -98,7 +98,7 @@ static func SetAndSaveTowers():
 			Enums.CanSeeCamo.CANNOTSEECAMO,
 			0,300,1,5,# setMinRange,setMaxRange,setFireRate,setShopCost
 			prepareBullet([
-				200,Enums.GuidanceTypes.SMART,#bulletspeed
+				251,Enums.GuidanceTypes.SMART,#bulletspeed
 				5,Enums.Fuses.IMPACT, #damage
 				0, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 				null, #status object
@@ -107,8 +107,8 @@ static func SetAndSaveTowers():
 			]),
 			getAtlasAreaGrid(BugAtlas,2,2,32),
 			[#upgrades, should be 2 per tower
-				{"range":100,"damage":20,"sprite":getAtlasAreaGrid(BugAtlas,3,2,32),
-				"cost":10,"desc":"better dmg and range"},
+				{"range":100,"damage":20,"muzzleVelocity":50,"sprite":getAtlasAreaGrid(BugAtlas,3,2,32),
+				"cost":10,"desc":"better dmg, bullet speed and range"},
 				{"firerate":0.5,"canseecamo":Enums.CanSeeCamo.CANSEECAMO,"sprite":getAtlasAreaGrid(BugAtlas,4,2,32),
 				"cost":10,"desc":"faster firerate and can now see camo"},
 				{
