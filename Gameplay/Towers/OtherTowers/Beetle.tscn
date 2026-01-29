@@ -1,9 +1,9 @@
 [gd_scene load_steps=16 format=3]
 
-[ext_resource type="Script" path="res://Towers/BaseTower/Base_Tower.gd" id="1_pmiox"]
-[ext_resource type="Script" path="res://Towers/BaseTower/base_bullet.gd" id="2_cmjdt"]
-[ext_resource type="Texture2D" path="res://Assets/BugAtlas.png" id="3_53x7a"]
-[ext_resource type="Texture2D" path="res://Assets/towerDefense_tilesheet.png" id="4_ymotw"]
+[ext_resource type="Script" uid="uid://calyswity8rl" path="res://Gameplay/Towers/BaseTower/Base_Tower.gd" id="1_pmiox"]
+[ext_resource type="Script" uid="uid://bsbtferjb3rha" path="res://Gameplay/Towers/BaseTower/base_bullet.gd" id="2_cmjdt"]
+[ext_resource type="Texture2D" uid="uid://0q22n8wdeb7a" path="res://Assets/BugAtlas.png" id="3_53x7a"]
+[ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="4_ymotw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kguq3"]
 atlas = ExtResource("3_53x7a")

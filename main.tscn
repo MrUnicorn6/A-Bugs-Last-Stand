@@ -1,14 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3scmm5r6a23q"]
+[gd_scene load_steps=2 format=3 uid="uid://b3scmm5r6a23q"]
 
 [ext_resource type="Script" uid="uid://du64n7xpj8sda" path="res://main.gd" id="1_h2yge"]
-[ext_resource type="PackedScene" uid="uid://b2vj21s3sjysa" path="res://UI/ui.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://bng06qj3ij7wc" path="res://Maps/Map1/Map1.tscn" id="3_1bvp3"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="AspectRatioContainer"]
 script = ExtResource("1_h2yge")
 
-[node name="UI" parent="." instance=ExtResource("2_h2yge")]
-
 [node name="Towers" type="Node2D" parent="."]
-
-[node name="Map1" parent="." instance=ExtResource("3_1bvp3")]

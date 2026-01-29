@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dyd2vt0dlvb72"]
 
-[ext_resource type="Script" uid="uid://bsbtferjb3rha" path="res://Towers/BaseTower/base_bullet.gd" id="1_8idb5"]
+[ext_resource type="Script" uid="uid://bsbtferjb3rha" path="res://Gameplay/Towers/BaseTower/base_bullet.gd" id="1_8idb5"]
 [ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="2_ntu5v"]
 [ext_resource type="Texture2D" uid="uid://0q22n8wdeb7a" path="res://Assets/BugAtlas.png" id="2_yyx8x"]
 

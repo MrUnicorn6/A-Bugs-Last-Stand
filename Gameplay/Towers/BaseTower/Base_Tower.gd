@@ -5,9 +5,7 @@ func setThisTowersValues(setName,setTargetingMethod:Enums.TargetingTypes,
 		setCanSeeCamo:Enums.CanSeeCamo,
 		setMinRange,setMaxRange,setFireRate,setShopCost,
 		setPackedBulletObject,setSprite,setUpgrades) -> Object:
-		
 		add_to_group("TOWERS")
-		
 		displayName = setName
 		targetingMethod = setTargetingMethod
 		canSeeCamo = setCanSeeCamo
@@ -27,7 +25,6 @@ func setThisTowersValues(setName,setTargetingMethod:Enums.TargetingTypes,
 func _draw() -> void:
 	if displayRange:
 		draw_circle(Vector2(0,0),_maxRange,Color(0,0,0,0.25),true)
-
 @export var displayName :String
 @export var fireRate :float
 @export var canSeeCamo:Enums.CanSeeCamo
@@ -101,7 +98,7 @@ func shoot():
 	tempBullet.process_mode = Node.PROCESS_MODE_ALWAYS
 	tempBullet.show()
 func _on_targeting_range_body_entered(body: Node2D) -> void:
-	print("target entered, ",body.get_groups())
+	#print("target entered, ",body.get_groups())
 	if canSeeCamo == Enums.CanSeeCamo.CANSEECAMO:
 		if body.is_in_group("ENEMY"):
 			#print("I SEE A CAMO FUCKER")
@@ -123,7 +120,7 @@ func updatePossibleTargets():
 		elif canSeeCamo == Enums.CanSeeCamo.CANNOTSEECAMO:
 			if i.is_in_group("ENEMY") && !i.is_in_group("CAMO"):
 				possibleTargets.append(i)
-	print("done updating targets")
+	#print("done updating targets")
 #to call the GUI to show upgrade options
 func _on_clicked_on_detector_gui_input(event: InputEvent) -> void:
 	
@@ -154,9 +151,6 @@ func upgradeOnce(selectedSpecialTower = ""):
 		futuretower.rotation_degrees -= 90
 		queue_free()
 		get_node("/root/Main/UI").changeToUpgradeScreen(futuretower,futuretower.upgrades)
-	
-		
-		
 func executeUpgrade(tolevel):
 	var toUpgradeBullet = packedBulletObject.instantiate()
 	var i = upgrades[tolevel-1]#to grab the first upgrade, or level 1; towers start at level 0

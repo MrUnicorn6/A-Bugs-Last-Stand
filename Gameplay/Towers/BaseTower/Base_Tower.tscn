@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ci5rmlxqewknb"]
 
-[ext_resource type="Script" uid="uid://calyswity8rl" path="res://Towers/BaseTower/Base_Tower.gd" id="1_cjgoi"]
+[ext_resource type="Script" uid="uid://calyswity8rl" path="res://Gameplay/Towers/BaseTower/Base_Tower.gd" id="1_cjgoi"]
 [ext_resource type="Texture2D" uid="uid://0q22n8wdeb7a" path="res://Assets/BugAtlas.png" id="2_x5he6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jt0u4"]
