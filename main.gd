@@ -15,8 +15,10 @@ func _ready() -> void:
 	packedBasicTowers = GameplayObjectLoader.getPackedBasicTowers()
 	packedSpecialTowers = GameplayObjectLoader.getPackedSpecialTowers()
 	packedEnemies = GameplayObjectLoader.getPackedEnemies()
+
 	currentMap = map.instantiate()
 	currentMap.setEnemies(packedEnemies)
+	currentMap.doRound()
 	add_child(currentMap)
 	
 	
@@ -29,9 +31,9 @@ func _ready() -> void:
 	for i in packedBasicTowers.keys():
 		UI.addShopItem(packedBasicTowers[i])
 		
-static func getPackedSpecialTower(name)->PackedScene:
+static func getPackedSpecialTower(findName)->PackedScene:
 	for i in packedSpecialTowers.keys():
-		if i == name:
-			return packedSpecialTowers[name]
-	print("SPECAIL TOWER ",name," NOT FOUND")
+		if i == findName:
+			return packedSpecialTowers[findName]
+	print("SPECAIL TOWER ",findName," NOT FOUND")
 	return null

@@ -9,7 +9,7 @@ const RoundOne = ["fast","3","strong","3","camo","1","fly",2]
 
 func _ready() -> void:
 	z_index = -10
-	doRound()
+	#doRound()
 	
 
 func doRound():

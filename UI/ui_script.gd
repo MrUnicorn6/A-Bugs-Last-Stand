@@ -15,18 +15,18 @@ func addShopItem(packedTower):
 	#its a valid place to put a tower
 	newButton.map = mapObject
 	newButton.setIntendedTower(packedTower)
-	newButton.get_node("Sprite").texture = tempTower.get_node("Sprite").texture
-	newButton.get_node("NameLabel").text = tempTower.displayName
-	newButton.get_node("CostLabel").text = str(tempTower.shopCost)
+	newButton.get_node("BaseShopButton/Sprite").texture = tempTower.get_node("Sprite").texture
+	newButton.get_node("BaseShopButton/NameLabel").text = tempTower.displayName
+	newButton.get_node("BaseShopButton/CostLabel").text = str(tempTower.shopCost)
 	#print("ADDING BUTTONS DISABLED RN")
 	$"ShopPanel/ShopOptionsContainer".add_child(newButton)
 	tempTower.queue_free()
 
 func addUpgradeItem(spriteTex,desc,cost):
 	var tempButton = BaseUpgradeItem.instantiate()
-	tempButton.get_node("Sprite").texture = spriteTex
-	tempButton.get_node("DescLabel").text = desc
-	tempButton.get_node("CostLabel").text = str(cost)
+	tempButton.get_node("BaseShopButton/Sprite").texture = spriteTex
+	tempButton.get_node("BaseShopButton/DescLabel").text = desc
+	tempButton.get_node("BaseShopButton/CostLabel").text = str(cost)
 	#print("ADDING BUTTONS DISABLED RN")
 	$"UpgradePanel/UpgradeOptionsContainer".add_child(tempButton)
 	return tempButton

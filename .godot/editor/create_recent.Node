@@ -1,3 +1,4 @@
+MarginContainer
 CanvasLayer
 Control
 PanelContainer
@@ -12,4 +13,3 @@ TileMapLayer
 CharacterBody2D
 Sprite2D
 Label
-Panel

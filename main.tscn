@@ -3,6 +3,11 @@
 [ext_resource type="Script" uid="uid://du64n7xpj8sda" path="res://main.gd" id="1_h2yge"]
 
 [node name="Main" type="AspectRatioContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_h2yge")
 
 [node name="Towers" type="Node2D" parent="."]

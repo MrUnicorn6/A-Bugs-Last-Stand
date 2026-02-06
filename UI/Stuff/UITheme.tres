@@ -1,4 +1,14 @@
-[gd_resource type="Theme" format=3 uid="uid://bnf7l64u5bhbo"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bnf7l64u5bhbo"]
+
+[ext_resource type="StyleBox" uid="uid://dji0dhrdrm1ii" path="res://UI/Stuff/UI Theme Parts/Flat Basic stylebox.tres" id="1_kx88j"]
 
 [resource]
 default_font_size = 16
+Button/colors/icon_normal_color = Color(1, 0.39607844, 1, 1)
+Button/colors/icon_pressed_color = Color(0, 0.6862745, 0.6862745, 1)
+Button/styles/normal = ExtResource("1_kx88j")
+MarginContainer/constants/margin_bottom = 5
+MarginContainer/constants/margin_left = 5
+MarginContainer/constants/margin_right = 5
+MarginContainer/constants/margin_top = 5
+Panel/styles/panel = ExtResource("1_kx88j")
