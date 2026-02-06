@@ -10,8 +10,6 @@ func setIntendedTower(setTower):
 
 
 func _on_base_shop_button_gui_input(event: InputEvent) -> void:
-	print("CLICKED")
-	#CLICKING THIS BUTTONS NOT WORKING RN
 	#on mousedown
 	if event is InputEventMouseButton and event.button_mask==1:
 		var tempTower = IntendedTower.instantiate()
@@ -44,7 +42,7 @@ func _on_base_shop_button_gui_input(event: InputEvent) -> void:
 				if !tiledata.get_custom_data("NoPlaceArea"):
 					$BaseShopButton/TempTowerHolder.get_child(0).process_mode = Node.PROCESS_MODE_ALWAYS
 					$BaseShopButton/TempTowerHolder.get_child(0).displayRange = false
-					var targetDir = get_node("/root/Main/Towers")
+					var targetDir = get_node("/root/Main/CoreGameNode/Towers")
 					$BaseShopButton/TempTowerHolder.get_child(0).reparent(targetDir)
 					
 				else:

@@ -10,4 +10,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h2yge")
 
-[node name="Towers" type="Node2D" parent="."]
+[node name="CoreGameNode" type="Node2D" parent="."]
+
+[node name="Towers" type="Node2D" parent="CoreGameNode"]

@@ -13,6 +13,7 @@ const Enums = preload("res://Main/ENUMS.gd")
 
 #in use
 var statusCoolDown
+var goalPosition:Vector2
 var canMove = true#for stun effects
 @export var defaultSpeed:int #for undoing the slowness effect
 var statuses = []
@@ -41,10 +42,13 @@ func setEnemyValues(data:Dictionary) -> Object:
 	
 
 	return self
-func update():
+func update(setGoalPosition:Vector2):
+	self.goalPosition = setGoalPosition
 	add_to_group("ENEMY")
 	if isCamo:
 		add_to_group("CAMO")
+	$NavigationAgent2D.target_position = goalPosition
+	
 
 func takeDamage(amount):##WIP
 	health -= amount
@@ -69,15 +73,23 @@ func applyStatusEffect(type,strength,duration):
 	
 
 func _physics_process(delta: float) -> void:
+	print("ATTEMPTING ENEMY PATHFINDING")
+	if !$'NavigationAgent2D'.is_target_reachable():
+		print("TARGET UNREACHABLE")
+	'''
 	if !canMove :
 		return
 	get_parent().set_progress(get_parent().get_progress()+speed*delta)
-	
-	#checks its progress along the board
-	if get_parent().progress_ratio >0.99:
+	'''
+	if !$NavigationAgent2D.is_target_reached():
+		var navDirection = to_local($'NavigationAgent2D'.get_next_path_position()).normalized()
+		velocity = navDirection*speed*delta*30
+		move_and_slide()
+	else:
 		print("YOU FUCKING DIE")
 		get_node("/root/Main/UI/HealthAndMoney").changeHealth(health)
 		queue_free()
+
 
 
 func _on_timer_timeout() -> void:
