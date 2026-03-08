@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="2_6ijjn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tflo0"]
-radius = 12.0
+radius = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k210i"]
 atlas = ExtResource("2_6ijjn")
@@ -15,7 +15,6 @@ script = ExtResource("1_bq4py")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_tflo0")
-disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_k210i")

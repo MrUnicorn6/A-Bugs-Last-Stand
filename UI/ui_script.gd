@@ -1,5 +1,5 @@
 extends Node
-
+const BaseTowerObject = preload("res://Gameplay/Towers/BaseTower/base_tower.tscn")
 const BaseShopItem = preload("res://UI/Shop Panel/BaseShopButton.tscn")
 const BaseUpgradeItem = preload("res://UI/UpgradePanel/BaseUpgradeButton.tscn")
 var mapObject #set by main.gd
@@ -8,25 +8,25 @@ var mapObject #set by main.gd
 
 
 
-func addShopItem(packedTower):
+func addShopItem(tower:Dictionary):
 	var newButton = BaseShopItem.instantiate()
-	var tempTower = packedTower.instantiate()
+	
 	#give the map to the button, so that it can be used to check if 
 	#its a valid place to put a tower
 	newButton.map = mapObject
-	newButton.setIntendedTower(packedTower)
-	newButton.get_node("BaseShopButton/Sprite").texture = tempTower.get_node("Sprite").texture
-	newButton.get_node("BaseShopButton/NameLabel").text = tempTower.displayName
-	newButton.get_node("BaseShopButton/CostLabel").text = str(tempTower.shopCost)
+	newButton.setIntendedTower(tower)
+	newButton.get_node("BaseShopButton/Sprite").texture = tower["icon_texture"]
+	newButton.get_node("BaseShopButton/NameLabel").text = tower["display_name"]
+	newButton.get_node("BaseShopButton/CostLabel").text = str(tower["shop_cost"])
 	#print("ADDING BUTTONS DISABLED RN")
 	$"ShopPanel/ShopOptionsContainer".add_child(newButton)
-	tempTower.queue_free()
+	#tower.queue_free()
 
 func addUpgradeItem(spriteTex,desc,cost):
 	var tempButton = BaseUpgradeItem.instantiate()
-	tempButton.get_node("BaseShopButton/Sprite").texture = spriteTex
-	tempButton.get_node("BaseShopButton/DescLabel").text = desc
-	tempButton.get_node("BaseShopButton/CostLabel").text = str(cost)
+	tempButton.get_node("Sprite").texture = spriteTex
+	tempButton.get_node("DescLabel").text = desc
+	tempButton.get_node("CostLabel").text = str(cost)
 	#print("ADDING BUTTONS DISABLED RN")
 	$"UpgradePanel/UpgradeOptionsContainer".add_child(tempButton)
 	return tempButton

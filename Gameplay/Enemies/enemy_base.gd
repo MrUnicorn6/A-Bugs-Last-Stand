@@ -73,9 +73,9 @@ func applyStatusEffect(type,strength,duration):
 	
 
 func _physics_process(delta: float) -> void:
-	print("ATTEMPTING ENEMY PATHFINDING")
-	if !$'NavigationAgent2D'.is_target_reachable():
-		print("TARGET UNREACHABLE")
+	#print("ATTEMPTING ENEMY PATHFINDING")
+	#if !$'NavigationAgent2D'.is_target_reachable():
+		#print("TARGET UNREACHABLE")
 	'''
 	if !canMove :
 		return

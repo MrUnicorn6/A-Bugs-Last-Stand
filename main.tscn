@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3scmm5r6a23q"]
+[gd_scene load_steps=3 format=3 uid="uid://b3scmm5r6a23q"]
 
 [ext_resource type="Script" uid="uid://du64n7xpj8sda" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://byr44qqo72cao" path="res://Maps/Map1/camera_2d.gd" id="2_0xm2m"]
 
 [node name="Main" type="AspectRatioContainer"]
 anchors_preset = 15
@@ -13,3 +14,7 @@ script = ExtResource("1_h2yge")
 [node name="CoreGameNode" type="Node2D" parent="."]
 
 [node name="Towers" type="Node2D" parent="CoreGameNode"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+script = ExtResource("2_0xm2m")

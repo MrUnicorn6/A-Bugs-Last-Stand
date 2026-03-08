@@ -1,8 +1,8 @@
 extends Node
 #blank objects:
 const BaseEnemy = preload("res://Gameplay/Enemies/EnemyBase.tscn")
-const BlankTower = preload("res://Gameplay/Towers/BaseTower/Base_Tower.tscn")
-const BlankBullet = preload("res://Gameplay/Towers/BaseTower/Base_Bullet.tscn")
+const BlankTower = preload("res://Gameplay/Towers/BaseTower/Depr_base_TOWER.tscn")
+const BlankBullet = preload("res://Gameplay/Towers/BaseTower/base_bullet.tscn")
 
 #atlases
 const TestingAtlas = preload("res://Assets/towerDefense_tilesheet.png")
@@ -14,7 +14,89 @@ const Enums = preload("res://Main/ENUMS.gd")
 #paths, maybe useless due to not needing to save towers to disk
 const SpecialTowersPath = "res://Towers/PathUpgradeTowers/"
 const TowersPath = "res://"
-
+##static and hopefully constant/unchanging array of all towers and their configs
+## to get a specific tower, use towers_config["type"]["tower"]
+##like towers_config["ants"]["bullet_ant"] returns: dict of configs
+static var towers_config = {
+	"ants":{
+		"ant":{
+			"display_name":"ant",
+			"desc":"mid range",
+			"icon_texture":get_atlas_texture(BugAtlas,1,2,32),
+			"targeting":Enums.TargetingTypes.FIRST,
+			"can_see_camo":Enums.CanSeeCamo.CANNOTSEECAMO,
+			"min_range":0,
+			"max_range":300,
+			"fire_rate":1,##expressed in delay between shots in seconds
+			"shop_cost":5,
+			"bullet_config":{
+				"bullet_texture":get_atlas_texture(TestingAtlas,22,10,64),
+				"speed":300,##in pixles per second
+				"guidance":Enums.GuidanceTypes.DUMB,
+				"aoe_radius":100,
+				"direct_damage":5,#to whatever it hits, usually its intended target
+				"fuse":Enums.Fuses.POINT,
+				"aoe_damage":10
+				
+			},
+			"tower_texture":get_atlas_texture(BugAtlas,2,2,32),
+			#"upgrades":null #unsure how to do this yet
+		},
+		"fire_ant":{
+			"display_name":"fire ant",
+			"desc":"burn range",
+			"targeting":Enums.TargetingTypes.CLOSEST,
+			"can_see_camo":Enums.CanSeeCamo.CANNOTSEECAMO,
+			"min_range":0,
+			"max_range":300,
+			"fire_rate":0.25,##expressed in delay between shots in seconds
+			"upgrade_cost":10,
+			"bullet_config":{
+				"speed":300,##in pixles per second
+				"guidance":Enums.GuidanceTypes.SMART,
+				"direct_damage":5,#to whatever it hits, usually its intended target
+				"fuse":Enums.Fuses.IMPACT, # may not be needed for this ant
+				"status_effect":{
+					"status_application":Enums.StatusApplication.DIRECT,
+					"status_type":Enums.StatusEffectType.DOT,
+					"status_duration":4,
+					"status_strength":4
+				}
+			},
+			"tower_texture":get_atlas_texture(BugAtlas,2,2,32),
+			"upgrades":null #unsure how to do this yet
+		}
+	},
+	"beetles":{
+		"beetle":{
+			"icon_texture":get_atlas_texture(BugAtlas,1,1,32),
+			"display_name":"beelte",
+			"desc":"ball ball ball",
+			"targeting":Enums.TargetingTypes.LAST,
+			"can_see_camo":Enums.CanSeeCamo.CANNOTSEECAMO,
+			"min_range":0,
+			"max_range":200,
+			"fire_rate":0.25,##expressed in delay between shots in seconds
+			"shop_cost":10,
+			"bullet_config":{
+				"speed":250,
+				"guidance":Enums.GuidanceTypes.BALL,#bulletspeed
+				"fuse":Enums.Fuses.TIMER,
+				"fuse_value":1,
+				"damage":5,
+				"aoe_radius":32,
+				"bullet_texture":get_atlas_texture(BugAtlas,2,9,32)
+			},
+			"tower_texture":get_atlas_texture(BugAtlas,2,1,32),
+		}
+	},
+	"bees":{
+		"basic_bee":{
+			#DRONES SOON???	
+		}
+	}
+}
+"""
 static var BasicTowers = [
 	BlankTower.instantiate().setThisTowersValues(
 		'Ant', Enums.TargetingTypes.FIRST,
@@ -179,24 +261,25 @@ static var SpecialTowers = [
 		[]
 	)
 ]
+"""
 static var Enemies = [
 	BaseEnemy.instantiate().setEnemyValues({
 		"name":"fast",
 		"health":10,
 		"speed":200,
-		"texture":getAtlasAreaTexture(TestingAtlas,15,10,64),
+		"texture":get_atlas_texture(TestingAtlas,15,10,64),
 	}),
 	BaseEnemy.instantiate().setEnemyValues({
 		"name":"strong",
 		"health":30,
 		"speed":50,
-		"texture":getAtlasAreaTexture(TestingAtlas,16,10,64),
+		"texture":get_atlas_texture(TestingAtlas,16,10,64),
 	}),
 	BaseEnemy.instantiate().setEnemyValues({
 		"name":"boss",
 		"health":50,
 		"speed":50,
-		"texture":getAtlasAreaTexture(TestingAtlas,17,10,64),
+		"texture":get_atlas_texture(TestingAtlas,17,10,64),
 		"resistances":"WAEWAKLKDNS"
 	}),
 	BaseEnemy.instantiate().setEnemyValues({
@@ -204,7 +287,7 @@ static var Enemies = [
 		"health":30,
 		"speed":50,
 		"camo":true,
-		"texture":getAtlasAreaTexture(TestingAtlas,18,10,64),
+		"texture":get_atlas_texture(TestingAtlas,18,10,64),
 		"resistances":"WAEWAKLKDNS"
 	}),
 	BaseEnemy.instantiate().setEnemyValues({
@@ -212,15 +295,15 @@ static var Enemies = [
 		"health":10,
 		"speed":300,
 		"flying":true,#not implemented
-		"texture":getAtlasAreaTexture(TestingAtlas,17,11,64),
+		"texture":get_atlas_texture(TestingAtlas,17,11,64),
 		"resistances":"WAEWAKLKDNS"
 	})
 ]
-
+"""
 static func getPackedBasicTowers() ->Dictionary:
 	return pack(BasicTowers)
 static func getPackedSpecialTowers()-> Dictionary:
-	return pack(SpecialTowers)
+	return pack(SpecialTowers)"""
 static func getPackedEnemies()->Dictionary:
 	return pack(Enemies)
 	
@@ -233,7 +316,7 @@ static func pack(objects)->Dictionary:
 		toSend[i.displayName]=scene
 	return toSend
 
-static func getAtlasAreaTexture(atlas: Texture2D,col: int,row: int,cell_size) -> Texture2D:  
+static func get_atlas_texture(atlas: Texture2D,col: int,row: int,cell_size) -> Texture2D:  
 	var tex := AtlasTexture.new()
 	tex.atlas = atlas
 	var rownumb = row*cell_size
@@ -244,13 +327,14 @@ static func getAtlasAreaTexture(atlas: Texture2D,col: int,row: int,cell_size) ->
 		cell_size,
 		cell_size)
 	return tex
-
 static func prepareBullet(bulletConfig)->PackedScene:
 	#to procedurally create and config a bullet into a packed scene for use by the tower
 	#does not save bullets to disk, this is mostly for reliable use of bullet.instantiate by shoot()
-	
+	return null
+	"""
 	var 	newBullet = BlankBullet.instantiate()
 	newBullet.setBulletValuesViaConfigOBject(bulletConfig)
 	var scene = PackedScene.new()
 	scene.pack(newBullet)
 	return scene
+	"""

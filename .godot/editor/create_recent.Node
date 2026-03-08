@@ -1,5 +1,5 @@
-Node
 CollisionShape2D
+Node
 StaticBody2D
 NavigationAgent2D
 Camera2D

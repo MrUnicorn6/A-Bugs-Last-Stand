@@ -5,7 +5,7 @@ extends Camera2D
 func _ready() -> void:
 	pass # Replace with function body.
 
-@export var mapPanSpeed = 200
+@export var mapPanSpeed = 600
 
 
 
@@ -14,4 +14,5 @@ func _physics_process(delta: float) -> void:
 	#print(direction)
 	direction = direction*mapPanSpeed
 	global_position += direction*delta
+	#print("Camerapos is ",global_position)
 # Called every frame. 'delta' is the elapsed time since the previous frame.

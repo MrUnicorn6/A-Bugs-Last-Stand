@@ -1,185 +1,133 @@
 extends StaticBody2D
+
+
+class_name Tower
+
+
 const Enums = preload("res://Main/ENUMS.gd")
+const base_bullet = preload("res://Gameplay/Towers/BaseTower/base_bullet.tscn")
 
-func setThisTowersValues(setName,setTargetingMethod:Enums.TargetingTypes,
-		setCanSeeCamo:Enums.CanSeeCamo,
-		setMinRange,setMaxRange,setFireRate,setShopCost,
-		setPackedBulletObject,setSprite,setUpgrades) -> Object:
-		add_to_group("TOWERS")
-		displayName = setName
-		targetingMethod = setTargetingMethod
-		canSeeCamo = setCanSeeCamo
-		fireRate = setFireRate
-		packedBulletObject = setPackedBulletObject
-		#$'BaseBullet'.hide()
-		minRange = setMinRange #range needs to be added
-		_maxRange = setMaxRange
-		shopCost = setShopCost
-		upgradeCount = 0
-		upgrades = setUpgrades #for upgrade info
-		$'TargetingRange/TargetingHitbox'.shape.radius = _maxRange
-		#print("SETTING MAX RANGE TO ",setMaxRange, " on tower ",displayName," and shopcost ",shopCost)
-		get_node('Sprite').texture = setSprite 
-		#meant to look like res://SourceTowers/BaseTower/Base_Tower.tscn::AtlasTexture_ugiwr
-		return self
+@export var _config:Dictionary
+
+#in use by this script for temporary thingies
+var draw_range = false
+var upgrade_count:int = 0
+var fire_rate_cooldown:float = 0
+var possible_targets:Array[Node] = [] ##constantly changing arr of targets
+var selected_target:Node = null ##for holding a target seperate from possibleTargets
 func _draw() -> void:
-	if displayRange:
-		draw_circle(Vector2(0,0),_maxRange,Color(0,0,0,0.25),true)
-@export var displayName :String
-@export var fireRate :float
-@export var canSeeCamo:Enums.CanSeeCamo
-@export var shopCost:int 
-@export var minRange:int
-@export var _maxRange :int
-@export var targetingMethod:Enums.TargetingTypes
-@export var packedBulletObject:PackedScene
-#hand this a preload("src")
-
-
-@export var upgrades :Array
-#this could be an issue, well see:
-
-#in use
-var displayRange = false
-var upgradeCount = 0
-var fireRateCooldown = 0
-var possibleTargets = [] #constantly changing arr of targets
-var selectedTarget = null # for holding a target seperate from possibleTargets
-
-
-	#firerate
-func _physics_process(delta: float) -> void:
-	if !possibleTargets.is_empty():
-		#visual of looking at target
-		if is_instance_valid(selectedTarget):
-			self.look_at(selectedTarget.global_position)
+	if draw_range:
+		draw_circle(Vector2(0,0),_config["max_range"],Color(0,0,0,0.25),true)
+"""
+"display_name":"ant",
+			"desc":"mid range",
+			"targeting":Enums.TargetingTypes.FIRST,
+			"can_see_camo":Enums.CanSeeCamo.CANNOTSEECAMO,
+			"min_range":0,
+			"max_range":300,
+			"fire_rate":1,##expressed in delay between shots in seconds
+			"shop_cost":5,
+			"bullet_config":{
+				"speed":300,##in pixles per second
+				"guidance":Enums.GuidanceTypes.SMART,
+				"direct_damage":5,#to whatever it hits, usually its intended target
+				"fuse":Enums.Fuses.IMPACT
+				
+			},
+			"tower_texture":getAtlasAreaTexture(BugAtlas,2,2,32),
+			"""
+func set_config(config_to_be_set_to:Dictionary):
+	print("TRYING TO SETTING CONFIG, BUT MAY NOT UPDATING PROPERLY")
+	_config = config_to_be_set_to
+	$TargetingRange/TargetingHitbox.shape.radius = _config["max_range"]
+	$Sprite.texture = _config["tower_texture"]
 	
-	if !possibleTargets.is_empty():
-		if possibleTargets[0] == null:
-			possibleTargets.remove_at(0)
-			return
-		#print('in targets selection loop')
-		if targetingMethod == Enums.TargetingTypes.CLOSEST:
-			selectedTarget = possibleTargets[0]
-			var closest = possibleTargets[0]
-			for i in possibleTargets:
-				if i.global_position.distance_to(global_position) < global_position.distance_to(closest.global_position):
-					closest = i
-			selectedTarget = closest
-			
-			
-		elif targetingMethod == Enums.TargetingTypes.STRONGEST:
-			selectedTarget = possibleTargets[0]
-			var Strongest = possibleTargets[0]
-			for i in possibleTargets:
-				if i.health > Strongest.health:
-					Strongest = i
-			selectedTarget = Strongest
-		elif targetingMethod == Enums.TargetingTypes.FIRST:
-			selectedTarget = possibleTargets[0]
-		elif targetingMethod == Enums.TargetingTypes.LAST:
-			selectedTarget = possibleTargets[0]
-			var Last = possibleTargets[0]
-			for i in possibleTargets:
-				if i.get_parent().progress < selectedTarget.get_parent().progress:
-					Last = i
-			selectedTarget = Last
-	if fireRateCooldown > 0:
-		fireRateCooldown -= delta
-	if (selectedTarget != null)&& (fireRateCooldown<=0):
-		shoot()
-		fireRateCooldown = 1.0 / fireRate
-func shoot():
-	#print("number of possible targets is ",possibleTargets.size())
-	var tempBullet = packedBulletObject.instantiate()
-	$'BulletContainer'.add_child(tempBullet)
-	tempBullet.global_position = $BulletSpawnPoint.global_position
-	tempBullet.setBulletTarget(selectedTarget) 
-	tempBullet.process_mode = Node.PROCESS_MODE_ALWAYS
-	tempBullet.show()
+
+
+func _physics_process(delta: float) -> void:
+	if possible_targets.is_empty() || possible_targets.size()==0:
+		return
+	if selected_target not in possible_targets && !possible_targets.is_empty():
+		selected_target = possible_targets[0]
+	if !is_instance_valid(selected_target):
+		selected_target = null
+	_determine_selected_target()
+
+	if fire_rate_cooldown > 0:
+		fire_rate_cooldown -= delta
+	if (selected_target != null)&& (fire_rate_cooldown<=0):
+		_shoot()
+		fire_rate_cooldown = 1.0 / _config["fire_rate"]
+func _shoot():
+	var temp_bullet = base_bullet.instantiate()
+	temp_bullet.set_config(_config["bullet_config"])
+	temp_bullet.global_position = $BulletSpawnPoint.global_position
+	temp_bullet.shoot_at_target(selected_target,selected_target.global_position)
+	
+	$BulletContainer.add_child(temp_bullet)
+
 func _on_targeting_range_body_entered(body: Node2D) -> void:
-	#print("target entered, ",body.get_groups())
-	if canSeeCamo == Enums.CanSeeCamo.CANSEECAMO:
+	print("target entered, ",body.get_groups()," Range is ",_config["max_range"]," actual range is ",$TargetingRange/TargetingHitbox.shape.radius,
+	" also possible tgts is ",possible_targets.size())
+	if _config["can_see_camo"] == Enums.CanSeeCamo.CANSEECAMO:
 		if body.is_in_group("ENEMY"):
-			#print("I SEE A CAMO FUCKER")
-			possibleTargets.append(body)
-	elif canSeeCamo == Enums.CanSeeCamo.CANNOTSEECAMO:
+			possible_targets.append(body)
+	elif _config["can_see_camo"] == Enums.CanSeeCamo.CANNOTSEECAMO:
 		if body.is_in_group("ENEMY") && !body.is_in_group("CAMO"):
-			possibleTargets.append(body)
+			possible_targets.append(body)
+
+
 func _on_targeting_range_body_exited(body: Node2D) -> void:
-	if body in possibleTargets:
-		possibleTargets.remove_at(possibleTargets.find(body))
-	if body == selectedTarget:
-		selectedTarget = null
+	if body in possible_targets:
+		possible_targets.remove_at(possible_targets.find(body))
+	if body == selected_target:
+		selected_target = null
+
+
+## to manually re check each enemy in range, for when a tower is
+##upgraded or placed.
 func updatePossibleTargets():
 	var bodies = $'TargetingRange'.get_overlapping_bodies()
 	for i in bodies:
-		if canSeeCamo == Enums.CanSeeCamo.CANSEECAMO:
+		if _config["can_see_camo"] == Enums.CanSeeCamo.CANSEECAMO:
 			if i.is_in_group("ENEMY"):
-				possibleTargets.append(i)
-		elif canSeeCamo == Enums.CanSeeCamo.CANNOTSEECAMO:
+				possible_targets.append(i)
+		elif _config["can_see_camo"] == Enums.CanSeeCamo.CANNOTSEECAMO:
 			if i.is_in_group("ENEMY") && !i.is_in_group("CAMO"):
-				possibleTargets.append(i)
-	#print("done updating targets")
-#to call the GUI to show upgrade options
+				possible_targets.append(i)
+
+
+func _determine_selected_target()->void:
+	if _config["targeting"] == Enums.TargetingTypes.CLOSEST:
+		var closest = possible_targets[0]
+		for i in possible_targets:
+			if i.global_position.distance_to(global_position) < global_position.distance_to(closest.global_position):
+				closest = i
+		selected_target = closest
+
+
+	elif _config["targeting"] == Enums.TargetingTypes.STRONGEST:
+		var strongest = possible_targets[0]
+		for i in possible_targets:
+			if i.health > strongest.health:
+				strongest = i
+		selected_target = strongest
+
+
+	elif _config["targeting"] == Enums.TargetingTypes.FIRST:
+			selected_target = possible_targets[0]
+
+
+	elif _config["targeting"] == Enums.TargetingTypes.LAST:
+			var Last = possible_targets[0]
+			for i in possible_targets:
+				if i.get_parent().progress < selected_target.get_parent().progress:
+					Last = i
+			selected_target = Last
+##@depricated: THIS IS A SHITTY METHOD, FIX IT
 func _on_clicked_on_detector_gui_input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseButton and event.button_mask==0:
-		get_node("/root/Main/UI").changeToUpgradeScreen(self,upgrades)
-	pass # Replace with function body.
-
-func upgradeOnce(selectedSpecialTower = ""):
-	if upgradeCount==0:
-		executeUpgrade(1)
-		updatePossibleTargets()
-		print(displayName," UPGRADED TO LEVEL 1")
-	elif upgradeCount == 1:
-		executeUpgrade(2)
-		updatePossibleTargets()
-		print(displayName," UPGRADED TO LEVEL 2")
-	elif upgradeCount == 2:
-		print(displayName," UPGRADED TO LEVEL 3, PATH")
-		if selectedSpecialTower =="":
-			print("WARNING NO PATH WAS SELECTED BUT TOWER UPGRADE() CALLED ANYWAY")
-		print("PREFORMING UPGRADE TO PATH TOWER: ",selectedSpecialTower)
-		var futuretower = get_node("/root/Main").getPackedSpecialTower(selectedSpecialTower).instantiate()
-		futuretower.global_position = global_position
-		$'../'.add_child(futuretower)
-		futuretower.show()
-		futuretower.process_mode = Node.ProcessMode.PROCESS_MODE_ALWAYS
-		futuretower.updatePossibleTargets()
-		futuretower.rotation_degrees -= 90
-		queue_free()
-		get_node("/root/Main/UI").changeToUpgradeScreen(futuretower,futuretower.upgrades)
-func executeUpgrade(tolevel):
-	var toUpgradeBullet = packedBulletObject.instantiate()
-	var i = upgrades[tolevel-1]#to grab the first upgrade, or level 1; towers start at level 0
-		#the for loop is to get and apply each item in the object like {"range":10,"damage":5}
-	if i.has("range"):
-		#print("NOT UPGRADING THE RANGE OF TOWER ",displayName)
-		_maxRange += i["range"]
-		$'TargetingRange/TargetingHitbox'.shape.radius = _maxRange
-		#print(displayName," RANGE UPGRADED TO ",_maxRange)
-	if i.has("sprite"):
-		get_node('Sprite').texture = i['sprite'] 
-	if i.has("damage"):
-		toUpgradeBullet.damageNumber +=i["damage"]
-	if i.has("firerate"):
-		fireRate+= i["firerate"]
-	if i.has("canseecamo"):
-		canSeeCamo = i["canseecamo"]
-	if i.has("status"):
-		toUpgradeBullet.statusEffectData = i["status"]
-	if i.has("aoeradius"):
-		toUpgradeBullet.AOERadius += i["aoeradius"]
-	if i.has("fusevalue"):
-		toUpgradeBullet.fuseValue +=i["fusevalue"]
-	if i.has("muzzleVelocity"):
-		toUpgradeBullet.muzzleVelocity +=i["muzzleVelocity"]
-	
-	#apply and repack the bullet for future use
-	var temp = PackedScene.new()
-	temp.pack(toUpgradeBullet)
-	packedBulletObject = temp
-	
-	upgradeCount+=1
+		print("WHAT THE FUCK IS THIS PEICE OF SHI AH AH METHOD Tower.Onclicked")
+		get_node("/root/Main/UI").changeToUpgradeScreen(self,_config["upgrades"])
+	pass
