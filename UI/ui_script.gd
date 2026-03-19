@@ -9,7 +9,8 @@ var mapObject #set by main.gd
 
 
 
-func start() -> void:
+func start(map) -> void:
+	mapObject=map
 	pass
 	
 func add_shop_item(tower:Dictionary):
@@ -101,9 +102,11 @@ func _on_back_button_pressed() -> void:
 
 ##when the main menus play button is clicked
 func _on_play_button_pressed() -> void:
+	#print("SWAWS")
 	$'MainMenu'.hide()
+	$'SidePanel'.show()
 	
-	$'LevelSelect'.show()
+	
 	
 	
 	pass # Replace with function body.

@@ -1,7 +1,7 @@
 extends MarginContainer
 
 var intended_tower_config:Dictionary = {}
-var map 
+var map
 const loader = preload("res://Gameplay/gameplay_objects_loader.gd")
 
 
