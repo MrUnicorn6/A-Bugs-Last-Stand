@@ -1,14 +1,15 @@
-CollisionShape2D
-Node
-StaticBody2D
-NavigationAgent2D
-Camera2D
-Node2D
-MarginContainer
-CanvasLayer
+ScrollContainer
+VScrollBar
+FlowContainer
+VBoxContainer
+LineEdit      - Matches the "text" keyword.
+TextureRect
+Label
 Control
-PanelContainer
 Container
-AspectRatioContainer
-Path2D
-PathFollow2D
+Panel
+MarginContainer
+HBoxContainer
+Label      - Matches the "text" keyword.
+ColorRect
+CollisionShape2D

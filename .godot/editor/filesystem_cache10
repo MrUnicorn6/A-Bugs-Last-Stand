@@ -1,57 +1,52 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1772929840
+::res://::1773956249
 icon.svg::CompressedTexture2D::921221585593911398::1772912571::1772912571::1::::<><><>0<>0<>0aa7127b07ca24b7253cb64019007254<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-main.gd::GDScript::8628820359299377510::1772926970::0::1::::<>Node<><>0<>0<><>::
-main.tscn::PackedScene::4389010646081670468::1772912571::0::1::::<><><>0<>0<><>::uid://du64n7xpj8sda::::res://main.gd<>uid://byr44qqo72cao::::res://Maps/Map1/camera_2d.gd
+main.gd::GDScript::8628820359299377510::1773951932::0::1::::<>Node<><>0<>0<><>::
+main.tscn::PackedScene::4389010646081670468::1773951752::0::1::::<><><>0<>0<><>::uid://du64n7xpj8sda::::res://main.gd
 ::res://Assets/::1772912586
 BugAtlas.png::CompressedTexture2D::1789439445041738132::1772912586::1772912586::1::::<><><>0<>0<>f13abd273d6f93e46706418e7aac2724<>res://.godot/imported/BugAtlas.png-182793f333e0fdc7e72959ec04106ace.ctex::
 towerDefense_tilesheet.png::CompressedTexture2D::9222109329449105216::1772912586::1772912586::1::::<><><>0<>0<>ab982f07e0651fbd9eb1b7e785ada544<>res://.godot/imported/towerDefense_tilesheet.png-8b0ec01e3d08857e59901f59c408065c.ctex::
 UIATLAS.png::CompressedTexture2D::8795879250502740591::1772912586::1772912586::1::::<><><>0<>0<>c37be644a1b6a7f6d1a6117430fd3051<>res://.godot/imported/UIATLAS.png-e5eaf4d2210b01deb98fc284c5613a11.ctex::
-::res://Gameplay/::1772926969
-GameplayObjectsLoader.gd::GDScript::6241817437728039145::1772926969::0::1::::<>Node<><>0<>0<><>::
-::res://Gameplay/Enemies/::1772912586
-EnemyBase.tscn::PackedScene::3137179464802737274::1772912586::0::1::::<><><>0<>0<><>::uid://xs6uy33avggi::::res://Gameplay/Enemies/enemy_base.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
-enemy_base.gd::GDScript::1653421450989630612::1772912586::0::1::::<>CharacterBody2D<><>0<>0<><>::
-::res://Gameplay/Towers/::1772912586
-::res://Gameplay/Towers/BaseTower/::1772928882
-base_bullet.gd::GDScript::8160566456956475918::1772925202::0::1::::Bullet<>CharacterBody2D<><>0<>0<><>::
-base_bullet.tscn::PackedScene::2561867244620517642::1772927753::0::1::::<><><>0<>0<><>::uid://dojblp5fifkp7::::res://Gameplay/Towers/BaseTower/base_bullet.gd<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
-base_tower.gd::GDScript::539083308556985572::1772928756::0::1::::Tower<>StaticBody2D<><>0<>0<><>::
-base_tower.tscn::PackedScene::1741955709739089019::1772928882::0::1::::<><><>0<>0<><>::uid://hxevgtnqwu1q::::res://Gameplay/Towers/BaseTower/base_tower.gd<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png
-DEPR_BASE_BULLET.gd::GDScript::3653047035530282242::1772925952::0::1::::<>CharacterBody2D<><>0<>0<><>::
+::res://Gameplay/::1773951482
+gameplay_objects_loader.gd::GDScript::6241817437728039145::1773951428::0::1::::<>Node<><>0<>0<><>::
+::res://Gameplay/Enemies/::1773285703
+enemy_base.gd::GDScript::1653421450989630612::1773285703::0::1::::<>CharacterBody2D<><>0<>0<><>::
+enemy_base.tscn::PackedScene::3137179464802737274::1772912586::0::1::::<><><>0<>0<><>::uid://xs6uy33avggi::::res://Gameplay/Enemies/enemy_base.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
+::res://Gameplay/Levels/::1773945439
+::res://Gameplay/Levels/Map1/::1773951752
+enemies_spawning.gd::GDScript::5817802831870557843::1773285579::0::1::::<>Node<><>0<>0<><>::
+Map1.tres::TileSet::3451106707125203606::1773945120::0::1::::<><><>0<>0<><>::uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
+Map1.tscn::PackedScene::3312836057502210166::1773945439::0::1::::<><><>0<>0<><>::uid://bpf0huc0qyabu::::res://Gameplay/Levels/Map1/Map1.tres<>uid://tn6eakis1elg::::res://Gameplay/Levels/Map1/MapSpawning.gd<>uid://co5gmlhtjwdx0::::res://Gameplay/Levels/Map1/enemies_spawning.gd
+MapSpawning.gd::GDScript::1362314325713380860::1772912586::0::1::::<>TileMapLayer<><>0<>0<><>::
+::res://Gameplay/Towers/::1773282717
+::res://Gameplay/Towers/BaseTower/::1773288353
+base_bullet.gd::GDScript::8160566456956475918::1773288276::0::1::::Bullet<>CharacterBody2D<><>0<>0<><>::
+base_bullet.tscn::PackedScene::2561867244620517642::1773288353::0::1::::<><><>0<>0<><>::uid://dojblp5fifkp7::::res://Gameplay/Towers/BaseTower/base_bullet.gd<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
+base_tower.gd::GDScript::539083308556985572::1773288353::0::1::::Tower<>StaticBody2D<><>0<>0<><>::
+base_tower.tscn::PackedScene::1741955709739089019::1773285481::0::1::::<><><>0<>0<><>::uid://hxevgtnqwu1q::::res://Gameplay/Towers/BaseTower/base_tower.gd<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png
+DEPR_BASE_BULLET.gd::GDScript::3653047035530282242::1773288251::0::1::::<>CharacterBody2D<><>0<>0<><>::
 DEPR_Base_Bullet.tscn::PackedScene::8851665328846553815::1772926155::0::1::::<><><>0<>0<><>::uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
 Depr_Base_TOWER.gd::GDScript::141089413046068929::1772925248::0::1::::<>StaticBody2D<><>0<>0<><>::
 Depr_base_TOWER.tscn::PackedScene::5397337681536685075::1772926163::0::1::::<><><>0<>0<><>::uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png
-::res://Gameplay/Towers/OtherTowers/::1772912586
-::res://Gameplay/Towers/PathUpgradeTowers/::1772922170
-Atlas.tscn::PackedScene::-1::1772922170::0::1::::<><><>0<>0<><>::uid://calyswity8rl::::res://Gameplay/Towers/BaseTower/Depr_Base_TOWER.gd<>uid://bsbtferjb3rha::::res://Gameplay/Towers/BaseTower/DEPR_BASE_BULLET.gd<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
-Bullet Ant.tscn::PackedScene::-1::1772922170::0::1::::<><><>0<>0<><>::uid://calyswity8rl::::res://Gameplay/Towers/BaseTower/Depr_Base_TOWER.gd<>uid://bsbtferjb3rha::::res://Gameplay/Towers/BaseTower/DEPR_BASE_BULLET.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png
-Dung Beetle.tscn::PackedScene::-1::1772922170::0::1::::<><><>0<>0<><>::uid://calyswity8rl::::res://Gameplay/Towers/BaseTower/Depr_Base_TOWER.gd<>uid://bsbtferjb3rha::::res://Gameplay/Towers/BaseTower/DEPR_BASE_BULLET.gd<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
-Fire Ant.tscn::PackedScene::-1::1772922170::0::1::::<><><>0<>0<><>::uid://calyswity8rl::::res://Gameplay/Towers/BaseTower/Depr_Base_TOWER.gd<>uid://bsbtferjb3rha::::res://Gameplay/Towers/BaseTower/DEPR_BASE_BULLET.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png
-Honey Ant.tscn::PackedScene::-1::1772922170::0::1::::<><><>0<>0<><>::uid://calyswity8rl::::res://Gameplay/Towers/BaseTower/Depr_Base_TOWER.gd<>uid://bsbtferjb3rha::::res://Gameplay/Towers/BaseTower/DEPR_BASE_BULLET.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png
-Scarab.tscn::PackedScene::-1::1772922170::0::1::::<><><>0<>0<><>::uid://calyswity8rl::::res://Gameplay/Towers/BaseTower/Depr_Base_TOWER.gd<>uid://bsbtferjb3rha::::res://Gameplay/Towers/BaseTower/DEPR_BASE_BULLET.gd<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
-::res://Main/::1772918035
-ENUMS.gd::GDScript::1444140555679433932::1772918035::0::1::::<>Node<><>0<>0<><>::
-::res://Maps/::1772912586
-::res://Maps/Map1/::1772925920
+::res://Main/::1773951814
+CameraScene.tscn::PackedScene::4739370868702193479::1773951814::0::1::::<><><>0<>0<><>::uid://byr44qqo72cao::::res://Main/camera_2d.gd
 camera_2d.gd::GDScript::4107860799408759086::1772912586::0::1::::<>Camera2D<><>0<>0<><>::
-enemies_spawning.gd::GDScript::5817802831870557843::1772912586::0::1::::<>Node<><>0<>0<><>::
-Map1.tres::TileSet::3451106707125203606::1772925920::0::1::::<><><>0<>0<><>::uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
-Map1.tscn::PackedScene::3312836057502210166::1772912586::0::1::::<><><>0<>0<><>::uid://bpf0huc0qyabu::::res://Maps/Map1/Map1.tres<>uid://tn6eakis1elg::::res://Maps/Map1/MapSpawning.gd<>uid://co5gmlhtjwdx0::::res://Maps/Map1/enemies_spawning.gd
-MapSpawning.gd::GDScript::1362314325713380860::1772912586::0::1::::<>TileMapLayer<><>0<>0<><>::
-::res://UI/::1772927057
+ENUMS.gd::GDScript::1444140555679433932::1773278444::0::1::::<>Node<><>0<>0<><>::
+::res://UI/::1773952801
 health_and_money.gd::GDScript::2069911013800014041::1772912586::0::1::::<>Panel<><>0<>0<><>::
-MainMenu.tscn::PackedScene::9129336461255755514::1772912586::0::1::::<><><>0<>0<><>::uid://dxk131fsnmthf::::res://Assets/UIATLAS.png
-ui.tscn::PackedScene::4325467458835772332::1772912586::0::1::::<><><>0<>0<><>::uid://fxckusi88c8o::::res://UI/ui_script.gd<>uid://ctm8cfcixquth::::res://UI/Stuff/UITileset.tres<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png<>uid://4qxeqtk7wca8::::res://UI/health_and_money.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png<>uid://bnf7l64u5bhbo::::res://UI/Stuff/UITheme.tres
-ui_script.gd::GDScript::398565277140483984::1772927057::0::1::::<>Node<><>0<>0<><>::
-::res://UI/Shop Panel/::1772927912
-BaseShopButton.tscn::PackedScene::657540965630943057::1772912586::0::1::::<><><>0<>0<><>::uid://bnf7l64u5bhbo::::res://UI/Stuff/UITheme.tres<>uid://c6awacbqs1wuk::::res://UI/Shop Panel/base_shop_button.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
-base_shop_button.gd::GDScript::6950031401349641786::1772927912::0::1::::<>MarginContainer<><>0<>0<><>::
-::res://UI/Stuff/::1772925920
+ui.tscn::PackedScene::4325467458835772332::1773952801::0::1::::<><><>0<>0<><>::uid://fxckusi88c8o::::res://UI/ui_script.gd<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png<>uid://4qxeqtk7wca8::::res://UI/health_and_money.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png<>uid://bnf7l64u5bhbo::::res://UI/Stuff/UITheme.tres<>uid://dxk131fsnmthf::::res://Assets/UIATLAS.png
+ui_script.gd::GDScript::398565277140483984::1773952649::0::1::::<>Node<><>0<>0<><>::
+::res://UI/BaseObjects/::1773952623
+::res://UI/BaseObjects/Levels/::1773952797
+BaseLevelTile.tscn::PackedScene::2368132066826776736::1773952797::0::1::::<><><>0<>0<><>::uid://bnf7l64u5bhbo::::res://UI/Stuff/UITheme.tres
+::res://UI/BaseObjects/Shop Panel/::1773952590
+BaseShopButton.tscn::PackedScene::657540965630943057::1773952590::0::1::::<><><>0<>0<><>::uid://bnf7l64u5bhbo::::res://UI/Stuff/UITheme.tres<>uid://c6awacbqs1wuk::::res://UI/BaseObjects/Shop Panel/base_shop_button.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
+base_shop_button.gd::GDScript::6950031401349641786::1773945120::0::1::::<>MarginContainer<><>0<>0<><>::
+::res://UI/BaseObjects/UpgradePanel/::1773952593
+BaseUpgradeButton.tscn::PackedScene::1433643606285556193::1773952593::0::1::::<><><>0<>0<><>::uid://txgge1lyg7af::::res://UI/BaseObjects/UpgradePanel/base_upgrade_button.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
+base_upgrade_button.gd::GDScript::1381443984976468245::1772912586::0::1::::<>Panel<><>0<>0<><>::
+::res://UI/Stuff/::1773945120
 UITheme.tres::Theme::3311161801231330164::1772912586::0::1::::<><><>0<>0<><>::uid://dji0dhrdrm1ii::::res://UI/Stuff/UI Theme Parts/Flat Basic stylebox.tres
-UITileset.tres::TileSet::6133209428007869133::1772925920::0::1::::<><><>0<>0<><>::uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png
+UITileset.tres::TileSet::6133209428007869133::1773945119::0::1::::<><><>0<>0<><>::uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png
 ::res://UI/Stuff/UI Theme Parts/::1772912586
 Flat Basic stylebox.tres::StyleBoxFlat::7809000342139601168::1772912586::0::1::::<><><>0<>0<><>::
-::res://UI/UpgradePanel/::1772912586
-BaseUpgradeButton.tscn::PackedScene::1433643606285556193::1772912586::0::1::::<><><>0<>0<><>::uid://txgge1lyg7af::::res://UI/UpgradePanel/base_upgrade_button.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png
-base_upgrade_button.gd::GDScript::1381443984976468245::1772912586::0::1::::<>Panel<><>0<>0<><>::

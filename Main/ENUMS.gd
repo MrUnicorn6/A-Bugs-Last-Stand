@@ -7,7 +7,6 @@ enum TargetingTypes {CLOSEST,##target closest to the tower
 	LAST##the least far along its path
 	}
 ##a bullets guidance behavior
-
 enum GuidanceTypes {
 	##when fired will fly to the position its target was
 	##when it was fired not updating/leading as it flies
@@ -53,3 +52,6 @@ enum StatusEffectType{
 	##multiplies enemy speed using currspeed/strength like 100/2
 	SLOW}
 enum CanSeeCamo {CANSEECAMO,CANNOTSEECAMO}
+
+##element, for elemental resistances and bullets
+enum ElementalType{NORMAL,FIRE,WATER,EARTH,ELECTRIC}

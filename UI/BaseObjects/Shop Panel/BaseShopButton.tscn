@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://jmrur2kr2boj"]
 
 [ext_resource type="Theme" uid="uid://bnf7l64u5bhbo" path="res://UI/Stuff/UITheme.tres" id="1_70txg"]
-[ext_resource type="Script" uid="uid://c6awacbqs1wuk" path="res://UI/Shop Panel/base_shop_button.gd" id="1_mvkwo"]
+[ext_resource type="Script" uid="uid://c6awacbqs1wuk" path="res://UI/BaseObjects/Shop Panel/base_shop_button.gd" id="1_mvkwo"]
 [ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="1_waspw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mvkwo"]

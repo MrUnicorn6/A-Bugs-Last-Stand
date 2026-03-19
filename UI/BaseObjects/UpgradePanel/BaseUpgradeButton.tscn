@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://uop5viubpenp"]
 
-[ext_resource type="Script" uid="uid://txgge1lyg7af" path="res://UI/UpgradePanel/base_upgrade_button.gd" id="1_ax1mn"]
+[ext_resource type="Script" uid="uid://txgge1lyg7af" path="res://UI/BaseObjects/UpgradePanel/base_upgrade_button.gd" id="1_ax1mn"]
 [ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="2_qgwuk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mvkwo"]

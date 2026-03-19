@@ -40,8 +40,7 @@ func configureate_this(config:Dictionary)->void:
 	if config.has("aoe_radius"):
 		aoe_radius = config["aoe_radius"]
 		$ExplosionArea/CollisionShape2D.shape.radius = config["aoe_radius"]
-	if 
-	
+
 	
 	
 func _init() -> void:

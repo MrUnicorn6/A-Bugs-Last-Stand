@@ -1,13 +1,8 @@
 extends CharacterBody2D
 const Enums = preload("res://Main/ENUMS.gd")
 
+@export var _config:Dictionary
 
-
-@export var speed:int
-@export var displayName:String
-@export var health:int
-@export var isCamo:bool= false
-@export var resistances:Dictionary = {}
 
 
 
@@ -18,42 +13,38 @@ var canMove = true#for stun effects
 @export var defaultSpeed:int #for undoing the slowness effect
 var statuses = []
 
-
-func setEnemyValues(data:Dictionary) -> Object:
-	if !data.has("name") || !data.has("health") || !data.has("speed") || !data.has("texture"):
-		print("ERROR IN CREATING ENEMY TYPE")
-		return
-	
-	displayName = data["name"]
-	health = data["health"]
-	speed = data["speed"]
-	defaultSpeed = data["speed"]
-	$'Sprite2D'.texture = data["texture"]
+static func instantiate_and_config(packed:PackedScene,to_config:Dictionary)->Object:
+	var temp = packed.instantiate()
+	temp.set_config(to_config)
+	return temp
+func set_config(data:Dictionary):
+	assert(data.has("name") || data.has("health") || data.has("speed") || data.has("texture"),"ERROR IN CREATING ENEMY TYPE")
+	_config = data
+	_config["default_speed"] = _config["speed"]
 		
 	#non required parameters for enemies
 	if data.has("resistances"):
-		pass
-		#print("SETTING RESISTANCE")
+		print("SETTING RESISTANCE")
 	
 	if data.has("camo"):
 		if data["camo"]:
-			isCamo = data["camo"]
 			add_to_group("CAMO")
 	
 
-	return self
 func update(setGoalPosition:Vector2):
 	self.goalPosition = setGoalPosition
 	add_to_group("ENEMY")
-	if isCamo:
-		add_to_group("CAMO")
+	if _config.has("camo"):
+		if _config["camo"]:
+			add_to_group("CAMO")
 	$NavigationAgent2D.target_position = goalPosition
 	
 
-func takeDamage(amount):##WIP
-	health -= amount
+func take_damage(amount,_element:Enums.ElementalType=Enums.ElementalType.NORMAL):##WIP
+	_config["health"] -= amount
+	print("ELEMENTAL DAMAGE TYPES ARE NOT IMPLEMENTED FOR ENEMEIS")
 	#print("TAKING SOME DADMAGE, my health is ",health," DAMAGE WAS ",amount," NAME IS ",get_name())
-	if health <=0 :
+	if _config["health"] <=0 :
 		queue_free()
 	pass
 func applyStatusEffect(type,strength,duration):
@@ -63,7 +54,7 @@ func applyStatusEffect(type,strength,duration):
 		
 		canMove=false
 	if type == Enums.StatusEffectType.SLOW:
-		speed = speed/strength
+		_config["speed"]  = _config["speed"]/strength
 	statuses.append(temp)
 	
 
@@ -83,11 +74,11 @@ func _physics_process(delta: float) -> void:
 	'''
 	if !$NavigationAgent2D.is_target_reached():
 		var navDirection = to_local($'NavigationAgent2D'.get_next_path_position()).normalized()
-		velocity = navDirection*speed*delta*30
+		velocity = navDirection*_config["speed"]*delta*30
 		move_and_slide()
 	else:
 		print("YOU FUCKING DIE")
-		get_node("/root/Main/UI/HealthAndMoney").changeHealth(health)
+		get_node("/root/Main/UI/HealthAndMoney").changeHealth(_config["health"])
 		queue_free()
 
 
@@ -96,24 +87,20 @@ func _on_timer_timeout() -> void:
 	# Called every 0.1 seconds
 	if statuses.is_empty():
 		return
-	
 	for i in statuses:
-		
-
 		if i[0] == Enums.StatusEffectType.DOT:
 			if step_decimals(i[2])==0:
-				takeDamage(i[1])
-		
+				take_damage(i[1])
 	for i in statuses:#decreases time of every status
 		i[2] -= 0.1
-		
 		if i[2]<= -0.1: #removes statuses that have duration<-0.1, its negative so 
 			#that the effect can be removed/unapplied before being deleted
-			
 			#removes some effects when the status is deleted
 			if i[0] == Enums.StatusEffectType.STUN:
 				canMove = true
 			if i[0] == Enums.StatusEffectType.SLOW:
-				speed = defaultSpeed
-			#print("STATUS ",i[0], "removed, Statuses length is now ",statuses.size())
+				print("warning, slow status effect is not removed properly, or doesnt work well")
+				#this removes all speeds regardless 
+				#of # or speeds, not sure if its implemented properly
+				_config["speed"] = _config["default_speed"]
 			statuses.erase(i)

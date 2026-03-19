@@ -24,10 +24,12 @@ var target_direction_velocity:Vector2# for ball type bullets
 
 func set_config(new_config:Dictionary)->void:
 	_config = new_config
-	print("SOME CONFIG STUFF DEF NEEDS TO BE UPDATED HERE")
 	#like ball stuff
 	if _config.has("aoe_radius"):
 		$ExplosionArea/CollisionShape2D.shape.radius = _config["aoe_radius"]
+	if _config["guidance"]==Enums.GuidanceTypes.BALL:
+		$'EnemyDetectionArea/HitboxArea'.shape.radius = _config["aoe_radius"]
+		$Sprite.scale = Vector2(_config["aoe_radius"]/16,_config["aoe_radius"]/16)
 	if _config.has("bullet_texture"):
 		get_node('Sprite').texture = _config["bullet_texture"]
 
@@ -68,7 +70,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if !can_move:
 		return
 	if !is_instance_valid(target) && _config["guidance"] == Enums.GuidanceTypes.SMART: #makes sure target exists
@@ -95,7 +97,7 @@ func _physics_process(delta: float) -> void:
 		await get_tree().create_timer(_config["fuse_value"]).timeout
 		if _config["fuse"] == Enums.Fuses.TIMEREXPLOSIVE:
 			
-			print("TIMED FUSE GO BOOOM")
+			#print("TIMED FUSE GO BOOOM")
 			explode()
 		queue_free()
 	else:
@@ -110,17 +112,36 @@ func explode():
 	for i in targets:
 		if i.is_in_group("ENEMY"):
 			temp.append(i)
-	print("NUM OF TGTs IN EXP ARE ",temp.size())
+	#print("NUM OF TGTs IN EXP ARE ",temp.size())
 	for i in temp:
-		
 		if _config.has("status_effect"):
 			if _config["status_effect"]["status_application"].application == Enums.StatusApplication.AOE :
 				print("NOT APPLYING STATUS VIA AOE TO ENEMY, AS ENEMY NEEDS TO BE UPDATED")
 
-		print("APPLYING AOE DMG TO ENEMY")
-		i.takeDamage(_config["aoe_damage"])
+		#print("APPLYING AOE DMG TO ENEMY")
+		i.take_damage(_config["aoe_damage"])
 	can_move=false
 	print("BOOOM")
 	$ExplosionEffect.visible=true
 	await get_tree().create_timer(0.15).timeout
 	queue_free()
+
+
+
+
+func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
+		#for direct hits, and application of status effects 
+	if body.is_in_group("ENEMY") && _config["guidance"]==Enums.Fuses.IMPACT:
+		body.take_damage(_config["damage"])
+		#
+		#if !statusEffectData.is_empty():
+			#if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
+				#body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
+		queue_free()
+	elif body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuses.TIMER && _config["guidance"] == Enums.GuidanceTypes.BALL:
+		body.take_damage(_config["damage"])
+		print("BALLING DAMAGE")
+		#if !statusEffectData.is_empty():
+			#if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
+				#body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
+		#queue_free()

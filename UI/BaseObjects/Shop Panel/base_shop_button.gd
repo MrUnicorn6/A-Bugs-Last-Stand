@@ -2,26 +2,25 @@ extends MarginContainer
 
 var intended_tower_config:Dictionary = {}
 var map 
-const base_tower = preload("res://Gameplay/Towers/BaseTower/base_tower.tscn")
+const loader = preload("res://Gameplay/gameplay_objects_loader.gd")
 
 
 
-func setIntendedTower(setTower:Dictionary):
-	print("setting node of shop button to ",setTower)
-	intended_tower_config = setTower
+func setIntendedTower(set_tower:Dictionary):
+	#print("setting node of shop button to ",set_tower)
+	intended_tower_config = set_tower
 
 
 func _on_base_shop_button_gui_input(event: InputEvent) -> void:
 	#on mousedown
-	var actual_event_position = event.global_position + get_node("/root/Main/Camera2D").global_position
+	#var actual_event_position = event.global_position + get_node("/root/Main/Camera2D").global_position
 	if event is InputEventMouseButton and event.button_mask==1:
 		assert(intended_tower_config!={},"Shop Button clicked, but no intended tower was set")
-		var temp_tower = base_tower.instantiate()
-		temp_tower.set_config(intended_tower_config)
+		var temp_tower = loader.instance_tower(intended_tower_config)
 		var PlayerMoney = $"../../../HealthAndMoney".Money
 		
 		if(int(intended_tower_config["shop_cost"])<=int(PlayerMoney)):
-			print("THIS IS ALL FUCKED HERE IN BASESHOPBUTTON")
+			#print("THIS IS ALL FUCKED HERE IN BASESHOPBUTTON")
 			$"../../../HealthAndMoney".changeMoney(intended_tower_config["shop_cost"])
 			$BaseShopButton/TempTowerHolder.add_child(temp_tower)
 			temp_tower.global_position = event.global_position
@@ -37,7 +36,6 @@ func _on_base_shop_button_gui_input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion and event.button_mask==1:
 		if($BaseShopButton/TempTowerHolder.get_child_count()>0 ):
 			$BaseShopButton/TempTowerHolder.get_child(0).global_position = event.global_position
-			print("MOUSE AT ",event.global_position)
 			#var tiledata = map.get_cell_tile_data(map.local_to_map(map.to_local(event.global_position)))
 			#print("CAN PUT HERE ",!tiledata.get_custom_data("NoPlaceArea"))
 	#on mouseup
@@ -50,8 +48,8 @@ func _on_base_shop_button_gui_input(event: InputEvent) -> void:
 					$BaseShopButton/TempTowerHolder.get_child(0).global_position = get_node("/root/Main/CoreGameNode/Towers").get_global_mouse_position()
 					$BaseShopButton/TempTowerHolder.get_child(0).process_mode = Node.PROCESS_MODE_ALWAYS
 					$BaseShopButton/TempTowerHolder.get_child(0).draw_range = false
-					print("TOWER PLACED AT ",$BaseShopButton/TempTowerHolder.get_child(0).global_position)
-					print("TOWER BULLET POINT IS ",$BaseShopButton/TempTowerHolder.get_child(0).get_node("BulletSpawnPoint").global_position)
+					#print("TOWER PLACED AT ",$BaseShopButton/TempTowerHolder.get_child(0).global_position)
+					#print("TOWER BULLET POINT IS ",$BaseShopButton/TempTowerHolder.get_child(0).get_node("BulletSpawnPoint").global_position)
 					var targetDir = get_node("/root/Main/CoreGameNode/Towers")
 					$BaseShopButton/TempTowerHolder.get_child(0).reparent(targetDir)
 					

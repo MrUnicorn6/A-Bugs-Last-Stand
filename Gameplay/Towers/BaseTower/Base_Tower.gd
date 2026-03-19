@@ -18,26 +18,9 @@ var selected_target:Node = null ##for holding a target seperate from possibleTar
 func _draw() -> void:
 	if draw_range:
 		draw_circle(Vector2(0,0),_config["max_range"],Color(0,0,0,0.25),true)
-"""
-"display_name":"ant",
-			"desc":"mid range",
-			"targeting":Enums.TargetingTypes.FIRST,
-			"can_see_camo":Enums.CanSeeCamo.CANNOTSEECAMO,
-			"min_range":0,
-			"max_range":300,
-			"fire_rate":1,##expressed in delay between shots in seconds
-			"shop_cost":5,
-			"bullet_config":{
-				"speed":300,##in pixles per second
-				"guidance":Enums.GuidanceTypes.SMART,
-				"direct_damage":5,#to whatever it hits, usually its intended target
-				"fuse":Enums.Fuses.IMPACT
-				
-			},
-			"tower_texture":getAtlasAreaTexture(BugAtlas,2,2,32),
-			"""
+	
 func set_config(config_to_be_set_to:Dictionary):
-	print("TRYING TO SETTING CONFIG, BUT MAY NOT UPDATING PROPERLY")
+	#print("TRYING TO SETTING CONFIG, BUT MAY NOT UPDATING PROPERLY")
 	_config = config_to_be_set_to
 	$TargetingRange/TargetingHitbox.shape.radius = _config["max_range"]
 	$Sprite.texture = _config["tower_texture"]
@@ -67,8 +50,8 @@ func _shoot():
 	$BulletContainer.add_child(temp_bullet)
 
 func _on_targeting_range_body_entered(body: Node2D) -> void:
-	print("target entered, ",body.get_groups()," Range is ",_config["max_range"]," actual range is ",$TargetingRange/TargetingHitbox.shape.radius,
-	" also possible tgts is ",possible_targets.size())
+	#print("target entered, ",body.get_groups()," Range is ",_config["max_range"]," actual range is ",$TargetingRange/TargetingHitbox.shape.radius,
+	#" also possible tgts is ",possible_targets.size())
 	if _config["can_see_camo"] == Enums.CanSeeCamo.CANSEECAMO:
 		if body.is_in_group("ENEMY"):
 			possible_targets.append(body)
@@ -86,7 +69,7 @@ func _on_targeting_range_body_exited(body: Node2D) -> void:
 
 ## to manually re check each enemy in range, for when a tower is
 ##upgraded or placed.
-func updatePossibleTargets():
+func update_possible_targets():
 	var bodies = $'TargetingRange'.get_overlapping_bodies()
 	for i in bodies:
 		if _config["can_see_camo"] == Enums.CanSeeCamo.CANSEECAMO:
@@ -120,14 +103,12 @@ func _determine_selected_target()->void:
 
 	elif _config["targeting"] == Enums.TargetingTypes.LAST:
 			var Last = possible_targets[0]
-			for i in possible_targets:
-				if i.get_parent().progress < selected_target.get_parent().progress:
-					Last = i
+			print("LAST TARGETING METHOD NOT IMPLEMENTED ")
 			selected_target = Last
 ##@depricated: THIS IS A SHITTY METHOD, FIX IT
 func _on_clicked_on_detector_gui_input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseButton and event.button_mask==0:
 		print("WHAT THE FUCK IS THIS PEICE OF SHI AH AH METHOD Tower.Onclicked")
-		get_node("/root/Main/UI").changeToUpgradeScreen(self,_config["upgrades"])
+		#get_node("/root/Main/UI").changeToUpgradeScreen(self,_config["upgrades"])
 	pass

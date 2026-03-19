@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=4 uid="uid://bng06qj3ij7wc"]
 
-[ext_resource type="TileSet" uid="uid://bpf0huc0qyabu" path="res://Maps/Map1/Map1.tres" id="1_webya"]
-[ext_resource type="Script" uid="uid://tn6eakis1elg" path="res://Maps/Map1/MapSpawning.gd" id="2_webya"]
-[ext_resource type="Script" uid="uid://co5gmlhtjwdx0" path="res://Maps/Map1/enemies_spawning.gd" id="3_giggf"]
+[ext_resource type="TileSet" uid="uid://bpf0huc0qyabu" path="res://Gameplay/Levels/Map1/Map1.tres" id="1_webya"]
+[ext_resource type="Script" uid="uid://tn6eakis1elg" path="res://Gameplay/Levels/Map1/MapSpawning.gd" id="2_webya"]
+[ext_resource type="Script" uid="uid://co5gmlhtjwdx0" path="res://Gameplay/Levels/Map1/enemies_spawning.gd" id="3_giggf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d54qm"]
 radius = 1.0
