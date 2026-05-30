@@ -1,9 +1,7 @@
 extends Node2D
-@onready var Path = preload("res://Maps/BaseMapPath.tscn")
-@onready var BaseEnemy = preload("res://Enemies/EnemyBase.tscn")
+const BaseEnemy = preload("res://Enemies/EnemyBase.tscn")
 const BlankTower = preload("res://Towers/BaseTower/Base_Tower.tscn")
 const BlankBullet = preload("res://Towers/BaseTower/Base_Bullet.tscn")
-#@onready var shopUI = preload("res://UI/shop_management_scripts.gd")
 @onready var UI = preload("res://UI/ui.tscn")
 const testingAtlas = preload("res://Assets/towerDefense_tilesheet.png")
 const BugAtlas = preload("res://Assets/BugAtlas.png")
@@ -14,13 +12,16 @@ const SpecialTowersPath = "res://Towers/PathUpgradeTowers/"
 var currentMap
 static var packedBasicTowers:Dictionary
 static var packedSpecialTowers:Dictionary
+static var packedEnemies:Dictionary
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#primary initiation stuff
 	#packedTowers = load_scenes_in_folder("res://Towers/OtherTowers/")
+	
+	setAndGetEnemies()
 	currentMap = map.instantiate()
-	currentMap.z_index = -10
+	currentMap.setEnemies(packedEnemies)
 	add_child(currentMap)
 	
 	UI = UI.instantiate()
@@ -33,6 +34,51 @@ func _ready() -> void:
 		UI.addShopItem(packedBasicTowers[i])
 
 #for loading sections of a atlas texture:
+static func setAndGetEnemies():
+	print("setting enemies")
+	var Enemies = [BaseEnemy.instantiate().setEnemyValues({
+			"name":"fast",
+			"health":10,
+			"speed":200,
+			"texture":getAtlasAreaGrid(testingAtlas,15,10,64),
+		}),
+		BaseEnemy.instantiate().setEnemyValues({
+			"name":"strong",
+			"health":30,
+			"speed":50,
+			"texture":getAtlasAreaGrid(testingAtlas,16,10,64),
+		}),
+		BaseEnemy.instantiate().setEnemyValues({
+			"name":"boss",
+			"health":50,
+			"speed":50,
+			"texture":getAtlasAreaGrid(testingAtlas,17,10,64),
+			"resistances":"WAEWAKLKDNS"
+		}),
+		BaseEnemy.instantiate().setEnemyValues({
+			"name":"camo",
+			"health":30,
+			"speed":50,
+			"camo":true,
+			"texture":getAtlasAreaGrid(testingAtlas,18,10,64),
+			"resistances":"WAEWAKLKDNS"
+		}),
+		BaseEnemy.instantiate().setEnemyValues({
+			"name":"fly",
+			"health":10,
+			"speed":300,
+			"flying":true,#not implemented
+			"texture":getAtlasAreaGrid(testingAtlas,17,11,64),
+			"resistances":"WAEWAKLKDNS"
+		})
+	]
+	
+	for i in Enemies:
+		var scene = PackedScene.new()
+		scene.pack(i)
+		print("MAKING ENEMY WITH NAME ",i.displayName)
+		packedEnemies[i.displayName] = scene
+
 static func getAtlasAreaGrid(atlas: Texture2D,col: int,row: int,cell_size) -> Texture2D:  
 	var tex := AtlasTexture.new()
 	tex.atlas = atlas
@@ -115,11 +161,11 @@ static func SetAndSaveTowers():
 			0,300,0.25,10,# setMinRange,setMaxRange,setFireRate,setShopCost
 			prepareBullet([
 				300,Enums.GuidanceTypes.SMART,
-				0,Enums.Fuses.IMPACT,
+				5,Enums.Fuses.IMPACT,
 				0, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 				{'application':Enums.StatusApplication.DIRECT,
 				'effectType':Enums.StatusEffectType.DOT,
-				'strength':4,'duration':10},
+				'strength':4,'duration':4},
 				0,#AOE
 				getAtlasAreaGrid(testingAtlas,22,12,64)
 			]),
@@ -215,6 +261,7 @@ static func SetAndSaveTowers():
 static func prepareBullet(bulletConfig)->PackedScene:
 	#to procedurally create and config a bullet into a packed scene for use by the tower
 	#does not save bullets to disk, this is mostly for reliable use of bullet.instantiate by shoot()
+	
 	var 	newBullet = BlankBullet.instantiate()
 	newBullet.setBulletValuesViaConfigOBject(bulletConfig)
 	var scene = PackedScene.new()
@@ -231,7 +278,7 @@ static func load_scenes_in_folder(path: String) -> Dictionary:
 			if not dir.current_is_dir() and file_name.get_extension() == "tscn":
 				# Construct the full path
 				var full_path = path.path_join(file_name)
-				print("LOADING TOWER ",file_name.get_basename())
+				#print("LOADING TOWER ",file_name.get_basename())
 				var scene: PackedScene = load(full_path)
 				if scene:
 					loaded_scenes[file_name.get_basename()] = scene
@@ -251,10 +298,10 @@ static func saveTowersToDisk(towers,givenFilePath):
 			if error != OK:
 				push_error("An error occurred while saving a scene to disk.")
 static func getPackedSpecialTower(desiredTowerName)-> PackedScene:
-	print("LOOKING FOR TOWER ",desiredTowerName)
+	#print("LOOKING FOR TOWER ",desiredTowerName)
 	for i in packedSpecialTowers.keys():
 		if i == desiredTowerName:
-			print("FOUND TOWER ", i)
+			#print("FOUND TOWER ", i)
 			return packedSpecialTowers[i]
 	print("HEY TOWER",desiredTowerName,"NOT FOUND")
 	return null

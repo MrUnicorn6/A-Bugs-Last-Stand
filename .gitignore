@@ -9,3 +9,5 @@ export_credentials.cfg
 *.tmp
 
 
+.godot/editor/editor_layout.cfg
+.godot/editor/editor_layout.cfg

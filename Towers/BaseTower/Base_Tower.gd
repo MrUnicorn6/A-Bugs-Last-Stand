@@ -56,7 +56,6 @@ func _physics_process(delta: float) -> void:
 		#visual of looking at target
 		if is_instance_valid(selectedTarget):
 			self.look_at(selectedTarget.global_position)
-
 	if !possibleTargets.is_empty() && possibleTargets[0] != null:
 		if targetingMethod == Enums.TargetingTypes.CLOSEST:
 			selectedTarget = possibleTargets[0]
@@ -97,9 +96,8 @@ func shoot():
 	tempBullet.setBulletTarget(selectedTarget) 
 	tempBullet.process_mode = Node.PROCESS_MODE_ALWAYS
 	tempBullet.show()
-	
-	
 func _on_targeting_range_body_entered(body: Node2D) -> void:
+	#print("target entered, ",body.get_groups())
 	if canSeeCamo == Enums.CanSeeCamo.CANSEECAMO:
 		if body.is_in_group("ENEMY"):
 			#print("I SEE A CAMO FUCKER")

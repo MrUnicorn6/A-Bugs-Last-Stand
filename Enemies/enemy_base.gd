@@ -1,26 +1,49 @@
 extends CharacterBody2D
 const Enums = preload("res://Main/ENUMS.gd")
-var speed=100
-var defaultSpeed #for undoing the slowness effect
-var health = 10
-var statuses = []
-var canMove = true
+
+
+
+@export var speed:int
+@export var displayName:String
+@export var health:int
+@export var isCamo:bool= false
+@export var resistances:Dictionary = {}
+
+
 
 #in use
 var statusCoolDown
+var canMove = true#for stun effects
+@export var defaultSpeed:int #for undoing the slowness effect
+var statuses = []
 
 
-func setEnemyValues(setName,setHealth,setSpeed,setIfCamo,setResistances):
+func setEnemyValues(data:Dictionary) -> Object:
+	if !data.has("name") || !data.has("health") || !data.has("speed") || !data.has("texture"):
+		print("ERROR IN CREATING ENEMY TYPE")
+		return
+	
+	displayName = data["name"]
+	health = data["health"]
+	speed = data["speed"]
+	defaultSpeed = data["speed"]
+	$'Sprite2D'.texture = data["texture"]
+		
+	#non required parameters for enemies
+	if data.has("resistances"):
+		print("SETTING RESISTANCE")
+	
+	if data.has("camo"):
+		if data["camo"]:
+			isCamo = data["camo"]
+			add_to_group("CAMO")
+	
+
+	return self
+func update():
 	add_to_group("ENEMY")
-	set_name(setName)
-	health = setHealth
-	speed = setSpeed
-	defaultSpeed = setSpeed
-	if setIfCamo:
+	if isCamo:
 		add_to_group("CAMO")
-	#resistances still need to be done
-
-
 
 func takeDamage(amount):##WIP
 	health -= amount
@@ -50,7 +73,7 @@ func _physics_process(delta: float) -> void:
 	get_parent().set_progress(get_parent().get_progress()+speed*delta)
 	
 	#checks its progress along the board
-	if get_parent().get_progress() <0.999:
+	if get_parent().progress_ratio >0.99:
 		print("YOU FUCKING DIE")
 		get_node("/root/Main/UI/HealthAndMoney").changeHealth(health)
 		queue_free()
