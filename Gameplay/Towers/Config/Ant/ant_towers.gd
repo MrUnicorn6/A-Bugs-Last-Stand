@@ -17,6 +17,7 @@ static var class_key := "ants"
 ##static and hopefully constant/unchanging dict of all ant towers and their configs
 static var towers = {
 	"ant":{
+		"icon_texture":Utils.get_atlas_texture(BugAtlas,1,2,32),
 		"tower_texture":Utils.get_atlas_texture(BugAtlas,2,2,32),
 		"display_name":"ant",
 		"class":"ants", #MUST MATCH ABOVE CLASS NAME( like ants, beeltes, bees ect), used to find other upgraded ants ect..

@@ -20,7 +20,7 @@ func add_shop_item(tower:Dictionary):
 	#its a valid place to put a tower
 	newButton.map = mapObject
 	newButton.setIntendedTower(tower)
-	newButton.get_node("BaseShopButton/Sprite").texture = tower["icon_texture"]
+	newButton.get_node("BaseShopButton/Sprite").texture = tower.get("icon_texture",tower.get("tower_texture"))
 	newButton.get_node("BaseShopButton/NameLabel").text = tower["display_name"]
 	newButton.get_node("BaseShopButton/CostLabel").text = str(tower["shop_cost"])
 	#print("ADDING BUTTONS DISABLED RN")

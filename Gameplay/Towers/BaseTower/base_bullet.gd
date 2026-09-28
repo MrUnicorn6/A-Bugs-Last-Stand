@@ -139,7 +139,7 @@ func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
 				#body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 		queue_free()
 	elif body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuses.TIMER && _config["guidance"] == Enums.GuidanceTypes.BALL:
-		body.take_damage(_config["damage"])
+		body.take_damage(_config["direct_damage"])
 		print("BALLING DAMAGE")
 		#if !statusEffectData.is_empty():
 			#if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
