@@ -1,15 +1,15 @@
-NavigationAgent2D
-PathFollow2D
-Button
+ScrollContainer
+VScrollBar
+FlowContainer
+VBoxContainer
+LineEdit      - Matches the "text" keyword.
 TextureRect
-TileMapLayer
+Label
 Control
 Container
-CharacterBody2D
-Sprite2D
-Label
 Panel
-FlowContainer
-PopupMenu
+MarginContainer
+HBoxContainer
+Label      - Matches the "text" keyword.
 ColorRect
 CollisionShape2D
