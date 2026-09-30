@@ -1,30 +1,12 @@
+
 extends Panel
 
-var tower
-var upgrade
-var nameOfSpecialTower = ''
+# This allows other scripts to read or change panel.pressed
+var pressed: bool = false 
 
-func _on_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_mask==1:
-		pass
-	elif event is InputEventMouseMotion and event.button_mask==1:
-		pass
-	elif event is InputEventMouseButton and event.button_mask==0:
-		if !event.pressed:
-			#print("UPGRADE BUTTON CLICKED FOR TOWER ",tower.displayName)
-			if(int(upgrade["cost"])<=int($"../../../HealthAndMoney".Money)):
-				$"../../../HealthAndMoney".changeMoney(upgrade["cost"])
-				tower.upgradeOnce(nameOfSpecialTower)
-				if nameOfSpecialTower == '':
-					$'../../../'.changeToUpgradeScreen(tower,tower.upgrades)
-					#update the panel to relfect upgrade, given its not a 
-					#tower replacement upgrade
-				
-				queue_free() #remove this from the panel
-				
-			else:
-				print("HEY SHITASS YOU CANNOT AFFORD THIS")
-
-
-		
-		
+func _gui_input(event: InputEvent) -> void:
+	# Checks if the left mouse button was clicked down inside the panel
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			print("UPGRADE BUTTON PRESSED, NOT FUNCTIONAL, OR BOUND PROPERLY")
+			pass

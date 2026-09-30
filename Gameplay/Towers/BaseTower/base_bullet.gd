@@ -130,18 +130,19 @@ func explode():
 
 
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
+	#print("SMACK ON ",body.get_groups()," ALSO GUIDANCE IS ",_config["fuse"]==Enums.Fuses.IMPACT)
 		#for direct hits, and application of status effects 
-	if body.is_in_group("ENEMY") && _config["guidance"]==Enums.Fuses.IMPACT:
-		body.take_damage(_config["damage"])
-		#
+	if body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuses.IMPACT:
+		#print("SMACK IMPACT HIT")
+		body.take_damage(_config["direct_damage"])
 		#if !statusEffectData.is_empty():
 			#if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
 				#body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 		queue_free()
-	elif body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuses.TIMER && _config["guidance"] == Enums.GuidanceTypes.BALL:
+	elif body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuses.TIMER && _config["fuse"] == Enums.GuidanceTypes.BALL:
 		body.take_damage(_config["direct_damage"])
 		print("BALLING DAMAGE")
 		#if !statusEffectData.is_empty():
 			#if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
 				#body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
-		#queue_free()
+				

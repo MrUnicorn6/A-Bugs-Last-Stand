@@ -13,11 +13,6 @@ const loader = preload("res://Gameplay/gameplay_objects_loader.gd")
 func _ready() -> void:
 	#primary initiation stuff
 	
-	#packedBasicTowers = GameplayObjectLoader.getPackedBasicTowers()
-	#packedSpecialTowers = GameplayObjectLoader.getPackedSpecialTowers()
-	#packed_enemies = loader.getPackedEnemies()
-	#var specialTower = GameplayObjectLoader.SpecialTowers[1]
-	#loader._static_init()
 	var all_towers_dict = loader.towers_config
 	print("MAPS SHOULD BE HANDELED BY A LEVEL LOADER(WIP)")
 	var currentMap = map.instantiate()
@@ -25,11 +20,9 @@ func _ready() -> void:
 	currentMap.setGoal()
 	currentMap.doRound()
 	add_child(currentMap)
-	
+	add_child(camera.instantiate())
 	
 	user_interface.start(currentMap)
-	
-	#user_interface.mapObject = currentMap
 	add_child(user_interface)
 	
 	#these should be in UI

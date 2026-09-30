@@ -1,3 +1,4 @@
+CanvasLayer
 ScrollContainer
 VScrollBar
 FlowContainer
@@ -12,4 +13,3 @@ MarginContainer
 HBoxContainer
 Label      - Matches the "text" keyword.
 ColorRect
-CollisionShape2D

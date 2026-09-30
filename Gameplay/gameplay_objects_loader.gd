@@ -1,4 +1,5 @@
 extends Node
+class_name GameplayObjectsLoader
 #base objects:
 const base_enemy_scene = preload("res://Gameplay/Enemies/enemy_base.tscn")
 const base_tower_scene = preload("res://Gameplay/Towers/BaseTower/base_tower.tscn")
@@ -26,6 +27,17 @@ const TowerRegistry = preload("res://Gameplay/Towers/Config/tower_registry.gd")
 ##this is only an alias,so main.gd / ui_script.gd keep working untouched
 static var towers_config:Dictionary = TowerRegistry.towers_config
 
+static func get_tower(key:String) ->Dictionary:
+	
+	for insect in towers_config.keys():
+		for insect_kind in towers_config[insect].keys():
+			print("looking for key ",key," opposed to ",insect_kind)
+			if insect_kind == key:
+				
+				return towers_config[insect][insect_kind]
+	
+	print("WARNING TOWER ",key," NOT FOUND")
+	return {}
 
 static var enemies_config = {
 	"fast":{

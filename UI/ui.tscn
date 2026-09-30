@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://b2vj21s3sjysa"]
+[gd_scene load_steps=16 format=3 uid="uid://b2vj21s3sjysa"]
 
 [ext_resource type="Script" uid="uid://fxckusi88c8o" path="res://UI/ui_script.gd" id="1_e6gg6"]
 [ext_resource type="Texture2D" uid="uid://0q22n8wdeb7a" path="res://Assets/BugAtlas.png" id="2_hat8c"]
 [ext_resource type="Script" uid="uid://4qxeqtk7wca8" path="res://UI/health_and_money.gd" id="2_q0uhn"]
+[ext_resource type="Script" uid="uid://deqd2nxdy4kdt" path="res://UI/upgrade_panel.gd" id="3_c7tqi"]
 [ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://Assets/towerDefense_tilesheet.png" id="3_e707p"]
 [ext_resource type="Theme" uid="uid://bnf7l64u5bhbo" path="res://UI/Stuff/UITheme.tres" id="4_nm1m0"]
 [ext_resource type="Texture2D" uid="uid://dxk131fsnmthf" path="res://Assets/UIATLAS.png" id="6_nm1m0"]
@@ -36,20 +37,13 @@ region = Rect2(32, 32, 96, 32)
 [sub_resource type="LabelSettings" id="LabelSettings_nm1m0"]
 font_size = 48
 
-[node name="UI" type="Control"]
-custom_minimum_size = Vector2(1920, 1080)
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="UI" type="CanvasLayer"]
 script = ExtResource("1_e6gg6")
 
 [node name="SidePanel" type="Control" parent="."]
 visible = false
 custom_minimum_size = Vector2(384, 0)
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -91,6 +85,7 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
 theme = ExtResource("4_nm1m0")
+script = ExtResource("3_c7tqi")
 
 [node name="UpgradeOptionsContainer" type="FlowContainer" parent="SidePanel/UpgradePanel"]
 layout_direction = 2
@@ -126,7 +121,6 @@ theme_type_variation = &"FlatButton"
 text = "Back"
 
 [node name="HealthAndMoney" type="Panel" parent="SidePanel"]
-visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -170,7 +164,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MainMenu" type="Control" parent="."]
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -213,7 +207,7 @@ text = "Play"
 
 [node name="LevelSelect" type="Control" parent="."]
 visible = false
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
