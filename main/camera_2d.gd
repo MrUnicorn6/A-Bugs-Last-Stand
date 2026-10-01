@@ -10,7 +10,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var direction = Input.get_vector('MoveMapLeft',"MoveMapRight","MoveMapUp","MoveMapDown")
+	var direction = Input.get_vector('move_map_left',"move_map_right","move_map_up","move_map_down")
 	#print(direction)
 	direction = direction*map_pan_speed
 	global_position += direction*delta
