@@ -7,10 +7,10 @@ const Enums = preload("res://Main/ENUMS.gd")
 
 
 #in use
-var statusCoolDown
-var goalPosition:Vector2
-var canMove = true#for stun effects
-@export var defaultSpeed:int #for undoing the slowness effect
+var status_cooldown
+var goal_position:Vector2
+var can_move = true#for stun effects
+@export var default_speed:int #for undoing the slowness effect
 var statuses = []
 
 static func instantiate_and_config(packed:PackedScene,to_config:Dictionary)->Object:
@@ -31,13 +31,13 @@ func set_config(data:Dictionary):
 			add_to_group("CAMO")
 	
 
-func update(setGoalPosition:Vector2):
-	self.goalPosition = setGoalPosition
+func update(new_goal_position:Vector2):
+	self.goal_position = new_goal_position
 	add_to_group("ENEMY")
 	if _config.has("camo"):
 		if _config["camo"]:
 			add_to_group("CAMO")
-	$NavigationAgent2D.target_position = goalPosition
+	$NavigationAgent2D.target_position = goal_position
 	
 
 func take_damage(amount,_element:Enums.ElementalType=Enums.ElementalType.NORMAL):##WIP
@@ -47,12 +47,12 @@ func take_damage(amount,_element:Enums.ElementalType=Enums.ElementalType.NORMAL)
 	if _config["health"] <=0 :
 		queue_free()
 	pass
-func applyStatusEffect(type,strength,duration):
+func apply_status_effect(type,strength,duration):
 	#print("HEY STATUS EFFECT OF ",type,' ',strength,' ',duration)
 	var temp = [type,strength,float(duration)]
 	if type == Enums.StatusEffectType.STUN:
 		
-		canMove=false
+		can_move=false
 	if type == Enums.StatusEffectType.SLOW:
 		_config["speed"]  = _config["speed"]/strength
 	statuses.append(temp)
@@ -68,17 +68,17 @@ func _physics_process(delta: float) -> void:
 	#if !$'NavigationAgent2D'.is_target_reachable():
 		#print("TARGET UNREACHABLE")
 	'''
-	if !canMove :
+	if !can_move :
 		return
 	get_parent().set_progress(get_parent().get_progress()+speed*delta)
 	'''
 	if !$NavigationAgent2D.is_target_reached():
-		var navDirection = to_local($'NavigationAgent2D'.get_next_path_position()).normalized()
-		velocity = navDirection*_config["speed"]*delta*30
+		var nav_direction = to_local($'NavigationAgent2D'.get_next_path_position()).normalized()
+		velocity = nav_direction*_config["speed"]*delta*30
 		move_and_slide()
 	else:
 		print("YOU FUCKING DIE")
-		get_node("/root/Main/UI/HealthAndMoney").changeHealth(_config["health"])
+		get_node("/root/Main/UI/HealthAndMoney").change_health(_config["health"])
 		queue_free()
 
 
@@ -97,7 +97,7 @@ func _on_timer_timeout() -> void:
 			#that the effect can be removed/unapplied before being deleted
 			#removes some effects when the status is deleted
 			if i[0] == Enums.StatusEffectType.STUN:
-				canMove = true
+				can_move = true
 			if i[0] == Enums.StatusEffectType.SLOW:
 				print("warning, slow status effect is not removed properly, or doesnt work well")
 				#this removes all speeds regardless 

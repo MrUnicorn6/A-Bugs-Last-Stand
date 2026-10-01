@@ -1,13 +1,13 @@
 extends RefCounted
 ##every ant tower config,in one place.
-##wired into loader.towers_config["ants"] by res://Gameplay/Towers/Config/tower_registry.gd
-##to look one up: towers["ant_two"]  (same as loader.towers_config["ants"]["ant_two"])
+##wired into Loader.towers_config["ants"] by res://Gameplay/Towers/Config/tower_registry.gd
+##to look one up: towers["ant_two"]  (same as Loader.towers_config["ants"]["ant_two"])
 ##upgrades are still hand written:each tower lists the config keys it can upgrade
 ##into under "upgrade_options_config_keys",and those keys are looked up in this same file.
 
 const Enums = preload("res://Main/ENUMS.gd")
-const BugAtlas = preload("res://Assets/BugAtlas.png")
-const TestingAtlas = preload("res://Assets/towerDefense_tilesheet.png")
+const BUG_ATLAS = preload("res://Assets/BugAtlas.png")
+const TESTING_ATLAS = preload("res://Assets/towerDefense_tilesheet.png")
 const Utils = preload("res://Gameplay/Towers/Config/config_utils.gd")
 
 ##MUST match the key this file is registered under in tower_registry.gd,
@@ -17,8 +17,8 @@ static var class_key := "ants"
 ##static and hopefully constant/unchanging dict of all ant towers and their configs
 static var towers = {
 	"ant":{
-		"icon_texture":Utils.get_atlas_texture(BugAtlas,1,2,32),
-		"tower_texture":Utils.get_atlas_texture(BugAtlas,2,2,32),
+		"icon_texture":Utils.get_atlas_texture(BUG_ATLAS,1,2,32),
+		"tower_texture":Utils.get_atlas_texture(BUG_ATLAS,2,2,32),
 		"display_name":"ant",
 		"class":"ants", #MUST MATCH ABOVE CLASS NAME( like ants, beeltes, bees ect), used to find other upgraded ants ect..
 		"desc":"mid range",
@@ -29,7 +29,7 @@ static var towers = {
 		"fire_rate":1,##expressed in delay between shots in seconds
 		"shop_cost":5,
 		"bullet_config":{
-			"bullet_texture":Utils.get_atlas_texture(TestingAtlas,22,10,64),
+			"bullet_texture":Utils.get_atlas_texture(TESTING_ATLAS,22,10,64),
 			"speed":300,##in pixles per second
 			"guidance":Enums.GuidanceTypes.SMART,
 			"direct_damage":5,#to whatever it hits, usually its intended target
@@ -40,7 +40,7 @@ static var towers = {
 		]
 	},
 	"ant_two":{
-		"tower_texture":Utils.get_atlas_texture(BugAtlas,3,2,32),
+		"tower_texture":Utils.get_atlas_texture(BUG_ATLAS,3,2,32),
 		"display_name":"ant but better",
 		"class":"ants",
 		"desc":"better ant range and damage",
@@ -51,7 +51,7 @@ static var towers = {
 		"fire_rate":1,##expressed in delay between shots in seconds
 		"shop_cost":5,
 		"bullet_config":{
-			"bullet_texture":Utils.get_atlas_texture(TestingAtlas,22,10,64),
+			"bullet_texture":Utils.get_atlas_texture(TESTING_ATLAS,22,10,64),
 			"speed":350,##in pixles per second
 			"guidance":Enums.GuidanceTypes.SMART,
 			"direct_damage":7,#to whatever it hits, usually its intended target
@@ -63,7 +63,7 @@ static var towers = {
 		]
 	},
 	"ant_three":{
-		"tower_texture":Utils.get_atlas_texture(BugAtlas,4,2,32),
+		"tower_texture":Utils.get_atlas_texture(BUG_ATLAS,4,2,32),
 		"display_name":"ant but even better",
 		"class":"ants",
 		"desc":"can now see camo, and better firerate",
@@ -74,7 +74,7 @@ static var towers = {
 		"fire_rate":0.75,##expressed in delay between shots in seconds
 		"shop_cost":5,
 		"bullet_config":{
-			"bullet_texture":Utils.get_atlas_texture(TestingAtlas,22,10,64),
+			"bullet_texture":Utils.get_atlas_texture(TESTING_ATLAS,22,10,64),
 			"speed":350,##in pixles per second
 			"guidance":Enums.GuidanceTypes.SMART,
 			"direct_damage":10,#to whatever it hits, usually its intended target
@@ -107,7 +107,7 @@ static var towers = {
 				"status_strength":4
 			}
 		},
-		"tower_texture":Utils.get_atlas_texture(BugAtlas,2,2,32),
+		"tower_texture":Utils.get_atlas_texture(BUG_ATLAS,2,2,32),
 		"upgrade_options_config_keys":[] #no further upgrades yet (used to be "upgrades":null)
 	}
 }

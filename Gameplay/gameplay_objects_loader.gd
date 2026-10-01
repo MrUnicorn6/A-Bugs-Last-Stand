@@ -1,13 +1,13 @@
 extends Node
 class_name GameplayObjectsLoader
 #base objects:
-const base_enemy_scene = preload("res://Gameplay/Enemies/enemy_base.tscn")
-const base_tower_scene = preload("res://Gameplay/Towers/BaseTower/base_tower.tscn")
-const base_bullet_scene = preload("res://Gameplay/Towers/BaseTower/base_bullet.tscn")
+const BASE_ENEMY_SCENE = preload("res://Gameplay/Enemies/enemy_base.tscn")
+const BASE_TOWER_SCENE = preload("res://Gameplay/Towers/BaseTower/base_tower.tscn")
+const BASE_BULLET_SCENE = preload("res://Gameplay/Towers/BaseTower/base_bullet.tscn")
 
 #atlases
-const TestingAtlas = preload("res://Assets/towerDefense_tilesheet.png")
-const BugAtlas = preload("res://Assets/BugAtlas.png")
+const TESTING_ATLAS = preload("res://Assets/towerDefense_tilesheet.png")
+const BUG_ATLAS = preload("res://Assets/BugAtlas.png")
 
 #enums
 const Enums = preload("res://Main/ENUMS.gd")
@@ -44,33 +44,33 @@ static var enemies_config = {
 		"name":"fast",
 		"health":10,
 		"speed":200,
-		"texture":get_atlas_texture(TestingAtlas,15,10,64)
+		"texture":get_atlas_texture(TESTING_ATLAS,15,10,64)
 	},
 	"strong":{
 		"name":"strong",
 		"health":30,
 		"speed":50,
-		"texture":get_atlas_texture(TestingAtlas,16,10,64)
+		"texture":get_atlas_texture(TESTING_ATLAS,16,10,64)
 	},
 	"boss":{
 		"name":"boss",
 		"health":50,
 		"speed":50,
-		"texture":get_atlas_texture(TestingAtlas,17,10,64),
+		"texture":get_atlas_texture(TESTING_ATLAS,17,10,64),
 	},
 	"camo":{
 		"name":"camo",
 		"health":30,
 		"speed":50,
 		"camo":true,
-		"texture":get_atlas_texture(TestingAtlas,18,10,64),
+		"texture":get_atlas_texture(TESTING_ATLAS,18,10,64),
 	},
 	"fly":{
 		"name":"fly",
 		"health":10,
 		"speed":300,
 		"flying":true,#not implemented
-		"texture":get_atlas_texture(TestingAtlas,17,11,64),
+		"texture":get_atlas_texture(TESTING_ATLAS,17,11,64),
 		"resistances":"WAEWAKLKDNS"
 	}
 	
@@ -98,17 +98,17 @@ static func validate_towers_config():
 
 
 static func instance_tower(tower_config:Dictionary)->Object:
-	var silly = base_tower_scene.instantiate()
+	var silly = BASE_TOWER_SCENE.instantiate()
 	silly.set_config(tower_config)
 	return silly
 	
 static func instance_enemy(enemy_config:Dictionary)->Object:
-	var silly = base_enemy_scene.instantiate()
+	var silly = BASE_ENEMY_SCENE.instantiate()
 	silly.set_config(enemy_config)
 	return silly
 
 
 static func get_atlas_texture(atlas: Texture2D,col: int,row: int,cell_size) -> Texture2D:
 	#single copy of this helper now lives in ConfigUtils,kept here so enemies_config
-	#and anything else already calling loader.get_atlas_texture() still works
+	#and anything else already calling Loader.get_atlas_texture() still works
 	return ConfigUtils.get_atlas_texture(atlas,col,row,cell_size)

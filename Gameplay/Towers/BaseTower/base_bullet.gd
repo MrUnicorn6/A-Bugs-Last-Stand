@@ -15,7 +15,7 @@ var target_position_fixed:Vector2 #for dumb bullets
 var target_direction_velocity:Vector2# for ball type bullets
 
 """
-"bullet_texture":getAtlasAreaTexture(TestingAtlas,22,10,64),
+"bullet_texture":getAtlasAreaTexture(TESTING_ATLAS,22,10,64),
 				"speed":251,##in pixles per second
 				"guidance":Enums.GuidanceTypes.SMART,
 				"direct_damage":5,#to whatever it hits, usually its intended target
@@ -137,12 +137,12 @@ func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
 		body.take_damage(_config["direct_damage"])
 		#if !statusEffectData.is_empty():
 			#if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
-				#body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
+				#body.apply_status_effect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 		queue_free()
 	elif body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuses.TIMER && _config["fuse"] == Enums.GuidanceTypes.BALL:
 		body.take_damage(_config["direct_damage"])
 		print("BALLING DAMAGE")
 		#if !statusEffectData.is_empty():
 			#if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
-				#body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
+				#body.apply_status_effect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 				

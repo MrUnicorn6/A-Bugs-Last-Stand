@@ -5,8 +5,8 @@ class_name BaseTower
 
 
 const Enums = preload("res://Main/ENUMS.gd")
-const base_bullet = preload("res://Gameplay/Towers/BaseTower/base_bullet.tscn")
-static var _main_UI = MainUI
+const BASE_BULLET = preload("res://Gameplay/Towers/BaseTower/base_bullet.tscn")
+static var _main_ui = MainUI
 
 @export var _config:Dictionary
 
@@ -15,7 +15,7 @@ var draw_range = false
 var upgrade_count:int = 0
 var fire_rate_cooldown:float = 0
 var possible_targets:Array[Node] = [] ##constantly changing arr of targets
-var selected_target:Node = null ##for holding a target seperate from possibleTargets
+var selected_target:Node = null ##for holding a target seperate from possible_targets
 func _draw() -> void:
 	if draw_range:
 		draw_circle(Vector2(0,0),_config["max_range"],Color(0,0,0,0.25),true)
@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 		_shoot()
 		fire_rate_cooldown = 1.0 / _config["fire_rate"]
 func _shoot():
-	var temp_bullet = base_bullet.instantiate()
+	var temp_bullet = BASE_BULLET.instantiate()
 	temp_bullet.set_config(_config["bullet_config"])
 	temp_bullet.global_position = $BulletSpawnPoint.global_position
 	temp_bullet.shoot_at_target(selected_target,selected_target.global_position)
@@ -106,9 +106,9 @@ func _determine_selected_target()->void:
 
 
 	elif _config["targeting"] == Enums.TargetingTypes.LAST:
-			var Last = possible_targets[0]
+			var last_target = possible_targets[0]
 			print("LAST TARGETING METHOD NOT IMPLEMENTED ")
-			selected_target = Last
+			selected_target = last_target
 ##@depricated: THIS IS A SHITTY METHOD, FIX IT
 func _on_clicked_on_detector_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_mask==0:

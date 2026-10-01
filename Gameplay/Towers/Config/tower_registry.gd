@@ -1,6 +1,6 @@
 extends RefCounted
 ##stitches the per-bug tower config files into the single towers_config dict
-##that the rest of the game reads through loader.towers_config.
+##that the rest of the game reads through Loader.towers_config.
 ##
 ##to add a new bug family:
 ## 1. make res://Gameplay/Towers/Config/<Bug>/<bug>_towers.gd with a `towers` dict

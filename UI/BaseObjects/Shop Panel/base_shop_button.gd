@@ -2,11 +2,11 @@ extends MarginContainer
 
 var intended_tower_config:Dictionary = {}
 var map
-const loader = preload("res://Gameplay/gameplay_objects_loader.gd")
+const Loader = preload("res://Gameplay/gameplay_objects_loader.gd")
 
 
 
-func setIntendedTower(set_tower:Dictionary):
+func set_intended_tower(set_tower:Dictionary):
 	#print("setting node of shop button to ",set_tower)
 	intended_tower_config = set_tower
 
@@ -16,12 +16,12 @@ func _on_base_shop_button_gui_input(event: InputEvent) -> void:
 	#var actual_event_position = event.global_position + get_node("/root/Main/Camera2D").global_position
 	if event is InputEventMouseButton and event.button_mask==1:
 		assert(intended_tower_config!={},"Shop Button clicked, but no intended tower was set")
-		var temp_tower = loader.instance_tower(intended_tower_config)
-		var PlayerMoney = $"../../../HealthAndMoney".Money
+		var temp_tower = Loader.instance_tower(intended_tower_config)
+		var player_money = $"../../../HealthAndMoney".money
 		
-		if(int(intended_tower_config["shop_cost"])<=int(PlayerMoney)):
+		if(int(intended_tower_config["shop_cost"])<=int(player_money)):
 			#print("THIS IS ALL FUCKED HERE IN BASESHOPBUTTON")
-			$"../../../HealthAndMoney".changeMoney(intended_tower_config["shop_cost"])
+			$"../../../HealthAndMoney".change_money(intended_tower_config["shop_cost"])
 			$BaseShopButton/TempTowerHolder.add_child(temp_tower)
 			temp_tower.global_position = event.global_position
 			#disables turret while dragging
@@ -50,12 +50,12 @@ func _on_base_shop_button_gui_input(event: InputEvent) -> void:
 					$BaseShopButton/TempTowerHolder.get_child(0).draw_range = false
 					#print("TOWER PLACED AT ",$BaseShopButton/TempTowerHolder.get_child(0).global_position)
 					#print("TOWER BULLET POINT IS ",$BaseShopButton/TempTowerHolder.get_child(0).get_node("BulletSpawnPoint").global_position)
-					var targetDir = get_node("/root/Main/CoreGameNode/Towers")
-					$BaseShopButton/TempTowerHolder.get_child(0).reparent(targetDir)
+					var target_dir = get_node("/root/Main/CoreGameNode/Towers")
+					$BaseShopButton/TempTowerHolder.get_child(0).reparent(target_dir)
 					
 					
 				else:
 					print("CANNOT PLACE HERE")
-					$"../../../HealthAndMoney".changeMoney(-$BaseShopButton/TempTowerHolder.get_child(0)._config["shop_cost"])
+					$"../../../HealthAndMoney".change_money(-$BaseShopButton/TempTowerHolder.get_child(0)._config["shop_cost"])
 					$BaseShopButton/TempTowerHolder.get_child(0).queue_free()
 					

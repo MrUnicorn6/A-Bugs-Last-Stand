@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1790798038
+::res://::1790815521
 icon.svg::CompressedTexture2D::921221585593911398::1772912571::1772912571::1::::<><><>0<>0<>0aa7127b07ca24b7253cb64019007254<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 main.gd::GDScript::8628820359299377510::1790635010::0::1::::<>Node<><>0<>0<><>::
 main.tscn::PackedScene::4389010646081670468::1790792629::0::1::::<><><>0<>0<><>::uid://du64n7xpj8sda::::res://main.gd<>uid://b8r10meamabpf::::res://Main/CameraScene.tscn
@@ -33,7 +33,7 @@ ant_towers.gd::GDScript::477865226701336115::1790629971::0::1::::<>RefCounted<><
 bee_towers.gd::GDScript::6105183881465138445::1790626028::0::1::::<>RefCounted<><>0<>0<><>::
 ::res://Gameplay/Towers/Config/Beetle/::1790626028
 beetle_towers.gd::GDScript::291081901676065422::1790626028::0::1::::<>RefCounted<><>0<>0<><>::
-::res://Main/::1790634845
+::res://Main/::1790800526
 CameraScene.tscn::PackedScene::4739370868702193479::1790634845::0::1::::<><><>0<>0<><>::uid://byr44qqo72cao::::res://Main/camera_2d.gd
 camera_2d.gd::GDScript::4107860799408759086::1790634412::0::1::::<>Camera2D<><>0<>0<><>::
 ENUMS.gd::GDScript::1444140555679433932::1773278444::0::1::::<>Node<><>0<>0<><>::
@@ -43,7 +43,7 @@ DEPR_Base_Bullet.tscn::PackedScene::8851665328846553815::1790626028::0::1::::<><
 Depr_Base_TOWER.gd::GDScript::141089413046068929::1790633538::0::1::::<>RefCounted<><>0<>0<><>::
 Depr_base_TOWER.tscn::PackedScene::5397337681536685075::1790626028::0::1::::<><><>0<>0<><>::uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png
 legacy_tower_configs.gd::GDScript::4590162536142554490::1790626028::0::1::::<>RefCounted<><>0<>0<><>::
-::res://UI/::1790797702
+::res://UI/::1790800526
 health_and_money.gd::GDScript::2069911013800014041::1772912586::0::1::::<>Panel<><>0<>0<><>::
 ui.tscn::PackedScene::4325467458835772332::1790793452::0::1::::<><><>0<>0<><>::uid://fxckusi88c8o::::res://UI/ui_script.gd<>uid://0q22n8wdeb7a::::res://Assets/BugAtlas.png<>uid://4qxeqtk7wca8::::res://UI/health_and_money.gd<>uid://deqd2nxdy4kdt::::res://UI/upgrade_panel.gd<>uid://d4ni18bovxebg::::res://Assets/towerDefense_tilesheet.png<>uid://bnf7l64u5bhbo::::res://UI/Stuff/UITheme.tres<>uid://dxk131fsnmthf::::res://Assets/UIATLAS.png
 ui_script.gd::GDScript::398565277140483984::1790792514::0::1::::MainUI<>Node<><>0<>0<><>::

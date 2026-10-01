@@ -9,7 +9,7 @@
 	#
 	#
 #"""
-#"bullet_texture":getAtlasAreaTexture(TestingAtlas,22,10,64),
+#"bullet_texture":getAtlasAreaTexture(TESTING_ATLAS,22,10,64),
 				#"speed":251,##in pixles per second
 				#"guidance":Enums.GuidanceTypes.SMART,
 				#"direct_damage":5,#to whatever it hits, usually its intended target
@@ -50,7 +50,7 @@
 	#z_index -= 1
 ##the constructor for new bullet types
 ###@depricated
-#func setBulletValuesViaConfigOBject(configObject:Array):
+#func set_bullet_values_via_config_object(configObject:Array):
 	#
 	#muzzle_velocity = configObject[0]
 	#guidance = configObject[1]
@@ -73,14 +73,14 @@
 #@export var guidance:Enums.GuidanceTypes = Enums.GuidanceTypes.SMART
 #@export var aoe_radius:float  = -1 #ignored if set to 0; need future damge thing
 #
-#var canMove = true #for freezing teh bullet in place for the explosion effect
+#var can_move = true #for freezing teh bullet in place for the explosion effect
 #var target
 #var targetPositionFixed:Vector2 #for dumb weapons
-#var targetDirection :Vector2
+#var target_direction :Vector2
 #
 #
 		#
-#func setBulletTarget(setTarget):
+#func set_bullet_target(setTarget):
 	##update the visual radius of the sprite of the bullet.
 	#if guidance == Enums.GuidanceTypes.BALL:
 		#$'EnemyDetectionArea/HitboxArea'.shape.radius = AOERadius
@@ -96,17 +96,17 @@
 	#target = setTarget
 	#targetPositionFixed = setTarget.global_position
 	##print('TARGET POS IS ',setTarget.global_position," OUR POS IS ",global_position)
-	#targetDirection = global_position.direction_to(targetPositionFixed)*muzzleVelocity
+	#target_direction = global_position.direction_to(targetPositionFixed)*muzzleVelocity
 	##this is to initally look at the target, updated to current target pos if guidance is smart
 	##mainly for BALL and POINT bullets
 	#look_at(targetPositionFixed)
 	#
-#func setTexture(newTex):
+#func set_texture(newTex):
 	#$'Sprite'.texture =newTex
 	#
 	#
 #func _physics_process(_delta: float) -> void:
-	#if !canMove:
+	#if !can_move:
 		#return
 	#if !is_instance_valid(target) && guidance == Enums.GuidanceTypes.SMART: #makes sure target exists
 		#queue_free()
@@ -120,7 +120,7 @@
 			#queue_free()
 	#elif guidance == Enums.GuidanceTypes.DUMB || guidance == Enums.GuidanceTypes.BALL:
 		#
-		#velocity = targetDirection
+		#velocity = target_direction
 		#move_and_slide()
 		#
 	##proximity fuses and whatnot
@@ -164,10 +164,10 @@
 		#if !statusEffectData.is_empty():
 			#if statusEffectData.application == Enums.StatusApplication.AOE :
 				#print("APPLYING STATUS VIA AOE TO ENEMY")
-				#i.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
+				#i.apply_status_effect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 		#print("APPLYING AOE DMG TO ENEMY")
 		#i.takeDamage(damageNumber)
-	#canMove=false
+	#can_move=false
 	#$ExplosionEffect.visible=true
 	#await get_tree().create_timer(0.1).timeout
 	#queue_free()
@@ -185,12 +185,12 @@
 		#body.takeDamage(damageNumber)
 		#if !statusEffectData.is_empty():
 			#if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
-				#body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
+				#body.apply_status_effect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 		#queue_free()
 	#elif body.is_in_group("ENEMY") && fuseType==Enums.Fuses.TIMER && guidance == Enums.GuidanceTypes.BALL:
 		#body.takeDamage(damageNumber)
 		##print("BALLING DAMAGE")
 		#if !statusEffectData.is_empty():
 			#if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
-				#body.applyStatusEffect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
+				#body.apply_status_effect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 		##queue_free()

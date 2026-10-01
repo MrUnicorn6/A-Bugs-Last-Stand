@@ -1,19 +1,19 @@
 extends Panel
 class_name UpgradePanel
-const base_upgrade_item = preload("res://UI/BaseObjects/UpgradePanel/BaseUpgradeButton.tscn")
+const BASE_UPGRADE_ITEM = preload("res://UI/BaseObjects/UpgradePanel/BaseUpgradeButton.tscn")
 
 '''
 func add_upgrade_item(to_be_upgraded_to_config,current_tower_config,tower_object):
-	var tempButton = base_upgrade_item.instantiate()
-	tempButton.get_node("Sprite").texture = to_be_upgraded_to_config["tower_texture"]
-	tempButton.get_node("DescLabel").text = to_be_upgraded_to_config["desc"]
-	tempButton.get_node("CostLabel").text = str(to_be_upgraded_to_config["shop_cost"])
-	tempButton.to_upgrade_to_config = to_be_upgraded_to_config
-	tempButton.tower_config = current_tower_config
-	tempButton.tower_object = tower_object
+	var temp_button = BASE_UPGRADE_ITEM.instantiate()
+	temp_button.get_node("Sprite").texture = to_be_upgraded_to_config["tower_texture"]
+	temp_button.get_node("DescLabel").text = to_be_upgraded_to_config["desc"]
+	temp_button.get_node("CostLabel").text = str(to_be_upgraded_to_config["shop_cost"])
+	temp_button.to_upgrade_to_config = to_be_upgraded_to_config
+	temp_button.tower_config = current_tower_config
+	temp_button.tower_object = tower_object
 	#print("ADDING BUTTONS DISABLED RN")
-	$"SidePanel/UpgradePanel/UpgradeOptionsContainer".add_child(tempButton)
-	return tempButton
+	$"SidePanel/UpgradePanel/UpgradeOptionsContainer".add_child(temp_button)
+	return temp_button
 func change_to_upgrade_screen(tower_config,tower_object):
 	print("REFACTOR THIS SHIT changetoupgradescreen()")
 	
@@ -26,17 +26,17 @@ func change_to_upgrade_screen(tower_config,tower_object):
 	
 	#check for existing upgradepanel items so that when clicking another tower
 	# so the upgrades dont stack together
-	if upgradePanel.is_visible_in_tree():
+	if upgrade_panel.is_visible_in_tree():
 		_on_back_button_pressed()
 	$SidePanel/ShopPanel.hide()
-	upgradePanel.get_node("DisplaySprite").texture = tower_config["tower_texture"]
-	upgradePanel.get_node("Label").text = tower_config["display_name"]
+	upgrade_panel.get_node("DisplaySprite").texture = tower_config["tower_texture"]
+	upgrade_panel.get_node("Label").text = tower_config["display_name"]
 	if upgrade_option_configs.size()!=0&&upgrade_option_configs!=null:
 		for i in upgrade_option_configs:
-			var temp_upgr_config = loader.towers_config[tower_config["class"]][i]
+			var temp_upgr_config = Loader.towers_config[tower_config["class"]][i]
 			add_upgrade_item(temp_upgr_config,tower_config,tower_object)
 		
-	upgradePanel.show()
+	upgrade_panel.show()
 	
 	
 	
@@ -57,9 +57,9 @@ func _on_gui_input(event: InputEvent) -> void:
 		pass
 	elif event is InputEventMouseButton and event.button_mask==0:
 		if !event.pressed:
-			#print("UPGRADE BUTTON CLICKED FOR TOWER ",tower.displayName)
-			if(int(to_upgrade_to_config["shop_cost"])<=int($"../../../HealthAndMoney".Money)):
-				$"../../../HealthAndMoney".changeMoney(to_upgrade_to_config["shop_cost"])
+			#print("UPGRADE BUTTON CLICKED FOR TOWER ",tower.display_name)
+			if(int(to_upgrade_to_config["shop_cost"])<=int($"../../../HealthAndMoney".money)):
+				$"../../../HealthAndMoney".change_money(to_upgrade_to_config["shop_cost"])
 				tower_object.set_config(to_upgrade_to_config)
 				$'../../../../'.change_to_upgrade_screen(tower_config,tower_object)
 					#update the panel to relfect upgrade, given its not a 
@@ -86,7 +86,7 @@ func _ready() -> void:
 
 func _add_upgrade_button(input_config:Dictionary):
 	print("button added for key ",input_config)
-	var button = base_upgrade_item.instantiate()
+	var button = BASE_UPGRADE_ITEM.instantiate()
 	button.get_node("Sprite").texture = input_config["tower_texture"]
 	button.get_node("DescLabel").text = input_config["desc"]
 	button.get_node("CostLabel").text = str(input_config["shop_cost"])

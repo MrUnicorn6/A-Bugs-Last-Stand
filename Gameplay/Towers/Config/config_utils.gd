@@ -1,12 +1,12 @@
 extends RefCounted
-##shared helpers for the tower config files (and the loader itself).
+##shared helpers for the tower config files (and the Loader itself).
 ##this lives here rather than in gameplay_objects_loader.gd on purpose:
-##the config files preload this, the loader preloads the config files,
-##so pointing config files back at the loader would make a preload cycle.
+##the config files preload this, the Loader preloads the config files,
+##so pointing config files back at the Loader would make a preload cycle.
 
 #atlases
-const TestingAtlas = preload("res://Assets/towerDefense_tilesheet.png")
-const BugAtlas = preload("res://Assets/BugAtlas.png")
+const TESTING_ATLAS = preload("res://Assets/towerDefense_tilesheet.png")
+const BUG_ATLAS = preload("res://Assets/BugAtlas.png")
 
 ##cuts a single cell out of an atlas sheet.
 ##same helper that used to live in gameplay_objects_loader.gd

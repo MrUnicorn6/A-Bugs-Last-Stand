@@ -1,41 +1,41 @@
 extends Node
 
-const loader = preload("res://Gameplay/gameplay_objects_loader.gd")
+const Loader = preload("res://Gameplay/gameplay_objects_loader.gd")
 
 var packed_enemies_config:Dictionary
 var round_counter = 0
-const round_one = ["fast","3","strong","3","camo","1","fly",2]
+const ROUND_ONE = ["fast","3","strong","3","camo","1","fly",2]
 var goal_position:Vector2 #usually player base or camp
 
 
-func doRound():
+func do_round():
 	if round_counter ==0:
 		print("startinground1")
 		@warning_ignore("integer_division")
-		for i in round_one.size()/2:
+		for i in ROUND_ONE.size()/2:
 			#make sure enemy exists
-			if !packed_enemies_config.has(round_one[i*2]):
-				print("CLANKER ",round_one[i*2], " NOT FOUND")
-			var spawnNumber = int(round_one[i*2+1])
-			var nextSpawn = packed_enemies_config[round_one[i*2]]
-			for x in range(0,spawnNumber):
+			if !packed_enemies_config.has(ROUND_ONE[i*2]):
+				print("CLANKER ",ROUND_ONE[i*2], " NOT FOUND")
+			var spawn_number = int(ROUND_ONE[i*2+1])
+			var next_spawn = packed_enemies_config[ROUND_ONE[i*2]]
+			for x in range(0,spawn_number):
 				#print("spawn number is ",x)
 				await $'enemiesSpawning/SpawnTimer'.timeout
-				spawnEnemyOnPath(nextSpawn)
+				spawn_enemy_on_path(next_spawn)
 			
 
-func setEnemies(given_config):
+func set_enemies(given_config):
 	packed_enemies_config = given_config
 	
-func setGoal():
+func set_goal():
 	goal_position = $'enemiesSpawning/TemporaryTarget/CollisionShape2D'.global_position
 
 	
 	#spawn enemy every few secs
-func spawnEnemyOnPath(enemy_config):
-	var tempEnemie =loader.instance_enemy(enemy_config)
-	tempEnemie.update(goal_position)
-	tempEnemie.process_mode = Node.PROCESS_MODE_DISABLED
-	$'enemiesSpawning/EnemieContainer'.add_child(tempEnemie)
-	tempEnemie.global_position = $'enemiesSpawning/Spawn Node'.global_position
-	tempEnemie.process_mode = Node.PROCESS_MODE_ALWAYS
+func spawn_enemy_on_path(enemy_config):
+	var temp_enemy =Loader.instance_enemy(enemy_config)
+	temp_enemy.update(goal_position)
+	temp_enemy.process_mode = Node.PROCESS_MODE_DISABLED
+	$'enemiesSpawning/EnemieContainer'.add_child(temp_enemy)
+	temp_enemy.global_position = $'enemiesSpawning/Spawn Node'.global_position
+	temp_enemy.process_mode = Node.PROCESS_MODE_ALWAYS
