@@ -20,16 +20,16 @@ static var towers = {
 		"icon_texture":Utils.get_atlas_texture(BUG_ATLAS,1,1,32),
 		"display_name":"beelte",
 		"desc":"ball ball ball",
-		"targeting":Enums.TargetingTypes.FIRST,
-		"can_see_camo":Enums.CanSeeCamo.CANNOTSEECAMO,
+		"targeting":Enums.TargetingType.FIRST,
+		"can_see_camo":Enums.CanSeeCamo.CANNOT_SEE_CAMO,
 		"min_range":0,
 		"max_range":200,
 		"fire_rate":0.25,##expressed in delay between shots in seconds
 		"shop_cost":10,
 		"bullet_config":{
 			"speed":150,
-			"guidance":Enums.GuidanceTypes.BALL,#bulletspeed
-			"fuse":Enums.Fuses.TIMER,
+			"guidance":Enums.GuidanceType.BALL,#bulletspeed
+			"fuse":Enums.Fuse.TIMER,
 			"fuse_value":2,
 			"direct_damage":5,
 			"aoe_radius":60,

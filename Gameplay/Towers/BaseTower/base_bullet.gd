@@ -17,9 +17,9 @@ var target_direction_velocity:Vector2# for ball type bullets
 """
 "bullet_texture":getAtlasAreaTexture(TESTING_ATLAS,22,10,64),
 				"speed":251,##in pixles per second
-				"guidance":Enums.GuidanceTypes.SMART,
+				"guidance":Enums.GuidanceType.SMART,
 				"direct_damage":5,#to whatever it hits, usually its intended target
-				"fuse":Enums.Fuses.IMPACT """
+				"fuse":Enums.Fuse.IMPACT """
 
 
 func set_config(new_config:Dictionary)->void:
@@ -27,7 +27,7 @@ func set_config(new_config:Dictionary)->void:
 	#like ball stuff
 	if _config.has("aoe_radius"):
 		$ExplosionArea/CollisionShape2D.shape.radius = _config["aoe_radius"]
-	if _config["guidance"]==Enums.GuidanceTypes.BALL:
+	if _config["guidance"]==Enums.GuidanceType.BALL:
 		$'EnemyDetectionArea/HitboxArea'.shape.radius = _config["aoe_radius"]
 		$Sprite.scale = Vector2(_config["aoe_radius"]/16,_config["aoe_radius"]/16)
 	if _config.has("bullet_texture"):
@@ -73,29 +73,29 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if !can_move:
 		return
-	if !is_instance_valid(target) && _config["guidance"] == Enums.GuidanceTypes.SMART: #makes sure target exists
+	if !is_instance_valid(target) && _config["guidance"] == Enums.GuidanceType.SMART: #makes sure target exists
 		queue_free()
-	if _config["guidance"] == Enums.GuidanceTypes.SMART:
+	if _config["guidance"] == Enums.GuidanceType.SMART:
 		if is_instance_valid(target):
 			look_at(target.global_position)
 			velocity = global_position.direction_to(target.global_position)*_config["speed"]
 			move_and_slide()
 		else:
 			queue_free()
-	elif _config["guidance"] == Enums.GuidanceTypes.DUMB || _config["guidance"] == Enums.GuidanceTypes.BALL:
+	elif _config["guidance"] == Enums.GuidanceType.DUMB || _config["guidance"] == Enums.GuidanceType.BALL:
 		
 		velocity = target_direction_velocity
 		move_and_slide()
 		
 	#proximity fuses and whatnot
-	if _config["fuse"] == Enums.Fuses.IMPACT:
+	if _config["fuse"] == Enums.Fuse.IMPACT:
 		pass #covered by _on_body_entered
-	elif _config["fuse"] == Enums.Fuses.POINT:
+	elif _config["fuse"] == Enums.Fuse.POINT:
 		if global_position.distance_to(target_position_fixed)<6:
 			explode()
-	elif _config["fuse"] == Enums.Fuses.TIMER || _config["fuse"] == Enums.Fuses.TIMEREXPLOSIVE:
+	elif _config["fuse"] == Enums.Fuse.TIMER || _config["fuse"] == Enums.Fuse.TIMER_EXPLOSIVE:
 		await get_tree().create_timer(_config["fuse_value"]).timeout
-		if _config["fuse"] == Enums.Fuses.TIMEREXPLOSIVE:
+		if _config["fuse"] == Enums.Fuse.TIMER_EXPLOSIVE:
 			
 			#print("TIMED FUSE GO BOOOM")
 			explode()
@@ -130,16 +130,16 @@ func explode():
 
 
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
-	#print("SMACK ON ",body.get_groups()," ALSO GUIDANCE IS ",_config["fuse"]==Enums.Fuses.IMPACT)
+	#print("SMACK ON ",body.get_groups()," ALSO GUIDANCE IS ",_config["fuse"]==Enums.Fuse.IMPACT)
 		#for direct hits, and application of status effects 
-	if body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuses.IMPACT:
+	if body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuse.IMPACT:
 		#print("SMACK IMPACT HIT")
 		body.take_damage(_config["direct_damage"])
 		#if !statusEffectData.is_empty():
 			#if statusEffectData["application"] == Enums.StatusApplication.DIRECT:
 				#body.apply_status_effect(statusEffectData['effectType'],statusEffectData['strength'],statusEffectData['duration'])
 		queue_free()
-	elif body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuses.TIMER && _config["fuse"] == Enums.GuidanceTypes.BALL:
+	elif body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuse.TIMER && _config["fuse"] == Enums.GuidanceType.BALL:
 		body.take_damage(_config["direct_damage"])
 		print("BALLING DAMAGE")
 		#if !statusEffectData.is_empty():

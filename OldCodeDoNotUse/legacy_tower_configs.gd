@@ -8,12 +8,12 @@ extends RefCounted
 """
 static var basic_towers = [
 	BlankTower.instantiate().set_this_towers_values(
-		'Ant', Enums.TargetingTypes.FIRST,
-		Enums.CanSeeCamo.CANNOTSEECAMO,
+		'Ant', Enums.TargetingType.FIRST,
+		Enums.CanSeeCamo.CANNOT_SEE_CAMO,
 		0,300,1,5,# setMinRange,setMaxRange,setFireRate,setShopCost
 		prepareBullet([
-			251,Enums.GuidanceTypes.SMART,#bulletspeed
-			5,Enums.Fuses.IMPACT, #damage
+			251,Enums.GuidanceType.SMART,#bulletspeed
+			5,Enums.Fuse.IMPACT, #damage
 			0, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 			null, #status object
 			0,#AOE
@@ -23,7 +23,7 @@ static var basic_towers = [
 		[#upgrades, should be 2 per tower
 			{"range":100,"damage":20,"muzzleVelocity":50,"sprite":getAtlasAreaTexture(BUG_ATLAS,3,2,32),
 			"cost":10,"desc":"better dmg, bullet speed and range"},
-			{"firerate":0.5,"canseecamo":Enums.CanSeeCamo.CANSEECAMO,"sprite":getAtlasAreaTexture(BUG_ATLAS,4,2,32),
+			{"firerate":0.5,"canseecamo":Enums.CanSeeCamo.CAN_SEE_CAMO,"sprite":getAtlasAreaTexture(BUG_ATLAS,4,2,32),
 			"cost":10,"desc":"faster firerate and can now see camo"},
 			{
 				"PathOne":{"Tower":"Fire Ant","cost":20,
@@ -37,12 +37,12 @@ static var basic_towers = [
 		]
 	),
 	BlankTower.instantiate().set_this_towers_values(
-		'Beetle', Enums.TargetingTypes.LAST,
-		Enums.CanSeeCamo.CANNOTSEECAMO,
+		'Beetle', Enums.TargetingType.LAST,
+		Enums.CanSeeCamo.CANNOT_SEE_CAMO,
 		0,200,0.25,10,# setMinRange,setMaxRange,setFireRate,setShopCost
 		prepareBullet([
-			250,Enums.GuidanceTypes.BALL,#bulletspeed
-			5,Enums.Fuses.TIMER, #damage
+			250,Enums.GuidanceType.BALL,#bulletspeed
+			5,Enums.Fuse.TIMER, #damage
 			1, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 			null, #status object
 			32,#AOE
@@ -70,12 +70,12 @@ static var basic_towers = [
 ]
 static var special_towers = [
 	BlankTower.instantiate().set_this_towers_values(
-		'Fire Ant', Enums.TargetingTypes.CLOSEST,
-		Enums.CanSeeCamo.CANNOTSEECAMO,
+		'Fire Ant', Enums.TargetingType.CLOSEST,
+		Enums.CanSeeCamo.CANNOT_SEE_CAMO,
 		0,300,0.25,10,# setMinRange,setMaxRange,setFireRate,setShopCost
 		prepareBullet([
-			300,Enums.GuidanceTypes.SMART,
-			5,Enums.Fuses.IMPACT,
+			300,Enums.GuidanceType.SMART,
+			5,Enums.Fuse.IMPACT,
 			0, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 			{'application':Enums.StatusApplication.DIRECT,
 			'effectType':Enums.StatusEffectType.DOT,
@@ -87,12 +87,12 @@ static var special_towers = [
 		[]
 	),
 	BlankTower.instantiate().set_this_towers_values(
-		'Bullet Ant', Enums.TargetingTypes.LAST,
-		Enums.CanSeeCamo.CANNOTSEECAMO,
+		'Bullet Ant', Enums.TargetingType.LAST,
+		Enums.CanSeeCamo.CANNOT_SEE_CAMO,
 		0,100,1,0,# setMinRange,setMaxRange,setFireRate,setShopCost
 		prepareBullet([
-			300,Enums.GuidanceTypes.DUMB,
-			10,Enums.Fuses.TIMER,
+			300,Enums.GuidanceType.DUMB,
+			10,Enums.Fuse.TIMER,
 			2, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 			null,
 			0,#AOE
@@ -102,12 +102,12 @@ static var special_towers = [
 		[]
 	),
 	BlankTower.instantiate().set_this_towers_values(
-		'Honey Ant', Enums.TargetingTypes.CLOSEST,
-		Enums.CanSeeCamo.CANNOTSEECAMO,
+		'Honey Ant', Enums.TargetingType.CLOSEST,
+		Enums.CanSeeCamo.CANNOT_SEE_CAMO,
 		0,300,0.25,0,# setMinRange,setMaxRange,setFireRate,setShopCost
 		prepareBullet([
-			300,Enums.GuidanceTypes.SMART,
-			1,Enums.Fuses.IMPACT,
+			300,Enums.GuidanceType.SMART,
+			1,Enums.Fuse.IMPACT,
 			2, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 			{'application':Enums.StatusApplication.DIRECT,
 			'effectType':Enums.StatusEffectType.SLOW,
@@ -119,12 +119,12 @@ static var special_towers = [
 		[]
 	),
 	BlankTower.instantiate().set_this_towers_values(
-		'Scarab', Enums.TargetingTypes.LAST,
-		Enums.CanSeeCamo.CANNOTSEECAMO,
+		'Scarab', Enums.TargetingType.LAST,
+		Enums.CanSeeCamo.CANNOT_SEE_CAMO,
 		0,200,0.5,20,# setMinRange,setMaxRange,setFireRate,setShopCost
 		prepareBullet([
-			250,Enums.GuidanceTypes.DUMB,#bulletspeed
-			5,Enums.Fuses.POINT, #damage
+			250,Enums.GuidanceType.DUMB,#bulletspeed
+			5,Enums.Fuse.POINT, #damage
 			1.5, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 			{'application':Enums.StatusApplication.AOE,
 				'effectType':Enums.StatusEffectType.STUN,
@@ -136,12 +136,12 @@ static var special_towers = [
 		[]
 	),
 	BlankTower.instantiate().set_this_towers_values(
-		'Dung Beetle', Enums.TargetingTypes.LAST,
-		Enums.CanSeeCamo.CANNOTSEECAMO,
+		'Dung Beetle', Enums.TargetingType.LAST,
+		Enums.CanSeeCamo.CANNOT_SEE_CAMO,
 		0,200,0.5,20,# setMinRange,setMaxRange,setFireRate,setShopCost
 		prepareBullet([
-			250,Enums.GuidanceTypes.BALL,#bulletspeed
-			5,Enums.Fuses.TIMER, #damage
+			250,Enums.GuidanceType.BALL,#bulletspeed
+			5,Enums.Fuse.TIMER, #damage
 			2, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 			{'application':Enums.StatusApplication.AOE,
 				'effectType':Enums.StatusEffectType.STUN,
@@ -153,12 +153,12 @@ static var special_towers = [
 		[]
 	),
 	BlankTower.instantiate().set_this_towers_values(
-		'Atlas', Enums.TargetingTypes.LAST,
-		Enums.CanSeeCamo.CANNOTSEECAMO,
+		'Atlas', Enums.TargetingType.LAST,
+		Enums.CanSeeCamo.CANNOT_SEE_CAMO,
 		0,200,0.5,20,# setMinRange,setMaxRange,setFireRate,setShopCost
 		prepareBullet([
-			250,Enums.GuidanceTypes.BALL,#bulletspeed
-			5,Enums.Fuses.TIMEREXPLOSIVE, #damage
+			250,Enums.GuidanceType.BALL,#bulletspeed
+			5,Enums.Fuse.TIMER_EXPLOSIVE, #damage
 			2, #fuse value, unused if not proxy(its radius, might never use it or penetrations) 
 			{'application':Enums.StatusApplication.AOE,
 				'effectType':Enums.StatusEffectType.STUN,

@@ -56,10 +56,10 @@ func _shoot():
 func _on_targeting_range_body_entered(body: Node2D) -> void:
 	#print("target entered, ",body.get_groups()," Range is ",_config["max_range"]," actual range is ",$TargetingRange/TargetingHitbox.shape.radius,
 	#" also possible tgts is ",possible_targets.size())
-	if _config["can_see_camo"] == Enums.CanSeeCamo.CANSEECAMO:
+	if _config["can_see_camo"] == Enums.CanSeeCamo.CAN_SEE_CAMO:
 		if body.is_in_group("ENEMY"):
 			possible_targets.append(body)
-	elif _config["can_see_camo"] == Enums.CanSeeCamo.CANNOTSEECAMO:
+	elif _config["can_see_camo"] == Enums.CanSeeCamo.CANNOT_SEE_CAMO:
 		if body.is_in_group("ENEMY") && !body.is_in_group("CAMO"):
 			possible_targets.append(body)
 
@@ -76,16 +76,16 @@ func _on_targeting_range_body_exited(body: Node2D) -> void:
 func update_possible_targets():
 	var bodies = $'TargetingRange'.get_overlapping_bodies()
 	for i in bodies:
-		if _config["can_see_camo"] == Enums.CanSeeCamo.CANSEECAMO:
+		if _config["can_see_camo"] == Enums.CanSeeCamo.CAN_SEE_CAMO:
 			if i.is_in_group("ENEMY"):
 				possible_targets.append(i)
-		elif _config["can_see_camo"] == Enums.CanSeeCamo.CANNOTSEECAMO:
+		elif _config["can_see_camo"] == Enums.CanSeeCamo.CANNOT_SEE_CAMO:
 			if i.is_in_group("ENEMY") && !i.is_in_group("CAMO"):
 				possible_targets.append(i)
 
 
 func _determine_selected_target()->void:
-	if _config["targeting"] == Enums.TargetingTypes.CLOSEST:
+	if _config["targeting"] == Enums.TargetingType.CLOSEST:
 		var closest = possible_targets[0]
 		for i in possible_targets:
 			if i.global_position.distance_to(global_position) < global_position.distance_to(closest.global_position):
@@ -93,7 +93,7 @@ func _determine_selected_target()->void:
 		selected_target = closest
 
 
-	elif _config["targeting"] == Enums.TargetingTypes.STRONGEST:
+	elif _config["targeting"] == Enums.TargetingType.STRONGEST:
 		var strongest = possible_targets[0]
 		for i in possible_targets:
 			if i.health > strongest.health:
@@ -101,11 +101,11 @@ func _determine_selected_target()->void:
 		selected_target = strongest
 
 
-	elif _config["targeting"] == Enums.TargetingTypes.FIRST:
+	elif _config["targeting"] == Enums.TargetingType.FIRST:
 			selected_target = possible_targets[0]
 
 
-	elif _config["targeting"] == Enums.TargetingTypes.LAST:
+	elif _config["targeting"] == Enums.TargetingType.LAST:
 			var last_target = possible_targets[0]
 			print("LAST TARGETING METHOD NOT IMPLEMENTED ")
 			selected_target = last_target

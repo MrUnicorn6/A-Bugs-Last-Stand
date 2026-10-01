@@ -5,7 +5,7 @@
 ##class_name Base_Tower
 #
 #
-#func set_this_towers_values(setName,setTargetingMethod:Enums.TargetingTypes,
+#func set_this_towers_values(setName,setTargetingMethod:Enums.TargetingType,
 		#setCanSeeCamo:Enums.CanSeeCamo,
 		#setMinRange,setMaxRange,setFireRate,setShopCost,
 		#setPackedBulletObject,setSprite,setUpgrades) -> Object:
@@ -35,7 +35,7 @@
 #@export var shopCost:int 
 #@export var minRange:int
 #@export var _maxRange :int
-#@export var targetingMethod:Enums.TargetingTypes
+#@export var targetingMethod:Enums.TargetingType
 #@export var packedBulletObject:PackedScene
 ##hand this a preload("src")
 #
@@ -64,7 +64,7 @@
 			#possible_targets.remove_at(0)
 			#return
 		##print('in targets selection loop')
-		#if targetingMethod == Enums.TargetingTypes.CLOSEST:
+		#if targetingMethod == Enums.TargetingType.CLOSEST:
 			#selectedTarget = possible_targets[0]
 			#var closest = possible_targets[0]
 			#for i in possible_targets:
@@ -73,16 +73,16 @@
 			#selectedTarget = closest
 			#
 			#
-		#elif targetingMethod == Enums.TargetingTypes.STRONGEST:
+		#elif targetingMethod == Enums.TargetingType.STRONGEST:
 			#selectedTarget = possible_targets[0]
 			#var Strongest = possible_targets[0]
 			#for i in possible_targets:
 				#if i.health > Strongest.health:
 					#Strongest = i
 			#selectedTarget = Strongest
-		#elif targetingMethod == Enums.TargetingTypes.FIRST:
+		#elif targetingMethod == Enums.TargetingType.FIRST:
 			#selectedTarget = possible_targets[0]
-		#elif targetingMethod == Enums.TargetingTypes.LAST:
+		#elif targetingMethod == Enums.TargetingType.LAST:
 			#selectedTarget = possible_targets[0]
 			#var last_target = possible_targets[0]
 			#for i in possible_targets:
@@ -100,11 +100,11 @@
 	#tempBullet.show()
 #func _on_targeting_range_body_entered(body: Node2D) -> void:
 	#print("target entered, ",body.get_groups())
-	#if canSeeCamo == Enums.CanSeeCamo.CANSEECAMO:
+	#if canSeeCamo == Enums.CanSeeCamo.CAN_SEE_CAMO:
 		#if body.is_in_group("ENEMY"):
 			##print("I SEE A CAMO FUCKER")
 			#possible_targets.append(body)
-	#elif canSeeCamo == Enums.CanSeeCamo.CANNOTSEECAMO:
+	#elif canSeeCamo == Enums.CanSeeCamo.CANNOT_SEE_CAMO:
 		#if body.is_in_group("ENEMY") && !body.is_in_group("CAMO"):
 			#possible_targets.append(body)
 #func _on_targeting_range_body_exited(body: Node2D) -> void:
@@ -115,10 +115,10 @@
 #func update_possible_targets():
 	#var bodies = $'TargetingRange'.get_overlapping_bodies()
 	#for i in bodies:
-		#if canSeeCamo == Enums.CanSeeCamo.CANSEECAMO:
+		#if canSeeCamo == Enums.CanSeeCamo.CAN_SEE_CAMO:
 			#if i.is_in_group("ENEMY"):
 				#possible_targets.append(i)
-		#elif canSeeCamo == Enums.CanSeeCamo.CANNOTSEECAMO:
+		#elif canSeeCamo == Enums.CanSeeCamo.CANNOT_SEE_CAMO:
 			#if i.is_in_group("ENEMY") && !i.is_in_group("CAMO"):
 				#possible_targets.append(i)
 	##print("done updating targets")
