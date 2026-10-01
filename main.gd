@@ -1,13 +1,13 @@
 extends Node
 
-@onready var user_interface = preload("res://UI/ui.tscn").instantiate()
-@onready var map = preload("res://Gameplay/Levels/Map1/Map1.tscn")
-@onready var camera = preload("res://Main/CameraScene.tscn")
+@onready var user_interface = preload("res://ui/ui.tscn").instantiate()
+@onready var map = preload("res://gameplay/levels/map1/map1.tscn")
+@onready var camera = preload("res://main/camera_scene.tscn")
 var current_map
 #static var packedBasicTowers:Dictionary
 #static var packedSpecialTowers:Dictionary
 static var packed_enemies:Dictionary
-const Loader = preload("res://Gameplay/gameplay_objects_loader.gd")
+const Loader = preload("res://gameplay/gameplay_objects_loader.gd")
 
 # Called when the node enters the scene tree for the first time.s
 func _ready() -> void:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b3scmm5r6a23q"]
 
 [ext_resource type="Script" uid="uid://du64n7xpj8sda" path="res://main.gd" id="1_h2yge"]
-[ext_resource type="PackedScene" uid="uid://b8r10meamabpf" path="res://Main/CameraScene.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://b8r10meamabpf" path="res://main/camera_scene.tscn" id="2_0xm2m"]
 
 [node name="Main" type="AspectRatioContainer"]
 anchors_preset = 15
