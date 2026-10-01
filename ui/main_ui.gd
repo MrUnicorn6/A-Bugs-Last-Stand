@@ -50,8 +50,3 @@ func _on_play_button_pressed() -> void:
 	#print("SWAWS")
 	$'MainMenu'.hide()
 	$'SidePanel'.show()
-	
-	
-	
-	
-	pass # Replace with function body.

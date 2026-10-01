@@ -90,6 +90,8 @@ func _add_upgrade_button(input_config:Dictionary):
 	button.get_node("Sprite").texture = input_config["tower_texture"]
 	button.get_node("DescLabel").text = input_config["desc"]
 	button.get_node("CostLabel").text = str(input_config["shop_cost"])
+	button.upgrade_config = input_config
+	button.upgrade_panel = self
 	#button.pressed.connect(_on_upgrade_button_pressed.bind(input_config))
 	_container.add_child(button)
 	
@@ -126,4 +128,7 @@ func _create_button_array():
 		
 func _on_upgrade_button_pressed(to_upgrade_config:Dictionary):
 	#pay for it and stuff
+	print("PAYING FOR UPGRADES NIY")
 	current_selected_tower.set_config(to_upgrade_config)
+	#clear and update panel for newly applied upgrade
+	set_to_upgrades_for_tower(current_selected_tower)

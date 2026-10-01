@@ -48,10 +48,9 @@ func take_damage(amount,_element:Enums.ElementalType=Enums.ElementalType.NORMAL)
 		queue_free()
 	pass
 func apply_status_effect(type,strength,duration):
-	#print("HEY STATUS EFFECT OF ",type,' ',strength,' ',duration)
+	print("HEY STATUS EFFECT OF ",type,' ',strength,' ',duration)
 	var temp = [type,strength,float(duration)]
 	if type == Enums.StatusEffectType.STUN:
-		
 		can_move=false
 	if type == Enums.StatusEffectType.SLOW:
 		_config["speed"]  = _config["speed"]/strength

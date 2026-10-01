@@ -6,7 +6,7 @@ class_name BaseTower
 
 const Enums = preload("res://main/enums.gd")
 const BASE_BULLET = preload("res://gameplay/towers/base_tower/base_bullet.tscn")
-static var _main_ui = MainUI
+
 
 @export var _config:Dictionary
 
