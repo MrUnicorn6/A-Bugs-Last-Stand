@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://b2vj21s3sjysa"]
 
-[ext_resource type="Script" uid="uid://fxckusi88c8o" path="res://UI/ui_script.gd" id="1_e6gg6"]
+[ext_resource type="Script" uid="uid://fxckusi88c8o" path="res://UI/main_ui.gd" id="1_e6gg6"]
 [ext_resource type="Texture2D" uid="uid://0q22n8wdeb7a" path="res://Assets/BugAtlas.png" id="2_hat8c"]
 [ext_resource type="Script" uid="uid://4qxeqtk7wca8" path="res://UI/health_and_money.gd" id="2_q0uhn"]
 [ext_resource type="Script" uid="uid://deqd2nxdy4kdt" path="res://UI/upgrade_panel.gd" id="3_c7tqi"]

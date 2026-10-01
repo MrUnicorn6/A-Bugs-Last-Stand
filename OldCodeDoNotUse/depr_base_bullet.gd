@@ -1,9 +1,9 @@
 #extends CharacterBody2D
-##class_name Bullet
+##class_name BaseBullet
 #const Enums = preload(
-	#"res://Main/ENUMS.gd"
+	#"res://Main/enums.gd"
 #)
-#static func instance_and_config(packed_base_bullet:PackedScene,config:Dictionary)->Bullet:
+#static func instance_and_config(packed_base_bullet:PackedScene,config:Dictionary)->BaseBullet:
 	#var temp = packed_base_bullet.instantiate()
 #
 	#

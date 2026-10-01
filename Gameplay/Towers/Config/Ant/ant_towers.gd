@@ -5,7 +5,7 @@ extends RefCounted
 ##upgrades are still hand written:each tower lists the config keys it can upgrade
 ##into under "upgrade_options_config_keys",and those keys are looked up in this same file.
 
-const Enums = preload("res://Main/ENUMS.gd")
+const Enums = preload("res://Main/enums.gd")
 const BUG_ATLAS = preload("res://Assets/BugAtlas.png")
 const TESTING_ATLAS = preload("res://Assets/towerDefense_tilesheet.png")
 const Utils = preload("res://Gameplay/Towers/Config/config_utils.gd")

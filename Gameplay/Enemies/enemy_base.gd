@@ -1,5 +1,5 @@
 extends CharacterBody2D
-const Enums = preload("res://Main/ENUMS.gd")
+const Enums = preload("res://Main/enums.gd")
 
 @export var _config:Dictionary
 

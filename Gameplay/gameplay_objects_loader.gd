@@ -10,7 +10,7 @@ const TESTING_ATLAS = preload("res://Assets/towerDefense_tilesheet.png")
 const BUG_ATLAS = preload("res://Assets/BugAtlas.png")
 
 #enums
-const Enums = preload("res://Main/ENUMS.gd")
+const Enums = preload("res://Main/enums.gd")
 
 #tower config split out into res://Gameplay/Towers/Config/ (see tower_registry.gd)
 const ConfigUtils = preload("res://Gameplay/Towers/Config/config_utils.gd")
@@ -24,7 +24,7 @@ const TowerRegistry = preload("res://Gameplay/Towers/Config/tower_registry.gd")
 ##the per tower data itself now lives in one file per bug family:
 ##  res://Gameplay/Towers/Config/<Bug>/<bug>_towers.gd
 ##and is stitched together by res://Gameplay/Towers/Config/tower_registry.gd
-##this is only an alias,so main.gd / ui_script.gd keep working untouched
+##this is only an alias,so main.gd / main_ui.gd keep working untouched
 static var towers_config:Dictionary = TowerRegistry.towers_config
 
 static func get_tower(key:String) ->Dictionary:

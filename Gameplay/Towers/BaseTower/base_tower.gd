@@ -4,7 +4,7 @@ extends StaticBody2D
 class_name BaseTower
 
 
-const Enums = preload("res://Main/ENUMS.gd")
+const Enums = preload("res://Main/enums.gd")
 const BASE_BULLET = preload("res://Gameplay/Towers/BaseTower/base_bullet.tscn")
 static var _main_ui = MainUI
 

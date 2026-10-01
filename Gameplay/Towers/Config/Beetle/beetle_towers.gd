@@ -6,7 +6,7 @@ extends RefCounted
 ##files were split out,so it is left alone for now - but it does have an empty
 ##upgrade_options_config_keys,so its upgrade panel opens with no options instead of erroring.
 
-const Enums = preload("res://Main/ENUMS.gd")
+const Enums = preload("res://Main/enums.gd")
 const BUG_ATLAS = preload("res://Assets/BugAtlas.png")
 const Utils = preload("res://Gameplay/Towers/Config/config_utils.gd")
 

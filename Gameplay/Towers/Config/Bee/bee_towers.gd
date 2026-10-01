@@ -4,7 +4,7 @@ extends RefCounted
 ##to look one up: towers["basic_bee"]  (same as Loader.towers_config["bees"]["basic_bee"])
 ##careful: this tower is an empty stub,as it was in the old gameplay_objects_loader.gd.
 
-const Enums = preload("res://Main/ENUMS.gd")
+const Enums = preload("res://Main/enums.gd")
 const BUG_ATLAS = preload("res://Assets/BugAtlas.png")
 const TESTING_ATLAS = preload("res://Assets/towerDefense_tilesheet.png")
 const Utils = preload("res://Gameplay/Towers/Config/config_utils.gd")

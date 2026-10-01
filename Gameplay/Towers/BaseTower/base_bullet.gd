@@ -1,11 +1,11 @@
 extends CharacterBody2D
 
 
-class_name Bullet
+class_name BaseBullet
 
 
 const Enums = preload(
-    "res://Main/ENUMS.gd"
+    "res://Main/enums.gd"
 )
 var _config:Dictionary
 #in use vars
