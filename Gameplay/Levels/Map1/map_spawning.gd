@@ -20,7 +20,7 @@ func do_round():
 			var next_spawn = packed_enemies_config[ROUND_ONE[i*2]]
 			for x in range(0,spawn_number):
 				#print("spawn number is ",x)
-				await $'enemiesSpawning/SpawnTimer'.timeout
+				await $'EnemiesSpawning/SpawnTimer'.timeout
 				spawn_enemy_on_path(next_spawn)
 			
 
@@ -28,7 +28,7 @@ func set_enemies(given_config):
 	packed_enemies_config = given_config
 	
 func set_goal():
-	goal_position = $'enemiesSpawning/TemporaryTarget/CollisionShape2D'.global_position
+	goal_position = $'EnemiesSpawning/TemporaryTarget/CollisionShape2D'.global_position
 
 	
 	#spawn enemy every few secs
@@ -36,6 +36,6 @@ func spawn_enemy_on_path(enemy_config):
 	var temp_enemy =Loader.instance_enemy(enemy_config)
 	temp_enemy.update(goal_position)
 	temp_enemy.process_mode = Node.PROCESS_MODE_DISABLED
-	$'enemiesSpawning/EnemieContainer'.add_child(temp_enemy)
-	temp_enemy.global_position = $'enemiesSpawning/Spawn Node'.global_position
+	$'EnemiesSpawning/EnemyContainer'.add_child(temp_enemy)
+	temp_enemy.global_position = $'EnemiesSpawning/SpawnNode'.global_position
 	temp_enemy.process_mode = Node.PROCESS_MODE_ALWAYS

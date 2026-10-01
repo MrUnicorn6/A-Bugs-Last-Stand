@@ -12,22 +12,22 @@ tile_map_data = PackedByteArray("AAACAAIAAAAEAAUAAAABAAEAAAAEAAUAAAAAAAAAAAAEAAU
 tile_set = ExtResource("1_webya")
 script = ExtResource("2_webya")
 
-[node name="enemiesSpawning" type="Node" parent="."]
+[node name="EnemiesSpawning" type="Node" parent="."]
 
-[node name="SpawnTimer" type="Timer" parent="enemiesSpawning"]
+[node name="SpawnTimer" type="Timer" parent="EnemiesSpawning"]
 wait_time = 2.0
 autostart = true
 
-[node name="TemporaryTarget" type="StaticBody2D" parent="enemiesSpawning"]
+[node name="TemporaryTarget" type="StaticBody2D" parent="EnemiesSpawning"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="enemiesSpawning/TemporaryTarget"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemiesSpawning/TemporaryTarget"]
 position = Vector2(352, -32)
 shape = SubResource("CircleShape2D_d54qm")
 
-[node name="Spawn Node" type="StaticBody2D" parent="enemiesSpawning"]
+[node name="SpawnNode" type="StaticBody2D" parent="EnemiesSpawning"]
 position = Vector2(-544, 640)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="enemiesSpawning/Spawn Node"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemiesSpawning/SpawnNode"]
 shape = SubResource("CircleShape2D_d54qm")
 
-[node name="EnemieContainer" type="Node" parent="enemiesSpawning"]
+[node name="EnemyContainer" type="Node" parent="EnemiesSpawning"]

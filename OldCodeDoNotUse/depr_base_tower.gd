@@ -2,7 +2,7 @@
 ###an abstract class intended for later instancing and configuration 
 ###via a config dict, as specified by towers_config found in (at least for now)
 ###GameplayObjectsLoader.gd
-##class_name Base_Tower
+##class_name BaseTower
 #
 #
 #func set_this_towers_values(setName,setTargetingMethod:Enums.TargetingType,

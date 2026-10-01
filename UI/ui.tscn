@@ -189,7 +189,7 @@ grow_horizontal = 2
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_cbfhl")
 
-[node name="Play Button" type="TextureRect" parent="MainMenu"]
+[node name="PlayButtonBackground" type="TextureRect" parent="MainMenu"]
 layout_mode = 0
 offset_left = 858.0
 offset_top = 372.0
@@ -198,7 +198,7 @@ offset_bottom = 412.0
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_4fiuh")
 
-[node name="PlayButton" type="Button" parent="MainMenu/Play Button"]
+[node name="PlayButton" type="Button" parent="MainMenu/PlayButtonBackground"]
 layout_mode = 0
 offset_right = 96.0
 offset_bottom = 40.5
@@ -254,4 +254,4 @@ layout_mode = 2
 theme = ExtResource("4_nm1m0")
 
 [connection signal="pressed" from="SidePanel/UpgradePanel/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="MainMenu/Play Button/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MainMenu/PlayButtonBackground/PlayButton" to="." method="_on_play_button_pressed"]

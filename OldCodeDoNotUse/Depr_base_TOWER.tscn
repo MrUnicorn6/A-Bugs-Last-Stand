@@ -15,7 +15,7 @@ radius = 300.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x5he6"]
 
-[node name="Base_Tower" type="StaticBody2D"]
+[node name="BaseTower" type="StaticBody2D"]
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jt0u4")
