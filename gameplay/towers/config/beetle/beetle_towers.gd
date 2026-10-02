@@ -42,7 +42,7 @@ static var towers = {
 	},
 	"beetle_two":{
 		"icon_texture":Utils.get_atlas_texture(BUG_ATLAS,1,1,32),
-		"display_name":"Beelte Two",
+		"display_name":"Beetle Two",
 		"desc":"Longer Range, targets closest",
 		"targeting":Enums.TargetingType.CLOSEST,
 		"can_see_camo":Enums.CanSeeCamo.CANNOT_SEE_CAMO,
