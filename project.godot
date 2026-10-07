@@ -25,6 +25,10 @@ window/stretch/mode="viewport"
 
 version_control/autoload_on_startup=true
 
+[gui]
+
+theme/custom_font="uid://bfbbh7ea60wot"
+
 [input]
 
 move_map_up={

@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://assets/tower_defense_tilesheet.png" id="3_e707p"]
 [ext_resource type="Theme" uid="uid://bnf7l64u5bhbo" path="res://ui/stuff/ui_theme.tres" id="4_nm1m0"]
 [ext_resource type="Texture2D" uid="uid://dxk131fsnmthf" path="res://assets/ui_atlas.png" id="6_nm1m0"]
+[ext_resource type="Texture2D" uid="uid://ccjfeb2llsupc" path="res://assets/menu_background.png" id="7_gycre"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3sbvi"]
 font_size = 30
@@ -22,9 +23,6 @@ region = Rect2(832, 768, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_jqf55"]
 atlas = ExtResource("3_e707p")
 region = Rect2(1344, 768, 64, 64)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_c7tqi"]
-specular_color = Color(0, 0.5103249, 0.1441493, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cbfhl"]
 atlas = ExtResource("6_nm1m0")
@@ -172,29 +170,33 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MenuBackground" type="TextureRect" parent="MainMenu"]
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-texture = SubResource("CanvasTexture_c7tqi")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_gycre")
 
 [node name="Title" type="TextureRect" parent="MainMenu"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -221.0
-offset_right = 3.0
-offset_bottom = 128.0
+offset_left = -457.0
+offset_top = -54.0
+offset_right = -233.0
+offset_bottom = 74.0
 grow_horizontal = 2
-scale = Vector2(2, 2)
+scale = Vector2(4, 4)
 texture = SubResource("AtlasTexture_cbfhl")
 
 [node name="PlayButtonBackground" type="TextureRect" parent="MainMenu"]
 layout_mode = 0
 offset_left = 858.0
-offset_top = 372.0
+offset_top = 500.0
 offset_right = 954.0
-offset_bottom = 412.0
+offset_bottom = 540.0
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_4fiuh")
 
