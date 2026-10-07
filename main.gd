@@ -26,6 +26,6 @@ func _ready() -> void:
 	add_child(user_interface)
 	
 	#these should be in UI
-	user_interface.add_shop_item(all_towers_dict["ants"]["ant"])
-	user_interface.add_shop_item(all_towers_dict["beetles"]["beetle"])
+	user_interface.add_shop_item(all_towers_dict["ants"]["ant_tower"])
+	#user_interface.add_shop_item(all_towers_dict["beetles"]["beetle"])
 		

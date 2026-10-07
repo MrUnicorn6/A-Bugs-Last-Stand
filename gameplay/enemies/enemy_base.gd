@@ -59,23 +59,30 @@ func apply_status_effect(type,strength,duration):
 
 	#apply the effects that this enemy has
 	#statuses held in here are in array format [type,strength,duration]
-	
+
+##to get an enemies current velocity for the perpose of calculating leading for bullets.
+##
+##respects stun effect
+func get_current_velocity() ->Vector2:
+	if !can_move:
+		return Vector2.ZERO
+	return velocity
+
 	
 
 func _physics_process(delta: float) -> void:
 	#print("ATTEMPTING ENEMY PATHFINDING")
 	#if !$'NavigationAgent2D'.is_target_reachable():
 		#print("TARGET UNREACHABLE")
-	'''
-	if !can_move :
-		return
-	get_parent().set_progress(get_parent().get_progress()+speed*delta)
-	'''
 	if !$NavigationAgent2D.is_target_reached():
 		var nav_direction = to_local($'NavigationAgent2D'.get_next_path_position()).normalized()
-		velocity = nav_direction*_config["speed"]*delta*30
+		if !can_move:
+			velocity = Vector2.ZERO
+		else:
+			velocity = nav_direction*_config["speed"]*delta*30
 		move_and_slide()
 	else:
+		#target is reached
 		print("YOU FUCKING DIE")
 		get_node("/root/Main/UI/HealthAndMoney").change_health(_config["health"])
 		queue_free()

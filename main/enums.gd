@@ -12,11 +12,19 @@ enum GuidanceType {
 	##when it was fired not updating/leading as it flies
 	##and is deleted when it reaches its end
 	DUMB,
+
 	##constantly fly to the targets current position
 	SMART,
+
 	##similar to DUMB, but instead of being deleted at the point, 
 	##uses a timer instead
-	BALL}
+	BALL, 
+
+	##like DUMB but meant to determine where the target will be, like how real bullets 
+	##are leaded
+	LEAD
+	
+	}
 	
 ##when a bullet will explode and or be deleted
 enum Fuse {

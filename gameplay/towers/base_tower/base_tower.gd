@@ -38,7 +38,9 @@ func _physics_process(delta: float) -> void:
 	if !is_instance_valid(selected_target):
 		selected_target = null
 	_determine_selected_target()
-	look_at(selected_target.global_position)
+	if selected_target == null || !is_instance_valid(selected_target):
+		return
+	look_at(_get_aim_point())
 
 	if fire_rate_cooldown > 0:
 		fire_rate_cooldown -= delta
@@ -114,4 +116,60 @@ func _on_clicked_on_detector_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_mask==0:
 		print("THIS GETNODE ROOT PISSES ME OFF")
 		get_node("/root/Main").user_interface.get_upgrade_panel().set_to_upgrades_for_tower(self)
+
+##Lead-intercept solver, owned here so the tower can aim its barrel at the
+##predicted point every frame. Mostly used by BaseBullet.shoot_at_target()
+##at fire-time via BaseTower.solve_intercept() — static so the bullet can
+##call it without a tower instance (avoids a preload cycle with base_bullet.tscn).
+##shooter_pos: where the bullet spawns (tower uses BulletSpawnPoint so the
+##barrel angle matches the bullet flight angle).
+##dumbpoint: where the target is RIGHT NOW. Falls back to dumbpoint (plain
+##DUMB aim) when no valid intercept exists.
+static func solve_intercept(shooter_pos: Vector2, dumbpoint: Vector2, target_velocity: Vector2, bullet_speed: float) -> Vector2:
+	# arrow from shooter to where the target is right now
+	var vector_to_target := dumbpoint - shooter_pos
+	# squared-out form of |vector_to_target + target_velocity*t| = bullet_speed*t
+	var quadratic_A := target_velocity.dot(target_velocity) - bullet_speed * bullet_speed
+	var quadratic_B := 2.0 * vector_to_target.dot(target_velocity)
+	var quadratic_C := vector_to_target.dot(vector_to_target)
+	# near-linear case (target ~stationary): plain time-of-flight
+	if absf(quadratic_A) < 0.001:
+		var straight_line_time := vector_to_target.length() / maxf(bullet_speed, 0.001)
+		return dumbpoint + target_velocity * straight_line_time
+	# no real roots: bullet can never catch the target
+	var discriminant := quadratic_B * quadratic_B - 4.0 * quadratic_A * quadratic_C
+	if discriminant < 0.0:
+		return dumbpoint
+	var square_root := sqrt(discriminant)
+	var impact_time_option_1 := (-quadratic_B + square_root) / (2.0 * quadratic_A)
+	var impact_time_option_2 := (-quadratic_B - square_root) / (2.0 * quadratic_A)
+	var time_to_impact := -1.0
+	if impact_time_option_1 > 0.0 and impact_time_option_2 > 0.0:
+		time_to_impact = minf(impact_time_option_1, impact_time_option_2)
+	elif impact_time_option_1 > 0.0:
+		time_to_impact = impact_time_option_1
+	elif impact_time_option_2 > 0.0:
+		time_to_impact = impact_time_option_2
+	else:
+		return dumbpoint
+	return dumbpoint + target_velocity * time_to_impact
+
+
+##Where the barrel should point this frame. For LEAD guidance this is the
+##predicted intercept (same math the bullet uses at fire-time); for every
+##other guidance type it's just the target's current position.
+func _get_aim_point() -> Vector2:
+	if _config["bullet_config"]["guidance"] != Enums.GuidanceType.LEAD:
+		return selected_target.global_position
+	var aim_velocity := Vector2.ZERO
+	if selected_target.has_method("get_current_velocity"):
+		aim_velocity = selected_target.get_current_velocity()
+	elif selected_target is CharacterBody2D:
+		aim_velocity = (selected_target as CharacterBody2D).velocity
+	return solve_intercept(
+		$BulletSpawnPoint.global_position,
+		selected_target.global_position,
+		aim_velocity,
+		_config["bullet_config"]["speed"]
+	)
 	

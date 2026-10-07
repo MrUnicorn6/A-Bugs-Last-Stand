@@ -9,10 +9,10 @@ const Enums = preload(
 )
 var _config:Dictionary
 #in use vars
-var can_move = true #for freezing teh bullet in place for the explosion effect
+var can_move = true ##for freezing teh bullet in place for the explosion effect
 var target:Node2D
-var target_position_fixed:Vector2 #for dumb bullets
-var target_direction_velocity:Vector2# for ball type bullets
+var target_position_fixed:Vector2##for dumb bullets
+var target_direction_velocity:Vector2## for ball type bullets
 
 """
 "bullet_texture":getAtlasAreaTexture(TESTING_ATLAS,22,10,64),
@@ -37,7 +37,6 @@ func set_config(new_config:Dictionary)->void:
 ##called once, and is fired at a specific target, or a specific position
 func shoot_at_target(set_target:Node2D,intended_position:Vector2):
 	#update the visual radius of the sprite of the bullet.
-	print("BALL BULLET NOT WORKIGN YET")
 		
 	#checking for validity
 	if set_target == null && intended_position==null:
@@ -46,17 +45,43 @@ func shoot_at_target(set_target:Node2D,intended_position:Vector2):
 	if set_target !=null:
 		target = set_target
 		target_position_fixed = set_target.global_position
+		
+		if _config["guidance"] == Enums.GuidanceType.LEAD:
+			var lead_velocity := Vector2.ZERO
+			if set_target.has_method("get_current_velocity"):
+				lead_velocity = set_target.get_current_velocity()
+			elif set_target is CharacterBody2D:
+				lead_velocity = (set_target as CharacterBody2D).velocity
+			target_position_fixed = BaseTower.solve_intercept(
+				global_position,
+				set_target.global_position,
+				lead_velocity,
+				_config["speed"]
+			)
+		
+		 
 		target_direction_velocity = global_position.direction_to(target_position_fixed)*_config["speed"]
-		#this is to initally look at the target, updated to current target pos if 
-		#guidance is smart
-		#mainly for BALL and POINT bullets
-		look_at(target_position_fixed)
 	if set_target==null&&intended_position!=null:
 		target_position_fixed = intended_position
 		target_direction_velocity = global_position.direction_to(target_position_fixed)*_config["speed"]
-		look_at(target_position_fixed)
+	
+	#inaccuracy: 0 = perfect aim, 1 = up to +-90 degrees off intended aim.
+	#uniform roll, applied after guidance so LEAD still predicts truly then executes sloppily.
+	#barrel (_get_aim_point) intentionally keeps aiming at the true point: barrel shows intent, bullet shows execution.
+	var inaccuracy := clampf(float(_config.get("inaccuracy", 0.0)), 0.0, 1.0)
+	if inaccuracy > 0.0 and target_direction_velocity.length() > 0.001:
+		var max_error := inaccuracy * PI / 2.0
+		var aim_error := randf_range(-max_error, max_error)
+		var flight_distance := global_position.distance_to(target_position_fixed)
+		target_direction_velocity = target_direction_velocity.rotated(aim_error)
+		#keep POINT fuse + look_at consistent with where the bullet actually flies
+		if flight_distance > 0.001:
+			target_position_fixed = global_position + target_direction_velocity.normalized() * flight_distance
+	
+	look_at(target_position_fixed)
 	process_mode = Node.PROCESS_MODE_INHERIT
 	show()
+
 
 func _init() -> void:
 	add_to_group("BULLETS")
@@ -71,18 +96,19 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	var guidance_type = _config["guidance"]
 	if !can_move:
 		return
-	if !is_instance_valid(target) && _config["guidance"] == Enums.GuidanceType.SMART: #makes sure target exists
+	if !is_instance_valid(target) &&guidance_type == Enums.GuidanceType.SMART: #makes sure target exists
 		queue_free()
-	if _config["guidance"] == Enums.GuidanceType.SMART:
+	if guidance_type == Enums.GuidanceType.SMART:
 		if is_instance_valid(target):
 			look_at(target.global_position)
 			velocity = global_position.direction_to(target.global_position)*_config["speed"]
 			move_and_slide()
 		else:
 			queue_free()
-	elif _config["guidance"] == Enums.GuidanceType.DUMB || _config["guidance"] == Enums.GuidanceType.BALL:
+	elif guidance_type == Enums.GuidanceType.DUMB || guidance_type == Enums.GuidanceType.BALL||guidance_type == Enums.GuidanceType.LEAD:
 		
 		velocity = target_direction_velocity
 		move_and_slide()
@@ -112,7 +138,6 @@ func explode():
 	for i in targets:
 		if i.is_in_group("ENEMY"):
 			temp.append(i)
-	#print("NUM OF TGTs IN EXP ARE ",temp.size())
 	for i in temp:
 		if _config.has("status_effect"):
 			if _config["status_effect"]["status_application"].application == Enums.StatusApplication.AOE :
@@ -137,8 +162,8 @@ func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
 		body.take_damage(_config["direct_damage"])
 		if _config.has("status_effect"):
 			var status = _config["status_effect"]
-			if status["application"] == Enums.StatusApplication.DIRECT:
-				body.apply_status_effect(status['effectType'],status['strength'],status['duration'])
+			if status["status_application"] == Enums.StatusApplication.DIRECT:
+				body.apply_status_effect(status['status_type'],status['status_strength'],status['status_duration'])
 		queue_free()
 	elif body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuse.TIMER && _config["guidance"] == Enums.GuidanceType.BALL:
 		body.take_damage(_config["direct_damage"])

@@ -8,6 +8,7 @@ const BASE_BULLET_SCENE = preload("res://gameplay/towers/base_tower/base_bullet.
 #atlases
 const TESTING_ATLAS = preload("res://assets/tower_defense_tilesheet.png")
 const BUG_ATLAS = preload("res://assets/bug_atlas.png")
+const VFX_ATLAS = preload("res://assets/vfx_atlas.png")
 
 #enums
 const Enums = preload("res://main/enums.gd")
