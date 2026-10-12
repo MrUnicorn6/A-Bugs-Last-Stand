@@ -4,12 +4,22 @@ const Loader = preload("res://gameplay/gameplay_objects_loader.gd")
 const BASE_SHOP_ITEM = preload("res://ui/base_objects/shop_panel/base_shop_button.tscn")
 
 const BASE_LEVEL_TILE = preload("res://ui/base_objects/levels/base_level_tile.tscn")
+const GAME_OVER_SCENE = preload("res://ui/game_over.tscn")
 #const main_menu_scene = preload("res://ui/MainMenu.tscn")
 var map_object #set by main.gd
 # Called when the node enters the scene tree for the first time.
 @onready var upgrade_panel = $"SidePanel/UpgradePanel"
 func get_upgrade_panel() ->UpgradePanel:
 	return upgrade_panel
+
+func _ready() -> void:
+	$"SidePanel/HealthAndMoney".game_over.connect(_on_health_game_over)
+
+##brings up the game over screen once the player runs out of health
+func _on_health_game_over() -> void:
+	var game_over = GAME_OVER_SCENE.instantiate()
+	game_over.layer = 10##draw over the rest of the ui
+	add_child(game_over)
 
 
 func start(map) -> void:

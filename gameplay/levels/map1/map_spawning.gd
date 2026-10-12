@@ -34,8 +34,10 @@ func set_goal():
 	#spawn enemy every few secs
 func spawn_enemy_on_path(enemy_config):
 	var temp_enemy =Loader.instance_enemy(enemy_config)
-	temp_enemy.update(goal_position)
 	temp_enemy.process_mode = Node.PROCESS_MODE_DISABLED
 	$'EnemiesSpawning/EnemyContainer'.add_child(temp_enemy)
 	temp_enemy.global_position = $'EnemiesSpawning/SpawnNode'.global_position
+	#set the nav target AFTER the enemy is in the tree at its spawn position,
+	#setting it before add_child (old order) could leave the agent with a stale/empty path
+	temp_enemy.update(goal_position)
 	temp_enemy.process_mode = Node.PROCESS_MODE_ALWAYS

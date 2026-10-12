@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dn31omv6nsgpe"]
 
 [ext_resource type="Script" path="res://gameplay/towers/base_tower/base_tower.gd" id="1_7rgko"]
-[ext_resource type="Texture2D" uid="uid://0q22n8wdeb7a" path="res://assets/bug_atlas.png" id="2_drh7h"]
+[ext_resource type="Texture2D" uid="uid://cwpgt5lseyb2o" path="res://assets/depricated Bug Atlas.png" id="2_drh7h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cud2n"]
 atlas = ExtResource("2_drh7h")

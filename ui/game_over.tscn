@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctwtwv7yqcd44"]
+
+[ext_resource type="Texture2D" uid="uid://ccjfeb2llsupc" path="res://assets/menu_background.png" id="1_oo8kp"]
+[ext_resource type="Script" path="res://ui/game_over.gd" id="2_goscript"]
+[ext_resource type="Theme" uid="uid://bnf7l64u5bhbo" path="res://ui/stuff/ui_theme.tres" id="3_gothen"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_j1fe5"]
+font_size = 100
+
+[node name="GameOver" type="CanvasLayer"]
+script = ExtResource("2_goscript")
+
+[node name="MenuBackground" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_oo8kp")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+text = "DEATH"
+label_settings = SubResource("LabelSettings_j1fe5")
+horizontal_alignment = 1
+
+[node name="RetryButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = 160.0
+offset_right = 120.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_gothen")
+theme_override_font_sizes/font_size = 48
+text = "RETRY"
+
+[connection signal="pressed" from="RetryButton" to="." method="_on_retry_button_pressed"]

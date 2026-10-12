@@ -7,7 +7,7 @@ const BASE_BULLET_SCENE = preload("res://gameplay/towers/base_tower/base_bullet.
 
 #atlases
 const TESTING_ATLAS = preload("res://assets/tower_defense_tilesheet.png")
-const BUG_ATLAS = preload("res://assets/bug_atlas.png")
+const BUG_ATLAS = preload("res://assets/depricated Bug Atlas.png")
 const VFX_ATLAS = preload("res://assets/vfx_atlas.png")
 
 #enums
@@ -45,18 +45,24 @@ static var enemies_config = {
 		"name":"fast",
 		"health":10,
 		"speed":200,
+		"bounty":4,##money paid to the player when this enemy dies
+		"leak_damage":24,##damage dealt to the player when it reaches the goal
 		"texture":get_atlas_texture(TESTING_ATLAS,15,10,64)
 	},
 	"strong":{
 		"name":"strong",
 		"health":30,
 		"speed":50,
+		"bounty":8,
+		"leak_damage":24,
 		"texture":get_atlas_texture(TESTING_ATLAS,16,10,64)
 	},
 	"boss":{
 		"name":"boss",
 		"health":50,
 		"speed":50,
+		"bounty":60,
+		"leak_damage":24,
 		"texture":get_atlas_texture(TESTING_ATLAS,17,10,64),
 	},
 	"camo":{
@@ -64,6 +70,8 @@ static var enemies_config = {
 		"health":30,
 		"speed":50,
 		"camo":true,
+		"bounty":12,
+		"leak_damage":24,
 		"texture":get_atlas_texture(TESTING_ATLAS,18,10,64),
 	},
 	"fly":{
@@ -71,6 +79,8 @@ static var enemies_config = {
 		"health":10,
 		"speed":300,
 		"flying":true,#not implemented
+		"bounty":6,
+		"leak_damage":24,
 		"texture":get_atlas_texture(TESTING_ATLAS,17,11,64),
 		"resistances":"WAEWAKLKDNS"
 	}

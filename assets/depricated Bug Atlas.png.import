@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctijnvxypibon"
-path="res://.godot/imported/BugAtlas.png-1f38b3922e949bfcf2ac69b448bfc8da.ctex"
+uid="uid://cwpgt5lseyb2o"
+path="res://.godot/imported/depricated Bug Atlas.png-3c56bef0ea4b891db35595fd9468a27d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/BugAtlas.png"
-dest_files=["res://.godot/imported/BugAtlas.png-1f38b3922e949bfcf2ac69b448bfc8da.ctex"]
+source_file="res://assets/depricated Bug Atlas.png"
+dest_files=["res://.godot/imported/depricated Bug Atlas.png-3c56bef0ea4b891db35595fd9468a27d.ctex"]
 
 [params]
 

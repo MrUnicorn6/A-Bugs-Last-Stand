@@ -14,7 +14,7 @@ grow_vertical = 2
 script = ExtResource("1_h2yge")
 
 [node name="CameraScene" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(947, 504)
+position = Vector2(956, 525)
 
 [node name="CoreGameNode" type="Node2D" parent="."]
 

@@ -31,6 +31,7 @@ func get_config()-> Dictionary:
 
 
 func _physics_process(delta: float) -> void:
+	_prune_dead_targets()
 	if possible_targets.is_empty() || possible_targets.size()==0:
 		return
 	if selected_target not in possible_targets && !possible_targets.is_empty():
@@ -86,6 +87,19 @@ func update_possible_targets():
 				possible_targets.append(i)
 
 
+func _ready() -> void:
+	add_to_group("TOWER")##so the game over screen can freeze towers
+
+##drops enemies that died (queue_free) from the target list, they stick
+##around for a frame after death and would otherwise crash targeting
+func _prune_dead_targets()->void:
+	for i in range(possible_targets.size()-1,-1,-1):
+		var candidate = possible_targets[i]
+		if !is_instance_valid(candidate) || candidate.is_queued_for_deletion():
+			if selected_target == candidate:
+				selected_target = null
+			possible_targets.remove_at(i)
+
 func _determine_selected_target()->void:
 	if _config["targeting"] == Enums.TargetingType.CLOSEST:
 		var closest = possible_targets[0]
@@ -98,7 +112,7 @@ func _determine_selected_target()->void:
 	elif _config["targeting"] == Enums.TargetingType.STRONGEST:
 		var strongest = possible_targets[0]
 		for i in possible_targets:
-			if i.health > strongest.health:
+			if i.get_health() > strongest.get_health():
 				strongest = i
 		selected_target = strongest
 

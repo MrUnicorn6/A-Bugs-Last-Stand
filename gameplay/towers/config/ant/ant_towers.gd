@@ -39,14 +39,14 @@ const Utils = preload("res://gameplay/towers/config/config_utils.gd")
 ##ant_art.png is 640x640 (32px cells = a 20x20 grid). rows 4 and 5 already hold
 ##drawn ant sprites for the b and c paths (an old comment here wrongly said 128x128).
 const SHEET = preload("res://gameplay/towers/config/ant/ant_art.png")
-##bullet atlases, read by the bullet_config entries below:
-##  TESTING_ATLAS -> ant, ant_one, ant_two only (carried over from the old file)
-##    KNOWN ISSUE (pre-existing, untouched here): tower_defense_tilesheet.png is 192x64
-##    but those lines ask for cell (22,10) at 64px = origin (1408,640), far outside
-##    the image - so those three bullets currently render blank.
-##  VFX_ATLAS cell (0,1) = small orange dot -> every a/b/c path tower
-const TESTING_ATLAS = preload("res://assets/tower_defense_tilesheet.png")
-const VFX_ATLAS = preload("res://assets/vfx_atlas.png")
+##the shared VFX art sheet, read by every bullet_config entry below:
+##  lives under config/common/ so other families can reuse it.
+##  640x640, 32px cells (the sheet prints its own 0-19 grid labels).
+##  cell (1,2) = the orange bullet dot -> all 12 ant bullets use it.
+##  this replaces two atlases: TESTING_ATLAS (its (22,10) cell at 64px was
+##  off-image on the 192x64 sheet, so those three trunk bullets rendered
+##  blank) and the old assets/vfx_atlas.png dot.
+const VFX_ART = preload("res://gameplay/towers/config/common/vfx_art.png")
 
 ##class key base - drives the T_* tower keys below. NOT the registry key.
 const INSECT := "ant"
@@ -165,7 +165,7 @@ static var towers = {
 		"fire_rate": 2,
 		"shop_cost": 5,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(TESTING_ATLAS,22,10,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 200,##in pixles per second
 			"guidance": Enums.GuidanceType.LEAD,
 			"direct_damage": 1,#to whatever it hits, usually its intended target
@@ -186,7 +186,7 @@ static var towers = {
 		"fire_rate": 2,##same as base ant: Strong Jaw only sells damage + range
 		"shop_cost": 8,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(TESTING_ATLAS,22,10,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 350,##in pixles per second
 			"guidance": Enums.GuidanceType.SMART,
 			"direct_damage": 7,#to whatever it hits, usually its intended target
@@ -207,7 +207,7 @@ static var towers = {
 		"fire_rate": 3,##was 0.75 which was slower than base (fire_rate is per second)
 		"shop_cost": 12,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(TESTING_ATLAS,22,10,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 350,##in pixles per second
 			"guidance": Enums.GuidanceType.SMART,
 			"direct_damage": 10,#to whatever it hits, usually its intended target
@@ -228,7 +228,7 @@ static var towers = {
 		"fire_rate": 2,
 		"shop_cost": 16,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(VFX_ATLAS,0,1,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 300,##in pixles per second
 			"guidance": Enums.GuidanceType.SMART,
 			"direct_damage": 5,#to whatever it hits, usually its intended target
@@ -255,7 +255,7 @@ static var towers = {
 		"fire_rate": 2,##design says Core only upgrades burn duration + damage
 		"shop_cost": 20,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(VFX_ATLAS,0,1,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 300,##in pixles per second
 			"guidance": Enums.GuidanceType.SMART,
 			"direct_damage": 7,#to whatever it hits, usually its intended target
@@ -283,7 +283,7 @@ static var towers = {
 		##approximated: very high fire rate with a burn DOT on every shot
 		"shop_cost": 25,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(VFX_ATLAS,0,1,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 400,##in pixles per second
 			"guidance": Enums.GuidanceType.SMART,
 			"direct_damage": 2,#low per hit - the burn DOT does the work
@@ -310,7 +310,7 @@ static var towers = {
 		"fire_rate": 8,##4x the base ant - the whole point of this tier
 		"shop_cost": 16,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(VFX_ATLAS,0,1,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 400,##in pixles per second
 			"guidance": Enums.GuidanceType.LEAD,
 			"direct_damage": 2,#low per hit - the fire rate does the work
@@ -334,7 +334,7 @@ static var towers = {
 		"fire_rate": 10,
 		"shop_cost": 20,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(VFX_ATLAS,0,1,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 450,##in pixles per second
 			"guidance": Enums.GuidanceType.LEAD,
 			"direct_damage": 3,#to whatever it hits, usually its intended target
@@ -355,7 +355,7 @@ static var towers = {
 		"fire_rate": 0.5,##one missile every 2 seconds - the slow launcher
 		"shop_cost": 25,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(VFX_ATLAS,0,1,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 150,##lobbed slowly like a mortar shell
 			"guidance": Enums.GuidanceType.DUMB,##flies straight at the spot it was aimed at
 			"direct_damage": 5,##unused by POINT fuses - aoe_damage is the payload
@@ -384,7 +384,7 @@ static var towers = {
 		"fire_rate": 3,
 		"shop_cost": 16,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(VFX_ATLAS,0,1,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 300,##in pixles per second
 			"guidance": Enums.GuidanceType.LEAD,
 			"direct_damage": 4,#to whatever it hits, usually its intended target
@@ -405,7 +405,7 @@ static var towers = {
 		"fire_rate": 4,
 		"shop_cost": 20,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(VFX_ATLAS,0,1,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 300,##in pixles per second
 			"guidance": Enums.GuidanceType.LEAD,
 			"direct_damage": 5,#to whatever it hits, usually its intended target
@@ -426,7 +426,7 @@ static var towers = {
 		"fire_rate": 5,
 		"shop_cost": 25,
 		"bullet_config": {
-			"bullet_texture": Utils.get_atlas_texture(VFX_ATLAS,0,1,64),
+			"bullet_texture": Utils.get_atlas_texture(VFX_ART,1,2,32),
 			"speed": 300,##in pixles per second
 			"guidance": Enums.GuidanceType.LEAD,
 			"direct_damage": 6,#to whatever it hits, usually its intended target

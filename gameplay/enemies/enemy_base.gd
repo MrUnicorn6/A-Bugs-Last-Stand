@@ -1,6 +1,8 @@
 extends CharacterBody2D
 const Enums = preload("res://main/enums.gd")
 
+const LEAK_RADIUS = 40.0 ##how close to the goal counts as leaking through
+
 @export var _config:Dictionary
 
 
@@ -10,6 +12,8 @@ const Enums = preload("res://main/enums.gd")
 var status_cooldown
 var goal_position:Vector2
 var can_move = true#for stun effects
+var is_dead = false##stops double kills/leaks (bounty paid only once)
+var dbg_timer = 0.0##TEMP DEBUG position logger
 @export var default_speed:int #for undoing the slowness effect
 var statuses = []
 
@@ -19,7 +23,9 @@ static func instantiate_and_config(packed:PackedScene,to_config:Dictionary)->Obj
 	return temp
 func set_config(data:Dictionary):
 	assert(data.has("name") || data.has("health") || data.has("speed") || data.has("texture"),"ERROR IN CREATING ENEMY TYPE")
-	_config = data
+	#duplicate so every enemy keeps its own health/speed, the shared
+	#enemies_config dict would otherwise be mutated by every instance
+	_config = data.duplicate()
 	_config["default_speed"] = _config["speed"]
 		
 	#non required parameters for enemies
@@ -41,12 +47,32 @@ func update(new_goal_position:Vector2):
 	
 
 func take_damage(amount,_element:Enums.ElementalType=Enums.ElementalType.NORMAL):##WIP
+	if is_dead:
+		return##already dead, dont process/pay twice
 	_config["health"] -= amount
 	print("ELEMENTAL DAMAGE TYPES ARE NOT IMPLEMENTED FOR ENEMEIS")
 	#print("TAKING SOME DADMAGE, my health is ",health," DAMAGE WAS ",amount," NAME IS ",get_name())
 	if _config["health"] <=0 :
+		is_dead = true
+		_pay_bounty()
 		queue_free()
 	pass
+
+##current health of this enemy, used by towers for STRONGEST targeting
+func get_health()->int:
+	return int(_config.get("health",0))
+
+##pays this enemies bounty to the player when it dies
+func _pay_bounty():
+	var health_and_money = _get_health_and_money()
+	if health_and_money == null:
+		return
+	health_and_money.earn(int(_config.get("bounty",0)))
+
+##the node holding the players health/money, may not exist yet during startup
+##NOTE: its UI/SidePanel/HealthAndMoney, the old hardcoded path was missing SidePanel
+func _get_health_and_money()->Node:
+	return get_node_or_null("/root/Main/UI/SidePanel/HealthAndMoney")
 func apply_status_effect(type,strength,duration):
 	print("HEY STATUS EFFECT OF ",type,' ',strength,' ',duration)
 	var temp = [type,strength,float(duration)]
@@ -74,7 +100,14 @@ func _physics_process(delta: float) -> void:
 	#print("ATTEMPTING ENEMY PATHFINDING")
 	#if !$'NavigationAgent2D'.is_target_reachable():
 		#print("TARGET UNREACHABLE")
-	if !$NavigationAgent2D.is_target_reached():
+	#TEMP DEBUG
+	dbg_timer += delta
+	if dbg_timer >= 3.0:
+		dbg_timer = 0
+		print("DBG pos=", global_position, " goal=", goal_position, " dist=", global_position.distance_to(goal_position), " next=", $NavigationAgent2D.get_next_path_position(), " reached=", $NavigationAgent2D.is_target_reached(), " path_pts=", $NavigationAgent2D.get_current_navigation_path().size())
+	#leak when the agent says reached OR when physically close to the goal:
+	#the agent flag alone never fired on its own (it stalls short of the final waypoint)
+	if !$NavigationAgent2D.is_target_reached() && global_position.distance_to(goal_position) > LEAK_RADIUS:
 		var nav_direction = to_local($'NavigationAgent2D'.get_next_path_position()).normalized()
 		if !can_move:
 			velocity = Vector2.ZERO
@@ -82,9 +115,15 @@ func _physics_process(delta: float) -> void:
 			velocity = nav_direction*_config["speed"]*delta*30
 		move_and_slide()
 	else:
-		#target is reached
-		print("YOU FUCKING DIE")
-		get_node("/root/Main/UI/HealthAndMoney").change_health(_config["health"])
+		#target is reached, the enemy leaks through the defense and deals
+		#its leak damage to the player (NOT its remaining health)
+		is_dead = true##no bounty for reaching the goal
+		var health_and_money = _get_health_and_money()
+		if health_and_money != null:
+			health_and_money.change_health(int(_config.get("leak_damage",1)))
+			print("YOU FUCKING DIE, health left ", health_and_money.health)
+		else:
+			print("YOU FUCKING DIE, NO HEALTH NODE")
 		queue_free()
 
 

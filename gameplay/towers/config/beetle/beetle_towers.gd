@@ -7,7 +7,7 @@ extends RefCounted
 ##upgrade_options_config_keys,so its upgrade panel opens with no options instead of erroring.
 
 const Enums = preload("res://main/enums.gd")
-const BUG_ATLAS = preload("res://assets/bug_atlas.png")
+const BUG_ATLAS = preload("res://assets/depricated Bug Atlas.png")
 const Utils = preload("res://gameplay/towers/config/config_utils.gd")
 
 ##MUST match the key this file is registered under in tower_registry.gd,

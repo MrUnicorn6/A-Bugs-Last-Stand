@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bcq8txt41fc4a"]
 
 [ext_resource type="Script" uid="uid://dojblp5fifkp7" path="res://gameplay/towers/base_tower/base_bullet.gd" id="1_ucmkv"]
-[ext_resource type="Texture2D" uid="uid://0q22n8wdeb7a" path="res://assets/bug_atlas.png" id="2_6vggx"]
+[ext_resource type="Texture2D" uid="uid://cwpgt5lseyb2o" path="res://assets/depricated Bug Atlas.png" id="2_6vggx"]
 [ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://assets/tower_defense_tilesheet.png" id="3_x03pg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yyx8x"]

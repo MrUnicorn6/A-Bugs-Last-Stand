@@ -5,7 +5,7 @@ extends RefCounted
 ##careful: this tower is an empty stub,as it was in the old gameplay_objects_loader.gd.
 
 const Enums = preload("res://main/enums.gd")
-const BUG_ATLAS = preload("res://assets/bug_atlas.png")
+const BUG_ATLAS = preload("res://assets/depricated Bug Atlas.png")
 const TESTING_ATLAS = preload("res://assets/tower_defense_tilesheet.png")
 const Utils = preload("res://gameplay/towers/config/config_utils.gd")
 

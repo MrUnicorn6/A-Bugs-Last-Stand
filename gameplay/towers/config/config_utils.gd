@@ -6,7 +6,7 @@ extends RefCounted
 
 #atlases
 const TESTING_ATLAS = preload("res://assets/tower_defense_tilesheet.png")
-const BUG_ATLAS = preload("res://assets/bug_atlas.png")
+const BUG_ATLAS = preload("res://assets/depricated Bug Atlas.png")
 
 ##cuts a single cell out of an atlas sheet.
 ##same helper that used to live in gameplay_objects_loader.gd
