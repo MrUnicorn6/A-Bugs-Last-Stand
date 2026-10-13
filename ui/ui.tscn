@@ -1,10 +1,10 @@
 [gd_scene load_steps=16 format=3 uid="uid://b2vj21s3sjysa"]
 
 [ext_resource type="Script" uid="uid://fxckusi88c8o" path="res://ui/main_ui.gd" id="1_e6gg6"]
-[ext_resource type="Texture2D" uid="uid://cwpgt5lseyb2o" path="res://assets/depricated Bug Atlas.png" id="2_hat8c"]
 [ext_resource type="Script" uid="uid://4qxeqtk7wca8" path="res://ui/health_and_money.gd" id="2_q0uhn"]
 [ext_resource type="Script" uid="uid://deqd2nxdy4kdt" path="res://ui/upgrade_panel.gd" id="3_c7tqi"]
 [ext_resource type="Texture2D" uid="uid://d4ni18bovxebg" path="res://assets/tower_defense_tilesheet.png" id="3_e707p"]
+[ext_resource type="PackedScene" uid="uid://uop5viubpenp" path="res://ui/base_objects/upgrade_panel/base_upgrade_button.tscn" id="4_gycre"]
 [ext_resource type="Theme" uid="uid://bnf7l64u5bhbo" path="res://ui/stuff/ui_theme.tres" id="4_nm1m0"]
 [ext_resource type="Texture2D" uid="uid://dxk131fsnmthf" path="res://assets/ui_atlas.png" id="6_nm1m0"]
 [ext_resource type="Texture2D" uid="uid://ccjfeb2llsupc" path="res://assets/menu_background.png" id="7_gycre"]
@@ -13,8 +13,8 @@
 font_size = 30
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nm1m0"]
-atlas = ExtResource("2_hat8c")
-region = Rect2(96, 320, 32, 32)
+atlas = ExtResource("6_nm1m0")
+region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f1fl4"]
 atlas = ExtResource("3_e707p")
@@ -50,6 +50,7 @@ grow_horizontal = 0
 grow_vertical = 2
 
 [node name="ShopPanel" type="Panel" parent="SidePanel"]
+visible = false
 custom_minimum_size = Vector2(384, 384)
 layout_mode = 1
 anchors_preset = 11
@@ -72,7 +73,6 @@ alignment = 1
 last_wrap_alignment = 1
 
 [node name="UpgradePanel" type="Panel" parent="SidePanel"]
-visible = false
 custom_minimum_size = Vector2(384, 0)
 layout_mode = 1
 anchors_preset = 11
@@ -88,11 +88,14 @@ script = ExtResource("3_c7tqi")
 [node name="UpgradeOptionsContainer" type="FlowContainer" parent="SidePanel/UpgradePanel"]
 layout_direction = 2
 layout_mode = 0
-offset_top = 256.0
+offset_top = 352.0
 offset_right = 384.0
 offset_bottom = 896.0
 alignment = 1
 last_wrap_alignment = 1
+
+[node name="BaseUpgradeButton" parent="SidePanel/UpgradePanel/UpgradeOptionsContainer" instance=ExtResource("4_gycre")]
+layout_mode = 2
 
 [node name="Label" type="Label" parent="SidePanel/UpgradePanel"]
 layout_mode = 0
@@ -117,6 +120,28 @@ offset_bottom = 64.0
 theme = ExtResource("4_nm1m0")
 theme_type_variation = &"FlatButton"
 text = "Back"
+
+[node name="TargetingButton" type="Button" parent="SidePanel/UpgradePanel"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 224.0
+offset_right = 160.0
+offset_bottom = 288.0
+theme = ExtResource("4_nm1m0")
+theme_type_variation = &"FlatButton"
+text = "Targeting: First"
+autowrap_mode = 2
+
+[node name="MovementButton" type="Button" parent="SidePanel/UpgradePanel"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 224.0
+offset_right = 352.0
+offset_bottom = 288.0
+theme = ExtResource("4_nm1m0")
+theme_type_variation = &"FlatButton"
+text = "Move"
+autowrap_mode = 2
 
 [node name="HealthAndMoney" type="Panel" parent="SidePanel"]
 layout_mode = 1
@@ -162,6 +187,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MainMenu" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

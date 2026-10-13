@@ -21,7 +21,7 @@ const TowerRegistry = preload("res://gameplay/towers/config/tower_registry.gd")
 
 ##static and hopefully constant/unchanging dict of all towers and their configs
 ## to get a specific tower, use towers_config["type"]["tower"]
-##like towers_config["ants"]["bullet_ant"] returns: dict of configs
+##like towers_config["ants"]["ant_tower"] returns: dict of configs
 ##the per tower data itself now lives in one file per bug family:
 ##  res://gameplay/towers/config/<Bug>/<bug>_towers.gd
 ##and is stitched together by res://gameplay/towers/config/tower_registry.gd
@@ -87,24 +87,21 @@ static var enemies_config = {
 	
 }
 
-##checks towers_config for any invalid entries, and throws assertions if any are found
-##NOT called automatically at startup yet:beetle, fire_ant and basic_bee still fail it
-##(missing "class"/"bullet_config"/"upgrade_options_config_keys") - those gaps existed
-##before the config files were split out and are being left as-is for now.
+##checks towers_config for any invalid entries. called from Main._ready.
 static func validate_towers_config():
 	for clas in towers_config.keys():
-		#the config file registered for this class must declare the same class_key
 		if TowerRegistry.class_files.has(clas):
 			assert(TowerRegistry.class_files[clas].class_key == clas,str("CLASS_KEY MISMATCH IN CONFIG FILE FOR ",clas))
+		assert(towers_config[clas].size() == 12, str("EXPECTED 12 BAKED TOWERS FOR ",clas," GOT ",towers_config[clas].size()))
 		for tower_key in towers_config[clas]:
 			var tower:Dictionary = towers_config[clas][tower_key]
 			assert(!tower.is_empty(),str("EMPTY TOWER CONFIG FOR ",clas,"/",tower_key))
 			assert(tower.has("class"),str("CLASS NOT FOUND IN CONFIG FOR ",clas," ",tower_key))
 			assert(tower.has("bullet_config"),str("bullet not exists in ",clas," ",tower_key))
 			assert(tower.has("upgrade_options_config_keys"),str("upgrade keys not defined for ",clas," ",tower_key))
-
-			
-			#validate upgrades
+			assert(tower.has("special"),str("special block missing for ",clas," ",tower_key))
+			assert(tower.has("tower_key") and tower["tower_key"] == tower_key,
+				str("tower_key mismatch for ",clas," ",tower_key))
 			
 
 

@@ -8,6 +8,11 @@ const Enums = preload(
     "res://main/enums.gd"
 )
 var _config:Dictionary
+var source_tower: Node = null
+var pierce_remaining: int = 0
+var life_timer: float = 3.0
+var fuse_timer: float = 0.0
+var has_exploded: bool = false
 #in use vars
 var can_move = true ##for freezing teh bullet in place for the explosion effect
 var target:Node2D
@@ -24,6 +29,11 @@ var target_direction_velocity:Vector2## for ball type bullets
 
 func set_config(new_config:Dictionary)->void:
 	_config = new_config
+	source_tower = _config.get("source_tower", null)
+	pierce_remaining = int(_config.get("pierce", 0))
+	life_timer = maxf(float(_config.get("lifetime", 3.0)), 0.0)
+	fuse_timer = maxf(float(_config.get("fuse_value", 0.0)), 0.0)
+	has_exploded = false
 	#like ball stuff
 	if _config.has("aoe_radius"):
 		$ExplosionArea/CollisionShape2D.shape.radius = _config["aoe_radius"]
@@ -95,16 +105,22 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	if life_timer > 0.0:
+		life_timer -= delta
+	if life_timer <= 0.0:
+		queue_free()
+		return
 	var guidance_type = _config["guidance"]
 	if !can_move:
 		return
-	if !is_instance_valid(target) &&guidance_type == Enums.GuidanceType.SMART: #makes sure target exists
-		queue_free()
 	if guidance_type == Enums.GuidanceType.SMART:
 		if is_instance_valid(target):
 			look_at(target.global_position)
 			velocity = global_position.direction_to(target.global_position)*_config["speed"]
+			move_and_slide()
+		elif target_direction_velocity.length() > 0.001:
+			velocity = target_direction_velocity
 			move_and_slide()
 		else:
 			queue_free()
@@ -113,43 +129,64 @@ func _physics_process(_delta: float) -> void:
 		velocity = target_direction_velocity
 		move_and_slide()
 		
-	#proximity fuses and whatnot
-	if _config["fuse"] == Enums.Fuse.IMPACT:
-		pass #covered by _on_body_entered
-	elif _config["fuse"] == Enums.Fuse.POINT:
+	var fuse: int = int(_config.get("fuse", Enums.Fuse.IMPACT))
+	if fuse == Enums.Fuse.POINT:
 		if global_position.distance_to(target_position_fixed)<6:
 			explode()
-	elif _config["fuse"] == Enums.Fuse.TIMER || _config["fuse"] == Enums.Fuse.TIMER_EXPLOSIVE:
-		await get_tree().create_timer(_config["fuse_value"]).timeout
-		if _config["fuse"] == Enums.Fuse.TIMER_EXPLOSIVE:
-			
-			#print("TIMED FUSE GO BOOOM")
-			explode()
-		queue_free()
-	else:
-		print("FUZE TYPE NOT IMPLEMENTED")
+	elif fuse == Enums.Fuse.TIMER || fuse == Enums.Fuse.TIMER_EXPLOSIVE:
+		fuse_timer -= delta
+		if fuse_timer <= 0.0:
+			if fuse == Enums.Fuse.TIMER_EXPLOSIVE:
+				explode()
+			else:
+				queue_free()
 
 func explode():
+	if has_exploded:
+		return
+	has_exploded = true
+	can_move = false
 	var targets = $ExplosionArea.get_overlapping_bodies()
 	var temp = []
-	$ExplosionEffect.scale = Vector2(_config["aoe_radius"]/32,_config["aoe_radius"]/32) #scaling the explosion effect to the proper size
+	var aoe_radius: float = float(_config.get("aoe_radius", 0.0))
+	$ExplosionEffect.scale = Vector2(aoe_radius/32.0, aoe_radius/32.0)
 	
 	#get all bodies and make sure their enemies
 	for i in targets:
 		if i.is_in_group("ENEMY"):
 			temp.append(i)
 	for i in temp:
-		if _config.has("status_effect"):
-			if _config["status_effect"]["status_application"].application == Enums.StatusApplication.AOE :
-				print("NOT APPLYING STATUS VIA AOE TO ENEMY, AS ENEMY NEEDS TO BE UPDATED")
-
-		#print("APPLYING AOE DMG TO ENEMY")
-		i.take_damage(_config["aoe_damage"])
-	can_move=false
+		_apply_status_effects(i, Enums.StatusApplication.AOE)
+		var aoe_damage: int = int(_config.get("aoe_damage", 0))
+		if aoe_damage > 0:
+			i.take_damage(aoe_damage)
 	print("BOOOM")
 	$ExplosionEffect.visible=true
 	await get_tree().create_timer(0.15).timeout
 	queue_free()
+
+func _apply_status_effects(body: Node, application: int) -> void:
+	if !body.has_method("apply_status_effect"):
+		return
+	var effects: Array = []
+	var multiple_effects: Variant = _config.get("status_effects", [])
+	if multiple_effects is Array:
+		effects.append_array(multiple_effects)
+	var single_effect: Variant = _config.get("status_effect", {})
+	if single_effect is Dictionary:
+		effects.append(single_effect)
+	for status in effects:
+		if int(status.get("status_application", Enums.StatusApplication.NONE)) != application:
+			continue
+		body.apply_status_effect(
+			status.get("status_type", Enums.StatusEffectType.STUN),
+			status.get("status_strength", 1.0),
+			status.get("status_duration", 0.0)
+		)
+
+func _on_explosion_area_body_entered(body: Node2D) -> void:
+	if int(_config.get("fuse", Enums.Fuse.IMPACT)) == Enums.Fuse.PROXIMITY and body.is_in_group("ENEMY"):
+		explode()
 
 
 
@@ -160,16 +197,22 @@ func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuse.IMPACT:
 		#print("SMACK IMPACT HIT")
 		body.take_damage(_config["direct_damage"])
-		if _config.has("status_effect"):
-			var status = _config["status_effect"]
-			if status["status_application"] == Enums.StatusApplication.DIRECT:
-				body.apply_status_effect(status['status_type'],status['status_strength'],status['status_duration'])
+		if source_tower != null and source_tower.has_method("get_money_bonus"):
+			var money_bonus: int = int(source_tower.get_money_bonus())
+			if money_bonus > 0:
+				var health_and_money = get_node_or_null("/root/Main/UI/SidePanel/HealthAndMoney")
+				if health_and_money != null:
+					health_and_money.earn(money_bonus)
+		_apply_status_effects(body, Enums.StatusApplication.DIRECT)
+		if pierce_remaining > 0:
+			pierce_remaining -= 1
+			if pierce_remaining > 0:
+				return
 		queue_free()
-	elif body.is_in_group("ENEMY") && _config["fuse"]==Enums.Fuse.TIMER && _config["guidance"] == Enums.GuidanceType.BALL:
+	elif body.is_in_group("ENEMY") \
+			&& (_config["fuse"] == Enums.Fuse.TIMER || _config["fuse"] == Enums.Fuse.TIMER_EXPLOSIVE) \
+			&& _config["guidance"] == Enums.GuidanceType.BALL:
 		body.take_damage(_config["direct_damage"])
 		print("BALLING DAMAGE")
-		if _config.has("status_effect"):
-			var status = _config["status_effect"]
-			if status["status_application"] == Enums.StatusApplication.DIRECT:
-				body.apply_status_effect(status['status_type'],status['status_strength'],status['status_duration'])
+		_apply_status_effects(body, Enums.StatusApplication.DIRECT)
 				

@@ -14,6 +14,7 @@ func _ready() -> void:
 	#primary initiation stuff
 	
 	var all_towers_dict = Loader.towers_config
+	Loader.validate_towers_config()
 	print("MAPS SHOULD BE HANDELED BY A LEVEL LOADER(WIP)")
 	var current_map = map.instantiate()
 	current_map.set_enemies(Loader.enemies_config)
@@ -27,5 +28,5 @@ func _ready() -> void:
 	
 	#these should be in UI
 	user_interface.add_shop_item(all_towers_dict["ants"]["ant_tower"])
-	#user_interface.add_shop_item(all_towers_dict["beetles"]["beetle"])
+	user_interface.add_shop_item(all_towers_dict["beetles"]["beetle_tower"])
 		

@@ -61,5 +61,27 @@ enum StatusEffectType{
 	SLOW}
 enum CanSeeCamo {CAN_SEE_CAMO,CANNOT_SEE_CAMO}
 
+enum WeaponType {
+	BULLET,
+	BEAM,
+	GRAB,
+	BALL,
+}
+
+enum AbilityType {
+	NONE,
+	DOUBLE_NEARBY_FIRE_RATE,
+	RAGE_FIRE_RATE,
+	COLONY_BOOST,
+}
+
+enum AuraType {
+	NONE,
+	FIRE_RATE,
+	MONEY_ON_HIT,
+	DAMAGE,
+	RANGE,
+}
+
 ##element, for elemental resistances and bullets
 enum ElementalType{NORMAL,FIRE,WATER,EARTH,ELECTRIC}

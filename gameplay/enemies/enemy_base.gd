@@ -62,6 +62,9 @@ func take_damage(amount,_element:Enums.ElementalType=Enums.ElementalType.NORMAL)
 func get_health()->int:
 	return int(_config.get("health",0))
 
+func get_distance_to_goal() -> float:
+	return global_position.distance_to(goal_position)
+
 ##pays this enemies bounty to the player when it dies
 func _pay_bounty():
 	var health_and_money = _get_health_and_money()
@@ -73,18 +76,21 @@ func _pay_bounty():
 ##NOTE: its UI/SidePanel/HealthAndMoney, the old hardcoded path was missing SidePanel
 func _get_health_and_money()->Node:
 	return get_node_or_null("/root/Main/UI/SidePanel/HealthAndMoney")
-func apply_status_effect(type,strength,duration):
-	print("HEY STATUS EFFECT OF ",type,' ',strength,' ',duration)
-	var temp = [type,strength,float(duration)]
-	if type == Enums.StatusEffectType.STUN:
-		can_move=false
-	if type == Enums.StatusEffectType.SLOW:
-		_config["speed"]  = _config["speed"]/strength
-	statuses.append(temp)
-	
+func apply_status_effect(type: int, strength: float, duration: float) -> void:
+	statuses.append([type, strength, maxf(duration, 0.0), 0.0])
+	_refresh_status_effects()
 
-	#apply the effects that this enemy has
-	#statuses held in here are in array format [type,strength,duration]
+func _refresh_status_effects() -> void:
+	var is_stunned: bool = false
+	var slow_multiplier: float = 1.0
+	for status in statuses:
+		if int(status[0]) == Enums.StatusEffectType.STUN:
+			is_stunned = true
+		elif int(status[0]) == Enums.StatusEffectType.SLOW:
+			slow_multiplier *= maxf(float(status[1]), 1.0)
+	can_move = !is_stunned
+	if !_config.is_empty():
+		_config["speed"] = float(_config.get("default_speed", _config.get("speed", 0.0))) / slow_multiplier
 
 ##to get an enemies current velocity for the perpose of calculating leading for bullets.
 ##
@@ -104,7 +110,6 @@ func _physics_process(delta: float) -> void:
 	dbg_timer += delta
 	if dbg_timer >= 3.0:
 		dbg_timer = 0
-		print("DBG pos=", global_position, " goal=", goal_position, " dist=", global_position.distance_to(goal_position), " next=", $NavigationAgent2D.get_next_path_position(), " reached=", $NavigationAgent2D.is_target_reached(), " path_pts=", $NavigationAgent2D.get_current_navigation_path().size())
 	#leak when the agent says reached OR when physically close to the goal:
 	#the agent flag alone never fired on its own (it stalls short of the final waypoint)
 	if !$NavigationAgent2D.is_target_reached() && global_position.distance_to(goal_position) > LEAK_RADIUS:
@@ -129,23 +134,16 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_timer_timeout() -> void:
-	# Called every 0.1 seconds
-	if statuses.is_empty():
-		return
-	for i in statuses:
-		if i[0] == Enums.StatusEffectType.DOT:
-			if step_decimals(i[2])==0:
-				take_damage(i[1])
-	for i in statuses:#decreases time of every status
-		i[2] -= 0.1
-		if i[2]<= -0.1: #removes statuses that have duration<-0.1, its negative so 
-			#that the effect can be removed/unapplied before being deleted
-			#removes some effects when the status is deleted
-			if i[0] == Enums.StatusEffectType.STUN:
-				can_move = true
-			if i[0] == Enums.StatusEffectType.SLOW:
-				print("warning, slow status effect is not removed properly, or doesnt work well")
-				#this removes all speeds regardless 
-				#of # or speeds, not sure if its implemented properly
-				_config["speed"] = _config["default_speed"]
-			statuses.erase(i)
+	for status_index in range(statuses.size() - 1, -1, -1):
+		var status: Array = statuses[status_index]
+		if int(status[0]) == Enums.StatusEffectType.DOT:
+			status[3] = float(status[3]) + 0.1
+			if float(status[3]) >= 0.9999:
+				status[3] = maxf(float(status[3]) - 1.0, 0.0)
+				take_damage(status[1])
+				if is_dead:
+					return
+		status[2] = float(status[2]) - 0.1
+		if float(status[2]) <= 0.0:
+			statuses.remove_at(status_index)
+	_refresh_status_effects()

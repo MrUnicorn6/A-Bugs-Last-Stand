@@ -3,7 +3,7 @@ extends RefCounted
 ##that the rest of the game reads through Loader.towers_config.
 ##
 ##to add a new bug family:
-## 1. make res://gameplay/towers/config/<Bug>/<bug>_towers.gd with a `towers` dict
+## 1. dupe BLANK_CONFIG, bake_family() produces the flat `towers` dict
 ## 2. preload it below and add one line to class_files and one to towers_config
 
 const AntTowers = preload("res://gameplay/towers/config/ant/ant_towers.gd")
