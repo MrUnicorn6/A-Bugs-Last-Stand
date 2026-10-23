@@ -1,8 +1,8 @@
 extends RefCounted
 ##bee family: same 12-slot delta tree as ant / BLANK.
 ##old key basic_bee is now bee_tower. Loader.towers_config["bees"]["bee_tower"]
-##bee is meant to fly at global range; BaseTower is still a StaticBody2D, so
-##range is just a large number until a flyer archetype exists.
+##bee is meant to fly at global range; it currently uses a large range
+##until a flyer archetype exists.
 
 const Enums = preload("res://main/enums.gd")
 const Utils = preload("res://gameplay/towers/config/config_utils.gd")

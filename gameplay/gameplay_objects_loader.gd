@@ -16,6 +16,7 @@ const Enums = preload("res://main/enums.gd")
 #tower config split out into res://gameplay/towers/config/ (see tower_registry.gd)
 const ConfigUtils = preload("res://gameplay/towers/config/config_utils.gd")
 const TowerRegistry = preload("res://gameplay/towers/config/tower_registry.gd")
+const EnemyRegistry = preload("res://gameplay/enemies/config/enemy_registry.gd")
 
 #paths, maybe useless due to not needing to save towers to disk
 
@@ -40,52 +41,8 @@ static func get_tower(key:String) ->Dictionary:
 	print("WARNING TOWER ",key," NOT FOUND")
 	return {}
 
-static var enemies_config = {
-	"fast":{
-		"name":"fast",
-		"health":10,
-		"speed":200,
-		"bounty":4,##money paid to the player when this enemy dies
-		"leak_damage":24,##damage dealt to the player when it reaches the goal
-		"texture":get_atlas_texture(TESTING_ATLAS,15,10,64)
-	},
-	"strong":{
-		"name":"strong",
-		"health":30,
-		"speed":50,
-		"bounty":8,
-		"leak_damage":24,
-		"texture":get_atlas_texture(TESTING_ATLAS,16,10,64)
-	},
-	"boss":{
-		"name":"boss",
-		"health":50,
-		"speed":50,
-		"bounty":60,
-		"leak_damage":24,
-		"texture":get_atlas_texture(TESTING_ATLAS,17,10,64),
-	},
-	"camo":{
-		"name":"camo",
-		"health":30,
-		"speed":50,
-		"camo":true,
-		"bounty":12,
-		"leak_damage":24,
-		"texture":get_atlas_texture(TESTING_ATLAS,18,10,64),
-	},
-	"fly":{
-		"name":"fly",
-		"health":10,
-		"speed":300,
-		"flying":true,#not implemented
-		"bounty":6,
-		"leak_damage":24,
-		"texture":get_atlas_texture(TESTING_ATLAS,17,11,64),
-		"resistances":"WAEWAKLKDNS"
-	}
-	
-}
+##kept as a loader alias so maps and other existing callers remain compatible.
+static var enemies_config: Dictionary = EnemyRegistry.enemies_config
 
 ##checks towers_config for any invalid entries. called from Main._ready.
 static func validate_towers_config():
@@ -102,6 +59,10 @@ static func validate_towers_config():
 			assert(tower.has("special"),str("special block missing for ",clas," ",tower_key))
 			assert(tower.has("tower_key") and tower["tower_key"] == tower_key,
 				str("tower_key mismatch for ",clas," ",tower_key))
+
+##checks the registered enemy definitions before a map starts spawning them.
+static func validate_enemies_config() -> void:
+	EnemyRegistry.validate_enemies_config()
 			
 
 

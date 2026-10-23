@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends "res://gameplay/gameplay_object.gd"
 
 
 class_name BaseTower
@@ -10,9 +10,7 @@ const BASE_BULLET = preload("res://gameplay/towers/base_tower/base_bullet.tscn")
 
 @export var _config:Dictionary
 
-var move_speed: float = 60.0
 var move_finish_distance: float = 12.0
-var navigation_agent: NavigationAgent2D = null
 
 #in use by this script for temporary thingies
 var draw_range = false
@@ -22,8 +20,6 @@ var possible_targets:Array[Node] = [] ##constantly changing arr of targets
 var selected_target:Node = null ##for holding a target seperate from possible_targets
 var is_moving: bool = false
 var can_fire: bool = true
-var move_target_position: Vector2 = Vector2.ZERO
-var move_target_set: bool = false
 var move_target_mode: bool = false
 
 func _draw() -> void:
@@ -33,11 +29,12 @@ func _draw() -> void:
 func set_config(config_to_be_set_to:Dictionary):
 	#print("TRYING TO SETTING CONFIG, BUT MAY NOT UPDATING PROPERLY")
 	_config = config_to_be_set_to.duplicate(true)
-	move_speed = maxf(float(_config.get("move_speed", 60.0)), 0.0)
+	configure_movement(_config)
+	movement_speed = maxf(float(_config.get("move_speed", 60.0)), 0.0)
+	arrival_distance = move_finish_distance
+	_apply_navigation_settings()
 	$TargetingRange/TargetingHitbox.shape.radius = _config["max_range"]
 	$Sprite.texture = _config["tower_texture"]
-	if navigation_agent != null:
-		navigation_agent.target_position = move_target_position
 
 func get_config()-> Dictionary:
 	return _config
@@ -85,64 +82,40 @@ func cycle_targeting_type() -> int:
 	return types[index]
 
 func set_move_target_position(position: Vector2) -> void:
-	move_target_position = position
-	move_target_set = true
+	set_movement_target(position)
 	move_target_mode = false
 	is_moving = true
 	can_fire = false
-	_ensure_navigation_agent()
-	navigation_agent.target_position = position
 
 func clear_move_target_position() -> void:
-	move_target_set = false
+	clear_movement_target()
 	move_target_mode = false
 	is_moving = false
 	can_fire = true
-	if navigation_agent != null:
-		navigation_agent.target_position = global_position
-
-func _ensure_navigation_agent() -> void:
-	if navigation_agent != null:
-		return
-	if has_node("NavigationAgent2D"):
-		navigation_agent = $NavigationAgent2D
-		return
-	navigation_agent = NavigationAgent2D.new()
-	navigation_agent.name = "NavigationAgent2D"
-	navigation_agent.path_desired_distance = 24.0
-	navigation_agent.target_desired_distance = 12.0
-	add_child(navigation_agent)
 
 func _update_movement(delta: float) -> bool:
-	if !move_target_set or !is_moving:
+	if !movement_target_set or !is_moving:
+		velocity = Vector2.ZERO
 		return false
-	_ensure_navigation_agent()
-	navigation_agent.target_position = move_target_position
-	var target_distance: float = global_position.distance_to(move_target_position)
+	var target_distance: float = global_position.distance_to(movement_target_position)
 	if target_distance <= move_finish_distance:
 		clear_move_target_position()
 		return false
-	var next_step: Vector2 = move_target_position
-	if navigation_agent.get_current_navigation_path().size() > 0:
-		next_step = navigation_agent.get_next_path_position()
-	elif navigation_agent.is_target_reachable():
-		next_step = move_target_position
-	var direction: Vector2 = global_position.direction_to(next_step)
+	var direction := get_movement_direction()
 	if direction.length_squared() <= 0.0001:
-		direction = global_position.direction_to(move_target_position)
-	if direction.length_squared() <= 0.0001:
-		clear_move_target_position()
-		return false
+		velocity = Vector2.ZERO
+		return true
 	var desired_rotation: float = direction.angle()
 	var angle_delta: float = wrapf(desired_rotation - rotation, -PI, PI)
 	var turn_speed: float = maxf(float(_config.get("turn_speed", 5.0)), 0.0)
 	var max_turn: float = turn_speed * delta
 	if absf(angle_delta) > max_turn:
 		rotation += signf(angle_delta) * max_turn
+		velocity = Vector2.ZERO
 		return true
 	rotation = desired_rotation
-	global_position += Vector2.RIGHT.rotated(rotation) * move_speed * delta
-	if global_position.distance_to(move_target_position) <= move_finish_distance:
+	move_in_direction(Vector2.RIGHT.rotated(rotation), movement_speed)
+	if global_position.distance_to(movement_target_position) <= move_finish_distance:
 		clear_move_target_position()
 	return true
 
@@ -344,7 +317,6 @@ func update_possible_targets():
 
 func _ready() -> void:
 	add_to_group("TOWER")##so the game over screen can freeze towers
-	_ensure_navigation_agent()
 
 ##drops enemies that died (queue_free) from the target list, they stick
 ##around for a frame after death and would otherwise crash targeting

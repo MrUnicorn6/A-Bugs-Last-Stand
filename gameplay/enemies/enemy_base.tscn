@@ -24,6 +24,7 @@ wait_time = 0.1
 autostart = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+navigation_layers = 3
 debug_enabled = true
 path_desired_distance = 24.0
 target_desired_distance = 24.0

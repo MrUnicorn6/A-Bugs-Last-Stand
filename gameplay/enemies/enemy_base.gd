@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends "res://gameplay/gameplay_object.gd"
 const Enums = preload("res://main/enums.gd")
 
 const LEAK_RADIUS = 40.0 ##how close to the goal counts as leaking through
@@ -9,7 +9,6 @@ const LEAK_RADIUS = 40.0 ##how close to the goal counts as leaking through
 
 
 #in use
-var status_cooldown
 var goal_position:Vector2
 var can_move = true#for stun effects
 var is_dead = false##stops double kills/leaks (bounty paid only once)
@@ -27,6 +26,7 @@ func set_config(data:Dictionary):
 	#enemies_config dict would otherwise be mutated by every instance
 	_config = data.duplicate()
 	_config["default_speed"] = _config["speed"]
+	configure_movement(_config)
 		
 	#non required parameters for enemies
 	if data.has("resistances"):
@@ -43,7 +43,7 @@ func update(new_goal_position:Vector2):
 	if _config.has("camo"):
 		if _config["camo"]:
 			add_to_group("CAMO")
-	$NavigationAgent2D.target_position = goal_position
+	set_movement_target(goal_position)
 	
 
 func take_damage(amount,_element:Enums.ElementalType=Enums.ElementalType.NORMAL):##WIP
@@ -91,6 +91,7 @@ func _refresh_status_effects() -> void:
 	can_move = !is_stunned
 	if !_config.is_empty():
 		_config["speed"] = float(_config.get("default_speed", _config.get("speed", 0.0))) / slow_multiplier
+		movement_speed = float(_config["speed"])
 
 ##to get an enemies current velocity for the perpose of calculating leading for bullets.
 ##
@@ -112,13 +113,12 @@ func _physics_process(delta: float) -> void:
 		dbg_timer = 0
 	#leak when the agent says reached OR when physically close to the goal:
 	#the agent flag alone never fired on its own (it stalls short of the final waypoint)
-	if !$NavigationAgent2D.is_target_reached() && global_position.distance_to(goal_position) > LEAK_RADIUS:
-		var nav_direction = to_local($'NavigationAgent2D'.get_next_path_position()).normalized()
+	if !is_movement_target_reached() && global_position.distance_to(goal_position) > LEAK_RADIUS:
+		var movement_direction := get_movement_direction()
 		if !can_move:
 			velocity = Vector2.ZERO
 		else:
-			velocity = nav_direction*_config["speed"]*delta*30
-		move_and_slide()
+			move_in_direction(movement_direction, movement_speed)
 	else:
 		#target is reached, the enemy leaks through the defense and deals
 		#its leak damage to the player (NOT its remaining health)

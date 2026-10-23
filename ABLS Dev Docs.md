@@ -11,8 +11,8 @@
 * For enemies   
   * Eventually implement rounds better and or maps or missions   
 * For health  
-  * Game over and 0 check for health  
-  * Money earning  
+  * ~~Game over and 0 check for health~~  
+  * ~~Money earning~~  
 * SPRITES  
   * Bullet  
   * Dung  

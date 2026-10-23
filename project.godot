@@ -52,6 +52,12 @@ move_map_right={
 ]
 }
 
+[layer_names]
+
+2d_navigation/layer_1="sea_level"
+2d_navigation/layer_2="alt_1"
+2d_navigation/layer_3="alt_2"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

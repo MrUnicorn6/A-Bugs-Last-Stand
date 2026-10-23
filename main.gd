@@ -1,7 +1,7 @@
 extends Node
 
 @onready var user_interface = preload("res://ui/ui.tscn").instantiate()
-@onready var map = preload("res://gameplay/levels/map1/map1.tscn")
+@onready var map = preload("res://gameplay/levels/DEBUG FOR ALTITUDES/map2.tscn")
 @onready var camera = preload("res://main/camera_scene.tscn")
 var current_map
 #static var packedBasicTowers:Dictionary
@@ -15,6 +15,7 @@ func _ready() -> void:
 	
 	var all_towers_dict = Loader.towers_config
 	Loader.validate_towers_config()
+	Loader.validate_enemies_config()
 	print("MAPS SHOULD BE HANDELED BY A LEVEL LOADER(WIP)")
 	var current_map = map.instantiate()
 	current_map.set_enemies(Loader.enemies_config)
