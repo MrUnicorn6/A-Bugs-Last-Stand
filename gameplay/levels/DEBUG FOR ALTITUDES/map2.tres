@@ -212,9 +212,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(32, -32, 32, 0, 16, 0, 
 agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_tdfrp"]
-vertices = PackedVector2Array(32, -32, 32, 16, 16, 0, 0, -16, -16, -32, 0, 0)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 0), PackedInt32Array(3, 0, 2, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(32, -32, 32, 16, 16, 0, 0, 0, 0, -16, -16, -32)])
+vertices = PackedVector2Array(32, 0, 16, 0, 0, -16, 0, -32, 32, -32)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(32, -32, 32, 0, 16, 0, 0, -16, 0, -32)])
 agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_gcb6n"]
@@ -230,9 +230,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-32, -32, -24, -32, -16
 agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o711b"]
-vertices = PackedVector2Array(32, 32, -16, 32, 0, 16, 16, 0, 32, -16, 0, 0)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 0), PackedInt32Array(3, 0, 2, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(32, 32, -16, 32, 0, 16, 0, 0, 16, 0, 32, -16)])
+vertices = PackedVector2Array(32, 32, 0, 32, 0, 16, 16, 0, 32, 0)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(32, 32, 0, 32, 0, 16, 16, 0, 32, 0)])
 agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1f041"]
@@ -248,9 +248,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-32, -32, 0, -32, 0, -1
 agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_mvowm"]
-vertices = PackedVector2Array(-16, 0, -32, 16, -32, -32, 16, -32, 0, -16, 0, 0)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(2, 3, 4), PackedInt32Array(0, 2, 4, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-32, -32, 16, -32, 0, -16, 0, 0, -16, 0, -32, 16)])
+vertices = PackedVector2Array(0, -16, -16, 0, -32, 0, -32, -32, 0, -32)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-32, -32, 0, -32, 0, -16, -16, 0, -32, 0)])
 agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_7gtom"]
@@ -278,9 +278,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-32, 32, -32, 24, 16, 1
 agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_lpyio"]
-vertices = PackedVector2Array(0, 16, 16, 32, -32, 32, -32, -16, -16, 0, 0, 0)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(2, 3, 4), PackedInt32Array(0, 2, 4, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-32, 32, -32, -16, -16, 0, 0, 0, 0, 16, 16, 32)])
+vertices = PackedVector2Array(0, 16, 0, 32, -32, 32, -32, 0, -16, 0)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-32, 32, -32, 0, -16, 0, 0, 16, 0, 32)])
 agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eew4c"]
@@ -703,12 +703,6 @@ texture_region_size = Vector2i(64, 64)
 14:6/0 = 0
 15:6/0 = 0
 15:6/0/terrain_set = 0
-15:6/0/terrains_peering_bit/right_side = 2
-15:6/0/terrains_peering_bit/bottom_right_corner = 2
-15:6/0/terrains_peering_bit/bottom_left_corner = 2
-15:6/0/terrains_peering_bit/left_side = 2
-15:6/0/terrains_peering_bit/top_left_corner = 2
-15:6/0/terrains_peering_bit/top_right_corner = 2
 15:6/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_6y38q")
 15:6/0/navigation_layer_1/polygon = SubResource("NavigationPolygon_rgp5n")
 16:6/0 = 0
@@ -1010,8 +1004,6 @@ terrain_set_0/terrain_0/name = "Main 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 terrain_set_0/terrain_1/name = "upper 1"
 terrain_set_0/terrain_1/color = Color(0.32580367, 0.47732717, 0.4657125, 1)
-terrain_set_0/terrain_2/name = "RAMP 0-1 2"
-terrain_set_0/terrain_2/color = Color(0.46875, 0.5, 0.25, 1)
 navigation_layer_0/layers = 1
 navigation_layer_1/layers = 2
 custom_data_layer_0/name = "NoPlaceArea"

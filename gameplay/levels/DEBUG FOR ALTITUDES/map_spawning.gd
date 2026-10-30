@@ -4,7 +4,7 @@ const Loader = preload("res://gameplay/gameplay_objects_loader.gd")
 
 var packed_enemies_config:Dictionary
 var round_counter = 0
-const ROUND_ONE = ["fast","3","strong","3","camo","1","fly",2]
+const ROUND_ONE = ["fast",3,"strong",3,"camo",1,"fly",2]
 var goal_position:Vector2 #usually player base or camp
 
 

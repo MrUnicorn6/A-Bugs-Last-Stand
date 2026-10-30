@@ -1,0 +1,230 @@
+[gd_scene load_steps=8 format=3 uid="uid://bpqf2plw6gtg8"]
+
+[ext_resource type="Texture2D" uid="uid://2ascjvs5gkua" path="res://assets/TILEATLAS.png" id="1_jd4ah"]
+[ext_resource type="Script" uid="uid://cwlkws4rjb4o6" path="res://gameplay/levels/DEBUG FOR ALTITUDES/map_spawning.gd" id="2_rtigd"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_emqfo"]
+vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_4rtwr"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2ucvs"]
+texture = ExtResource("1_jd4ah")
+margins = Vector2i(0, 16)
+texture_region_size = Vector2i(32, 32)
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+4:0/0/terrain_set = 0
+4:0/0/terrains_peering_bit/bottom_right_corner = 0
+4:0/0/terrains_peering_bit/bottom_left_corner = 1
+4:0/0/terrains_peering_bit/left_side = 1
+4:0/0/terrains_peering_bit/top_left_corner = 1
+4:0/0/terrains_peering_bit/top_side = 1
+4:0/0/terrains_peering_bit/top_right_corner = 1
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+4:1/0/terrain_set = 0
+4:1/0/terrains_peering_bit/right_side = 0
+4:1/0/terrains_peering_bit/bottom_right_corner = 0
+4:1/0/terrains_peering_bit/bottom_left_corner = 1
+4:1/0/terrains_peering_bit/left_side = 1
+4:1/0/terrains_peering_bit/top_left_corner = 1
+4:1/0/terrains_peering_bit/top_right_corner = 0
+1:2/0 = 0
+2:2/0 = 0
+2:2/0/terrain_set = 0
+3:2/0 = 0
+3:2/0/terrain_set = 0
+4:2/0 = 0
+4:2/0/terrain_set = 0
+4:2/0/terrains_peering_bit/bottom_right_corner = 1
+4:2/0/terrains_peering_bit/bottom_side = 1
+4:2/0/terrains_peering_bit/bottom_left_corner = 1
+4:2/0/terrains_peering_bit/left_side = 1
+4:2/0/terrains_peering_bit/top_left_corner = 1
+4:2/0/terrains_peering_bit/top_right_corner = 0
+5:2/0 = 0
+5:2/0/terrain_set = 0
+5:2/0/terrains_peering_bit/bottom_right_corner = 1
+5:2/0/terrains_peering_bit/bottom_side = 1
+5:2/0/terrains_peering_bit/bottom_left_corner = 1
+5:2/0/terrains_peering_bit/top_left_corner = 0
+5:2/0/terrains_peering_bit/top_side = 0
+5:2/0/terrains_peering_bit/top_right_corner = 0
+6:2/0 = 0
+6:2/0/terrain_set = 0
+6:2/0/terrains_peering_bit/right_side = 1
+6:2/0/terrains_peering_bit/bottom_right_corner = 1
+6:2/0/terrains_peering_bit/bottom_side = 1
+6:2/0/terrains_peering_bit/bottom_left_corner = 1
+6:2/0/terrains_peering_bit/top_left_corner = 0
+6:2/0/terrains_peering_bit/top_right_corner = 1
+7:2/0 = 0
+7:2/0/terrain_set = 0
+7:2/0/terrains_peering_bit/bottom_right_corner = 0
+7:2/0/terrains_peering_bit/bottom_side = 0
+7:2/0/terrains_peering_bit/bottom_left_corner = 0
+7:2/0/terrains_peering_bit/left_side = 0
+7:2/0/terrains_peering_bit/top_left_corner = 0
+7:2/0/terrains_peering_bit/top_right_corner = 1
+8:2/0 = 0
+8:2/0/terrain_set = 0
+8:2/0/terrains_peering_bit/bottom_right_corner = 0
+8:2/0/terrains_peering_bit/bottom_side = 0
+8:2/0/terrains_peering_bit/bottom_left_corner = 0
+8:2/0/terrains_peering_bit/top_left_corner = 1
+8:2/0/terrains_peering_bit/top_side = 1
+8:2/0/terrains_peering_bit/top_right_corner = 1
+9:2/0 = 0
+9:2/0/terrain_set = 0
+9:2/0/terrains_peering_bit/right_side = 0
+9:2/0/terrains_peering_bit/bottom_right_corner = 0
+9:2/0/terrains_peering_bit/bottom_side = 0
+9:2/0/terrains_peering_bit/bottom_left_corner = 0
+9:2/0/terrains_peering_bit/top_left_corner = 1
+9:2/0/terrains_peering_bit/top_right_corner = 0
+5:1/0 = 0
+5:1/0/terrain_set = 0
+5:1/0/terrain = 0
+5:1/0/terrains_peering_bit/right_side = 0
+5:1/0/terrains_peering_bit/bottom_right_corner = 0
+5:1/0/terrains_peering_bit/bottom_side = 0
+5:1/0/terrains_peering_bit/bottom_left_corner = 0
+5:1/0/terrains_peering_bit/left_side = 0
+5:1/0/terrains_peering_bit/top_left_corner = 0
+5:1/0/terrains_peering_bit/top_side = 0
+5:1/0/terrains_peering_bit/top_right_corner = 0
+5:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_emqfo")
+5:0/0 = 0
+5:0/0/terrain_set = 0
+5:0/0/terrains_peering_bit/bottom_right_corner = 0
+5:0/0/terrains_peering_bit/bottom_side = 0
+5:0/0/terrains_peering_bit/bottom_left_corner = 0
+5:0/0/terrains_peering_bit/top_left_corner = 1
+5:0/0/terrains_peering_bit/top_side = 1
+5:0/0/terrains_peering_bit/top_right_corner = 1
+6:0/0 = 0
+6:0/0/terrain_set = 0
+6:0/0/terrains_peering_bit/right_side = 1
+6:0/0/terrains_peering_bit/bottom_right_corner = 1
+6:0/0/terrains_peering_bit/bottom_left_corner = 0
+6:0/0/terrains_peering_bit/top_left_corner = 1
+6:0/0/terrains_peering_bit/top_side = 1
+6:0/0/terrains_peering_bit/top_right_corner = 1
+7:0/0 = 0
+7:0/0/terrain_set = 0
+7:0/0/terrains_peering_bit/bottom_right_corner = 1
+7:0/0/terrains_peering_bit/bottom_left_corner = 0
+7:0/0/terrains_peering_bit/left_side = 0
+7:0/0/terrains_peering_bit/top_left_corner = 0
+7:0/0/terrains_peering_bit/top_side = 0
+7:0/0/terrains_peering_bit/top_right_corner = 0
+8:0/0 = 0
+8:0/0/terrain_set = 0
+8:0/0/terrains_peering_bit/bottom_right_corner = 1
+8:0/0/terrains_peering_bit/bottom_side = 1
+8:0/0/terrains_peering_bit/bottom_left_corner = 1
+8:0/0/terrains_peering_bit/top_left_corner = 0
+8:0/0/terrains_peering_bit/top_side = 0
+8:0/0/terrains_peering_bit/top_right_corner = 0
+9:0/0 = 0
+9:0/0/terrain_set = 0
+9:0/0/terrains_peering_bit/right_side = 0
+9:0/0/terrains_peering_bit/bottom_right_corner = 0
+9:0/0/terrains_peering_bit/bottom_left_corner = 1
+9:0/0/terrains_peering_bit/top_left_corner = 0
+9:0/0/terrains_peering_bit/top_side = 0
+9:0/0/terrains_peering_bit/top_right_corner = 0
+9:1/0 = 0
+9:1/0/terrain_set = 0
+9:1/0/terrains_peering_bit/right_side = 0
+9:1/0/terrains_peering_bit/bottom_right_corner = 0
+9:1/0/terrains_peering_bit/bottom_left_corner = 1
+9:1/0/terrains_peering_bit/left_side = 1
+9:1/0/terrains_peering_bit/top_left_corner = 1
+9:1/0/terrains_peering_bit/top_right_corner = 0
+8:1/0 = 0
+8:1/0/terrain_set = 0
+8:1/0/terrain = 1
+8:1/0/terrains_peering_bit/right_side = 1
+8:1/0/terrains_peering_bit/bottom_right_corner = 1
+8:1/0/terrains_peering_bit/bottom_side = 1
+8:1/0/terrains_peering_bit/bottom_left_corner = 1
+8:1/0/terrains_peering_bit/left_side = 1
+8:1/0/terrains_peering_bit/top_left_corner = 1
+8:1/0/terrains_peering_bit/top_side = 1
+8:1/0/terrains_peering_bit/top_right_corner = 1
+8:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_4rtwr")
+7:1/0 = 0
+7:1/0/terrain_set = 0
+7:1/0/terrains_peering_bit/right_side = 1
+7:1/0/terrains_peering_bit/bottom_right_corner = 1
+7:1/0/terrains_peering_bit/bottom_left_corner = 0
+7:1/0/terrains_peering_bit/left_side = 0
+7:1/0/terrains_peering_bit/top_left_corner = 0
+7:1/0/terrains_peering_bit/top_right_corner = 1
+6:1/0 = 0
+6:1/0/terrain_set = 0
+6:1/0/terrains_peering_bit/right_side = 1
+6:1/0/terrains_peering_bit/bottom_right_corner = 1
+6:1/0/terrains_peering_bit/bottom_left_corner = 0
+6:1/0/terrains_peering_bit/left_side = 0
+6:1/0/terrains_peering_bit/top_left_corner = 0
+6:1/0/terrains_peering_bit/top_right_corner = 1
+
+[sub_resource type="TileSet" id="TileSet_oskyf"]
+tile_size = Vector2i(32, 32)
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Grass"
+terrain_set_0/terrain_0/color = Color(0.5019608, 0.6862745, 0.2509804, 1)
+terrain_set_0/terrain_1/name = "Dirt"
+terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
+navigation_layer_0/layers = 1
+custom_data_layer_0/name = "NoPlaceArea"
+custom_data_layer_0/type = 1
+sources/1 = SubResource("TileSetAtlasSource_2ucvs")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d54qm"]
+radius = 32.0
+
+[node name="Map1" type="TileMapLayer"]
+z_index = -2
+position = Vector2(704, 0)
+tile_set = SubResource("TileSet_oskyf")
+navigation_visibility_mode = 1
+script = ExtResource("2_rtigd")
+
+[node name="EnemiesSpawning" type="Node" parent="."]
+
+[node name="SpawnTimer" type="Timer" parent="EnemiesSpawning"]
+wait_time = 2.0
+autostart = true
+
+[node name="TemporaryTarget" type="StaticBody2D" parent="EnemiesSpawning"]
+position = Vector2(1920, 544)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemiesSpawning/TemporaryTarget"]
+visible = false
+shape = SubResource("CircleShape2D_d54qm")
+
+[node name="SpawnNode" type="StaticBody2D" parent="EnemiesSpawning"]
+position = Vector2(128, 672)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemiesSpawning/SpawnNode"]
+visible = false
+shape = SubResource("CircleShape2D_d54qm")
+
+[node name="EnemyContainer" type="Node" parent="EnemiesSpawning"]
+
+[node name="NavigationLink2D" type="NavigationLink2D" parent="."]
+position = Vector2(448, 576)
+navigation_layers = 3
+start_position = Vector2(-288, 0)
+end_position = Vector2(128, 0)

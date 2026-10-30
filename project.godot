@@ -54,9 +54,10 @@ move_map_right={
 
 [layer_names]
 
-2d_navigation/layer_1="sea_level"
-2d_navigation/layer_2="alt_1"
+2d_navigation/layer_1="ground"
+2d_navigation/layer_2="ground_slow_maybe_this_should_be_a_bool?"
 2d_navigation/layer_3="alt_2"
+2d_navigation/layer_4="alt_2_slow"
 
 [rendering]
 
